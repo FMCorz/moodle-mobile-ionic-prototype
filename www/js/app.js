@@ -1,4 +1,4 @@
-angular.module('mm', ['ionic', 'mm.auth', 'mm.files'])
+angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files'])
 
 .run(function($ionicPlatform, $rootScope, $state, mmAuth) {
   $ionicPlatform.ready(function() {
@@ -53,7 +53,8 @@ angular.module('mm', ['ionic', 'mm.auth', 'mm.files'])
       url: '/index',
       views: {
         'site': {
-          templateUrl: 'tpl/site-index.html'
+          templateUrl: 'tpl/site-courses.html',
+          controller: 'mmSiteCourses'
         }
       }
     })

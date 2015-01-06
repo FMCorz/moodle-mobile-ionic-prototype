@@ -1,0 +1,23 @@
+<ion-view view-title="My courses">
+    <ion-content padding="true">
+        <div class="list">
+          <label class="item item-input">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="text" placeholder="Filter" ng-model="filterText">
+          </label>
+        </div>
+        <div class="list card" ng-repeat="course in courses | filter:{name: filterText}">
+            <a class="item">
+               {{course.name}}
+            </a>
+            <div class="item item-text-wrap">
+                <p>{{course.desc}}</p>
+            </div>
+            <div class="item tabs tabs-secondary tabs-icon-left">
+                <a class="tab-item active"><i class="icon ion-briefcase"></i>Contents</a>
+                <a class="tab-item active"><i class="icon ion-stats-bars"></i>Grades</a>
+                <a class="tab-item active"><i class="icon ion-person-stalker"></i>Participants</a>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
