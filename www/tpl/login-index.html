@@ -1,0 +1,16 @@
+<ion-view view-title="Login">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-icon ion-plus" ng-click="add()"></button>
+  </ion-nav-buttons>
+  <ion-content>
+      <ion-list ng-repeat="identity in identities">
+        <ion-item class="item item-thumbnail-left" ng-click="login()">
+          <img ng-src="{{identity.thumb}}">
+          <h2>{{identity.name}}</h2>
+          <p>{{identity.desc}}</p>
+        </a>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
+
