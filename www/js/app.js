@@ -1,4 +1,4 @@
-angular.module('mm', ['ionic', 'mm.auth'])
+angular.module('mm', ['ionic', 'mm.auth', 'mm.files'])
 
 .run(function($ionicPlatform, $rootScope, $state, mmAuth) {
   $ionicPlatform.ready(function() {
@@ -19,7 +19,7 @@ angular.module('mm', ['ionic', 'mm.auth'])
       event.preventDefault();
       console.log('Redirect to login page, request was: ' + toState.name);
       $state.transitionTo('login.index');
-    } else if (toState.name === 'login' && mmAuth.isLoggedIn()) {
+    } else if (toState.name.substr(0, 5) === 'login' && mmAuth.isLoggedIn()) {
       // We are logged in and requested the login page.
       event.preventDefault();
       console.log('Redirect to course page, request was: ' + toState.name);
@@ -40,6 +40,7 @@ angular.module('mm', ['ionic', 'mm.auth'])
   $stateProvider
 
     .state('site', {
+      url: '/site',
       templateUrl: 'tpl/site.html',
       abstract: true,
       onEnter: function($ionicHistory) {
@@ -53,6 +54,35 @@ angular.module('mm', ['ionic', 'mm.auth'])
       views: {
         'site': {
           templateUrl: 'tpl/site-index.html'
+        }
+      }
+    })
+
+    .state('site.files', {
+      url: '/files',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-files.html'
+        }
+      }
+    })
+
+    .state('site.files-my', {
+      url: '/my?path',
+      views: {
+        'site': {
+          controller: 'mmFilesMyCtrl',
+          templateUrl: 'tpl/site-files-my.html'
+        }
+      }
+    })
+
+    .state('site.files-site', {
+      url: '/site?path',
+      views: {
+        'site': {
+          controller: 'mmFilesSiteCtrl',
+          templateUrl: 'tpl/site-files-site.html'
         }
       }
     })
