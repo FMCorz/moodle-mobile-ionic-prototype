@@ -59,6 +59,51 @@ angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files'])
       }
     })
 
+    .state('site.notifications', {
+      url: '/notifications',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-notifications.html'
+        }
+      }
+    })
+
+    .state('site.messages', {
+      url: '/messages',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-messages.html'
+        }
+      }
+    })
+
+    .state('site.message', {
+      url: '/message',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-message.html'
+        }
+      }
+    })
+
+    .state('site.events', {
+      url: '/events',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-events.html'
+        }
+      }
+    })
+
+    .state('site.event', {
+      url: '/event',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-event.html'
+        }
+      }
+    })
+
     .state('site.files', {
       url: '/files',
       views: {
@@ -84,6 +129,33 @@ angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files'])
         'site': {
           controller: 'mmFilesSiteCtrl',
           templateUrl: 'tpl/site-files-site.html'
+        }
+      }
+    })
+
+    .state('site.preferences', {
+      url: '/preferences',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-preferences.html'
+        }
+      }
+    })
+
+    .state('site.settings', {
+      url: '/settings',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-settings.html'
+        }
+      }
+    })
+
+    .state('site.synchronization', {
+      url: '/synchronization',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-synchronization.html'
         }
       }
     })

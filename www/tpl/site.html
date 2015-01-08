@@ -25,12 +25,12 @@
                 <p>on Moodle.org</p>
             </div>
             <a menu-close class="item item-icon-left" ui-sref="site.index"><i class="icon ion-ionic"></i>My courses</a>
-            <a menu-close class="item item-icon-left"><i class="icon ion-ios7-bell"></i>Notifications <span class="badge badge-assertive">2</span></a>
-            <a menu-close class="item item-icon-left"><i class="icon ion-chatbox"></i>Messages</a>
-            <a menu-close class="item item-icon-left"><i class="icon ion-calendar"></i>Calendar events</a>
-            <a ui-sref="site.files" menu-close class="item item-icon-left"><i class="icon ion-folder"></i>My files</a>
+            <a menu-close class="item item-icon-left" ui-sref="site.notifications"><i class="icon ion-ios7-bell"></i>Notifications <span class="badge badge-assertive">2</span></a>
+            <a menu-close class="item item-icon-left" ui-sref="site.messages"><i class="icon ion-chatbox"></i>Messages <span class="badge badge-assertive">6</span></a>
+            <a menu-close class="item item-icon-left" ui-sref="site.events"><i class="icon ion-calendar"></i>Calendar events</a>
+            <a menu-close class="item item-icon-left" ui-sref="site.files"><i class="icon ion-folder"></i>My files</a>
             <div class="item item-divider"></div>
-            <a menu-close class="item item-icon-left"><i class="icon ion-gear-a"></i>Preferences</a>
+            <a menu-close class="item item-icon-left" ui-sref="site.preferences"><i class="icon ion-gear-a"></i>Preferences</a>
             <a menu-close class="item item-icon-left" href="https://moodle.org"><i class="icon ion-earth"></i>Website</a>
             <a menu-close class="item item-icon-left"><i class="icon ion-help-buoy"></i>Help</a>
         </div>
@@ -38,7 +38,7 @@
     </ion-content>
 
     <div class="tabs tabs-icon-top tabs-light">
-        <a menu-close class="tab-item active"><i class="icon ion-gear-b"></i>App settings</a>
+        <a menu-close class="tab-item active" ui-sref="site.settings"><i class="icon ion-gear-b"></i>App settings</a>
         <a menu-close class="tab-item active" ng-click="logout()"><i class="icon ion-log-out"></i>Logout</a>
     </div>
 
