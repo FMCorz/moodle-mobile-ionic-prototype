@@ -68,6 +68,51 @@ angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files'])
       }
     })
 
+    .state('site.sections', {
+      url: '/sections',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-sections.html'
+        }
+      }
+    })
+
+    .state('site.section-all', {
+      url: '/section-all',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-section-all.html'
+        }
+      }
+    })
+
+    .state('site.section', {
+      url: '/section',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-section.html'
+        }
+      }
+    })
+
+    .state('site.forum', {
+      url: '/forum',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-forum.html'
+        }
+      }
+    })
+
+    .state('site.discussion', {
+      url: '/discussion',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-discussion.html'
+        }
+      }
+    })
+
     .state('site.messages', {
       url: '/messages',
       views: {
@@ -202,7 +247,7 @@ angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files'])
           $state.go('login.index');
         }
       }
-    })
+    });
 
   // Default redirect to the login page.
   $urlRouterProvider.otherwise(function($injector, $location) {
@@ -217,7 +262,7 @@ angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files'])
   $scope.logout = function() {
     mmAuth.logout();
     $state.go('login.index');
-  }
+  };
 
-})
+});
 
