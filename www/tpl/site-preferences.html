@@ -2,17 +2,15 @@
     <ion-content>
         <ul class="list">
             <li class="item item-input item-select">
-                <div class="input-label">
-                    Language
+                <div class="input-label" translate="language">
+                    Language <!-- {{ 'language' | translate }} -->
                 </div>
-                <select>
-                    <option>English</option>
-                    <option>Catalan</option>
-                    <option>French</option>
+                <!-- lang as lang.name for lang in langs" -->
+                <select ng-model="selectedLanguage" ng-options="code as name for (code, name) in langs" ng-change="languageChanged(selectedLanguage)">
                 </select>
             </li>
             <li class="item item-toggle">
-                Allow sync only when on Wi-Fi
+                <span translate="enablesyncwifi">Allow sync only when on Wi-Fi</span>
                 <label class="toggle">
                     <input type="checkbox" checked="">
                     <div class="track">
@@ -21,7 +19,7 @@
                 </label>
             </li>
             <li class="item item-toggle">
-                Enable app notifications for incoming events
+                <span translate="enableeventnotifications">Enable app notifications for incoming events</span>
                 <label class="toggle">
                     <input type="checkbox" checked="">
                     <div class="track">
