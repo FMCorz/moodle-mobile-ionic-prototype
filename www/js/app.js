@@ -217,6 +217,8 @@ angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files', 'mm.preferences
     suffix: '.json'
   });
   $translateProvider.preferredLanguage(window.sessionStorage.lang || 'en');
+  // If a key is not found for the current language, search in the English file.
+  $translateProvider.fallbackLanguage('en'); 
 
 })
 
