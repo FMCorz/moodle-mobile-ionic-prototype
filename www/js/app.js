@@ -1,4 +1,4 @@
-angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files'])
+angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files', 'mm.preferences', 'pascalprecht.translate'])
 
 .run(function($ionicPlatform, $rootScope, $state, mmAuth) {
   $ionicPlatform.ready(function() {
@@ -31,7 +31,7 @@ angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files'])
 
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $translateProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -182,6 +182,7 @@ angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files'])
       url: '/preferences',
       views: {
         'site': {
+          controller: 'mmPreferencesCtrl',
           templateUrl: 'tpl/site-preferences.html'
         }
       }
@@ -253,7 +254,16 @@ angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files'])
   $urlRouterProvider.otherwise(function($injector, $location) {
     var $state = $injector.get('$state');
     $state.go('login.index');
+  }); 
+
+  // Set lang files location and load current language
+  $translateProvider.useStaticFilesLoader({
+    prefix: 'lang/',
+    suffix: '.json'
   });
+  $translateProvider.preferredLanguage(window.sessionStorage.lang || 'en');
+  // If a key is not found for the current language, search in the English file.
+  $translateProvider.fallbackLanguage('en'); 
 
 })
 
