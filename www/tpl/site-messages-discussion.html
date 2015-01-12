@@ -1,0 +1,17 @@
+<div style="position: relative; height: 100%;">
+    <ion-scroll delegate-handle="messagesScroll" style="height: 100%;" class="has-footer">
+        <ion-list>
+            <div class='item item-message item-text-wrap' ng-repeat="message in discussion.messages | orderBy:'time' track by $index" ng-class='{"message-mine": message.mine, "royal": !message.mine}'>
+                {{message.message}}
+                <p class="item-note">{{message.time | date:"EEE d, h:mma"}}</p>
+            </div>
+        </ion-list>
+    </ion-scroll>
+
+    <div class="bar bar-footer item-input-inset">
+        <label class="item-input-wrapper">
+            <input type="search" placeholder="New message..." ng-model="newMessage">
+        </label>
+        <button class="button button-clear button-positive" ng-click="addMessage(newMessage); newMessage = '';">Send</button>
+    </div>
+</div>

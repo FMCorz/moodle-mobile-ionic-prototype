@@ -1,4 +1,11 @@
-angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files', 'mm.preferences', 'pascalprecht.translate'])
+angular.module('mm', [
+  'ionic',
+  'mm.auth',
+  'mm.site',
+  'mm.files',
+  'mm.messages',
+  'mm.preferences',
+  'pascalprecht.translate'])
 
 .run(function($ionicPlatform, $rootScope, $state, mmAuth) {
   $ionicPlatform.ready(function() {
@@ -115,18 +122,35 @@ angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files', 'mm.preferences
 
     .state('site.messages', {
       url: '/messages',
+      abstract: true,
       views: {
         'site': {
-          templateUrl: 'tpl/site-messages.html'
+          controller: 'mmDiscussionsCtrl',
+          templateUrl: 'tpl/site-messages.html',
+          resolve: {
+            discussions: function(mmMessages) {
+              return mmMessages.getDiscussions();
+            }
+          }
         }
       }
     })
 
-    .state('site.message', {
-      url: '/message',
+    .state('site.messages.index', {
+      url: '/index'
+    })
+
+    .state('site.messages.discussion', {
+      url: '/discussion/:index',
       views: {
-        'site': {
-          templateUrl: 'tpl/site-message.html'
+        'mmMessagesDiscussion': {
+          controller: 'mmDiscussionCtrl',
+          templateUrl: 'tpl/site-messages-discussion.html',
+          resolve: {
+            discussion: function($stateParams, mmMessages) {
+              return mmMessages.getDiscussion($stateParams.index);
+            }
+          }
         }
       }
     })
