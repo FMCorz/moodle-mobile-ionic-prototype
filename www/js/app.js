@@ -102,6 +102,24 @@ angular.module('mm', [
       }
     })
 
+    .state('site.label', {
+      url: '/label',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-label.html'
+        }
+      }
+    })
+
+    .state('site.folder', {
+      url: '/folder',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-folder.html'
+        }
+      }
+    })
+
     .state('site.forum', {
       url: '/forum',
       views: {
@@ -119,6 +137,33 @@ angular.module('mm', [
         }
       }
     })
+
+    .state('site.participants', {
+      url: '/participants',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-participants.html'
+        }
+      }
+    })
+
+    .state('site.participant', {
+          url: '/participant',
+          views: {
+            'site': {
+              templateUrl: 'tpl/site-participant.html'
+            }
+          }
+        })
+
+    .state('site.grades', {
+          url: '/grades',
+          views: {
+            'site': {
+              templateUrl: 'tpl/site-grades.html'
+            }
+          }
+        })
 
     .state('site.messages', {
       url: '/messages',
