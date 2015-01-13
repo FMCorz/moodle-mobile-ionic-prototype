@@ -132,9 +132,10 @@ angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files', 'mm.preferences
     })
 
     .state('site.participants', {
-      url: '/participants',
+      url: '/participants?courseid',
       views: {
         'site': {
+          controller: 'mmCourseParticipants',
           templateUrl: 'tpl/site-participants.html'
         }
       }
