@@ -167,57 +167,23 @@ angular.module('mm', [
 
     .state('site.messages', {
       url: '/messages',
-      abstract: true,
       views: {
         'site': {
-          // controller: 'mmDiscussionsCtrl',
-          templateUrl: 'tpl/site-messages.html',
-          // resolve: {
-          //   discussions: function(mmMessages) {
-          //     return mmMessages.getDiscussions();
-          //   }
-          // }
-        },
-      }
-    })
-
-    .state('site.messages.index', {
-      url: '/index',
-      views: {
-        'left': {
           controller: 'mmDiscussionsCtrl',
           templateUrl: 'tpl/site-messages-discussions.html',
           resolve: {
             discussions: function(mmMessages) {
               return mmMessages.getDiscussions();
-            }
-          }
-        },
-        'main': {
-          controller: 'mmDiscussionCtrl',
-          templateUrl: 'tpl/site-messages-discussion.html',
-          resolve: {
-            discussion: function($stateParams, mmMessages) {
-              return mmMessages.getDiscussion($stateParams.index || 0);
             }
           }
         }
       }
     })
 
-    .state('site.messages.discussion', {
+    .state('site.messages-discussion', {
       url: '/discussion/:index',
       views: {
-        'left': {
-          controller: 'mmDiscussionsCtrl',
-          templateUrl: 'tpl/site-messages-discussions.html',
-          resolve: {
-            discussions: function(mmMessages) {
-              return mmMessages.getDiscussions();
-            }
-          }
-        },
-        'main': {
+        'site': {
           controller: 'mmDiscussionCtrl',
           templateUrl: 'tpl/site-messages-discussion.html',
           resolve: {
