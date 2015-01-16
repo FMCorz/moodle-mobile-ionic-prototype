@@ -8,7 +8,7 @@
         </ion-list>
     </ion-content>
 </ion-view>
-<ion-footer-bar class="item-input-inset">
+<ion-footer-bar class="item-input-inset" ng-class="(isTablet) ? 'tablet-view' : ''">
     <label class="item-input-wrapper">
         <input type="search" placeholder="New message..." ng-model="newMessage">
     </label>
