@@ -222,7 +222,10 @@ angular.module('mm.messages', [])
 
 })
 
-.controller('mmDiscussionsCtrl', function($scope, discussions, $stateParams) {
+.controller('mmDiscussionsCtrl', function($scope, discussions, $stateParams, $state) {
+
+    // We can create a service for return device information.
+    $scope.isTablet = document.body.clientWidth > 600;
 
     $scope.currentIndex = null;
     $scope.discussions = discussions;
@@ -233,12 +236,31 @@ angular.module('mm.messages', [])
 
     $scope.$on('$ionicView.enter', function() {
         console.log('$ionicView.enter');
-    })
+
+        if ($scope.isTablet) {
+            // Load the first discussion.
+            // This does not allways works, seems to be cached states.
+            console.log("state go...");
+            $state.go("site.messages.discussion", {index: 0});
+        }
+
+    });
+
+    // Function for returning the correct URL for the state.
+    $scope.getURL = function(index) {
+        if ($scope.isTablet) {
+            return "#/site/messages/discussion/" + index;
+        } else {
+            return "#/site/messages-discussion/" + index;
+        }
+    };
 })
 
 .controller('mmDiscussionCtrl', function($scope, $stateParams, $ionicScrollDelegate, $timeout, mmMessages, discussion) {
-
     var sv;
+
+    // We can create a service for return device information.
+    $scope.isTablet = document.body.clientWidth > 600;
 
     // Scroll to the botton.
     $timeout(function() {

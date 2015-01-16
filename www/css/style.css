@@ -1,1 +1,9 @@
 /* Empty. Add your own CSS if you like */
+.tablet-view {
+    left: 50%;
+    width: 50%;
+}
+
+.hide-view {
+    display: none;
+}

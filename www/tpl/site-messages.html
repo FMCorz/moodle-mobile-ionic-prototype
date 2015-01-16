@@ -4,7 +4,7 @@
             <div ui-view="mmMessagesDiscussions" class="col" style="height: 100%; padding: 0;">
                 <ion-scroll style="height: 100%;">
                     <ion-list>
-                        <a ui-sref="site.messages.discussion({index: $index})" class="item item-avatar" ng-repeat="disc in discussions track by $index" ng-class="{active: currentIndex && currentIndex == $index}">
+                        <a href="{{getURL($index)}}" class="item item-avatar" ng-repeat="disc in discussions track by $index" ng-class="{active: currentIndex && currentIndex == $index}">
                             <img ng-src="{{disc.from.thumb}}" alt="">
                             <h2>{{disc.from.name}}</h2>
                             <p>{{disc.messages[0].message}}</p>
@@ -12,7 +12,7 @@
                     </ion-list>
                 </ion-scroll>
             </div>
-            <div ui-view="mmMessagesDiscussion" class="col" style="height: 100%; padding: 0; ">
+            <div ui-view="mmMessagesDiscussion" class="col" style="height: 100%; padding: 0; " ng-class="(isTablet) ? '' : 'hide-view'">
             </div>
         </div>
     </ion-pane>

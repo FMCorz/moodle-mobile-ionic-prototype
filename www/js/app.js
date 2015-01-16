@@ -122,7 +122,6 @@ angular.module('mm', [
 
     .state('site.messages', {
       url: '/messages',
-      abstract: true,
       views: {
         'site': {
           controller: 'mmDiscussionsCtrl',
@@ -134,10 +133,6 @@ angular.module('mm', [
           }
         }
       }
-    })
-
-    .state('site.messages.index', {
-      url: '/index'
     })
 
     .state('site.messages.discussion', {
@@ -154,6 +149,23 @@ angular.module('mm', [
         }
       }
     })
+
+    // Non-nested state for messages. For tablet we need nested ones.
+    .state('site.messages-discussion', {
+      url: '/messages-discussion/:index',
+      views: {
+        'site': {
+          controller: 'mmDiscussionCtrl',
+          templateUrl: 'tpl/site-messages-discussion.html',
+          resolve: {
+            discussion: function($stateParams, mmMessages) {
+              return mmMessages.getDiscussion($stateParams.index);
+            }
+          }
+        }
+      }
+    })
+
 
     .state('site.events', {
       url: '/events',
@@ -278,7 +290,7 @@ angular.module('mm', [
   $urlRouterProvider.otherwise(function($injector, $location) {
     var $state = $injector.get('$state');
     $state.go('login.index');
-  }); 
+  });
 
   // Set lang files location and load current language
   $translateProvider.useStaticFilesLoader({
@@ -287,7 +299,7 @@ angular.module('mm', [
   });
   $translateProvider.preferredLanguage(window.sessionStorage.lang || 'en');
   // If a key is not found for the current language, search in the English file.
-  $translateProvider.fallbackLanguage('en'); 
+  $translateProvider.fallbackLanguage('en');
 
 })
 
