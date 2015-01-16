@@ -2,6 +2,7 @@
 .tablet-view {
     left: 50%;
     width: 50%;
+    border-left: solid 3px gray;
 }
 
 .hide-view {
