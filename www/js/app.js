@@ -79,7 +79,8 @@ angular.module('mm', [
       url: '/sections',
       views: {
         'site': {
-          templateUrl: 'tpl/site-sections.html'
+          templateUrl: 'tpl/site-sections.html',
+          controller: 'mmSiteSections'
         }
       }
     })
@@ -88,16 +89,38 @@ angular.module('mm', [
       url: '/section-all',
       views: {
         'site': {
-          templateUrl: 'tpl/site-section-all.html'
+          templateUrl: 'tpl/site-section-all.html',
+          controller: 'mmSiteSections'
         }
       }
     })
 
-    .state('site.section', {
-      url: '/section',
+    .state('site.section-one', {
+      url: '/section-one',
       views: {
         'site': {
-          templateUrl: 'tpl/site-section.html'
+          templateUrl: 'tpl/site-section.html',
+          controller: 'mmSiteSections'
+        }
+      }
+    })
+
+  .state('site.sections.one', {
+      url: '/one',
+      views: {
+        'sectionsTablet': {
+          templateUrl: 'tpl/site-section.html',
+          controller: 'mmSiteSections'
+        }
+      }
+    })
+
+  .state('site.sections.all', {
+      url: '/all',
+      views: {
+        'sectionsTablet': {
+          templateUrl: 'tpl/site-section-all.html',
+          controller: 'mmSiteSections'
         }
       }
     })
