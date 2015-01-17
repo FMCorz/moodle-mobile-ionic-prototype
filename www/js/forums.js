@@ -1,6 +1,6 @@
 angular.module('mm.forums', [])
 
-.controller('mmDiscussions', function($scope, $state) {
+.controller('mmDiscussions', function($scope, $state, $ionicPopover) {
     $scope.isTablet = document.body.clientWidth > 600;
     $scope.getURL = function() {
         if ($scope.isTablet) {
@@ -21,6 +21,11 @@ angular.module('mm.forums', [])
         }
 
     });
+
+    $scope.popover =  $ionicPopover.fromTemplate('<ion-popover-view><ion-header-bar> <h1 class="title">Menu</h1> </ion-header-bar> <ion-content> Home <br> Course home <br> Course sections... </ion-content></ion-popover-view>',
+        {
+        scope: $scope,
+      });
 })
 .controller('mmDiscussionPosts', function($scope, $state) {
     $scope.isTablet = document.body.clientWidth > 600;
