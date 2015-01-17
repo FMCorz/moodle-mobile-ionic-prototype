@@ -5,6 +5,8 @@ angular.module('mm', [
   'mm.files',
   'mm.messages',
   'mm.preferences',
+  'mm.sections',
+  'mm.forums',
   'pascalprecht.translate'])
 
 .run(function($ionicPlatform, $rootScope, $state, mmAuth) {
@@ -90,7 +92,7 @@ angular.module('mm', [
       views: {
         'site': {
           templateUrl: 'tpl/site-section-all.html',
-          controller: 'mmSiteSections'
+          controller: 'mmSiteSection'
         }
       }
     })
@@ -100,7 +102,7 @@ angular.module('mm', [
       views: {
         'site': {
           templateUrl: 'tpl/site-section.html',
-          controller: 'mmSiteSections'
+          controller: 'mmSiteSection'
         }
       }
     })
@@ -129,7 +131,18 @@ angular.module('mm', [
       url: '/forum',
       views: {
         'site': {
-          templateUrl: 'tpl/site-forum.html'
+          templateUrl: 'tpl/site-forum.html',
+          controller: 'mmDiscussions'
+        }
+      }
+    })
+
+    .state('site.forum.discussion', {
+      url: '/discussion',
+      views: {
+        'forumdiscussion': {
+          templateUrl: 'tpl/site-discussion.html',
+          controller: 'mmDiscussionPosts'
         }
       }
     })
@@ -138,7 +151,8 @@ angular.module('mm', [
       url: '/discussion',
       views: {
         'site': {
-          templateUrl: 'tpl/site-discussion.html'
+          templateUrl: 'tpl/site-discussion.html',
+          controller: 'mmDiscussionPosts'
         }
       }
     })

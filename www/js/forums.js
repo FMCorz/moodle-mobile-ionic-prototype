@@ -1,12 +1,12 @@
-angular.module('mm.sections', [])
+angular.module('mm.forums', [])
 
-.controller('mmSiteSections', function($scope, $state) {
+.controller('mmDiscussions', function($scope, $state) {
     $scope.isTablet = document.body.clientWidth > 600;
-    $scope.getURL = function(type) {
+    $scope.getURL = function() {
         if ($scope.isTablet) {
-            return "#/site/sections/" + type;
+            return "#/site/forum/discussion" ;
         } else {
-            return "#/site/section-" + type;
+            return "#/site/discussion";
         }
     };
 
@@ -17,12 +17,12 @@ angular.module('mm.sections', [])
             // Load the first discussion.
             // This does not allways works, seems to be cached states.
             console.log("state go...");
-            $state.go("site.sections.all");
+            $state.go("site.forum.discussion");
         }
 
     });
 })
-.controller('mmSiteSection', function($scope, $state) {
+.controller('mmDiscussionPosts', function($scope, $state) {
     $scope.isTablet = document.body.clientWidth > 600;
 })
 ;
