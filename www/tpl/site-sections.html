@@ -1,18 +1,27 @@
 <ion-view view-title="Moodle in English">
-    <ion-content>
-        <div class="list">
-            <a class="item" ui-sref="site.section-all">
-                All
-            </a>
-            <a class="item" ui-sref="site.section">
-                Welcome
-            </a>
-            <a class="item" ui-sref="site.section">
-                Have your say
-            </a>
-            <a class="item" ui-sref="site.section">
-                Learning resources
-            </a>
+    <ion-content scroll="false" padding="false">
+        <div class="row" style="height: 100%; padding: 0">
+            <div class="col" style="height: 100%; padding: 0;">
+                <ion-scroll style="height: 100%;">
+                    <ion-list>
+                        <a class="item" href="{{getURL('all')}}">
+                            All
+                        </a>
+                        <a class="item" href="{{getURL('one')}}">
+                            Welcome
+                        </a>
+                        <a class="item" href="{{getURL('one')}}">
+                            Have your say
+                        </a>
+                        <a class="item" href="{{getURL('one')}}">
+                            Learning resources
+                        </a>
+                    </ion-list>
+                </ion-scroll>
+            </div>
+            <div ui-view="sectionsTablet" class="col" style="height: 100%; padding: 0; " ng-class="(isTablet) ? '' : 'hide-view'">
+            </div>
         </div>
-    </ion-content>
+    </ion-pane>
 </ion-view>
+

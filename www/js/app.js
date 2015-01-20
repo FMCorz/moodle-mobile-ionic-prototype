@@ -1,4 +1,13 @@
-angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files', 'mm.preferences', 'pascalprecht.translate'])
+angular.module('mm', [
+  'ionic',
+  'mm.auth',
+  'mm.site',
+  'mm.files',
+  'mm.messages',
+  'mm.preferences',
+  'mm.sections',
+  'mm.forums',
+  'pascalprecht.translate'])
 
 .run(function($ionicPlatform, $rootScope, $state, mmAuth) {
   $ionicPlatform.ready(function() {
@@ -72,7 +81,8 @@ angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files', 'mm.preferences
       url: '/sections',
       views: {
         'site': {
-          templateUrl: 'tpl/site-sections.html'
+          templateUrl: 'tpl/site-sections.html',
+          controller: 'mmSiteSections'
         }
       }
     })
@@ -81,16 +91,38 @@ angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files', 'mm.preferences
       url: '/section-all',
       views: {
         'site': {
-          templateUrl: 'tpl/site-section-all.html'
+          templateUrl: 'tpl/site-section-all.html',
+          controller: 'mmSiteSection'
         }
       }
     })
 
-    .state('site.section', {
-      url: '/section',
+    .state('site.section-one', {
+      url: '/section-one',
       views: {
         'site': {
-          templateUrl: 'tpl/site-section.html'
+          templateUrl: 'tpl/site-section.html',
+          controller: 'mmSiteSection'
+        }
+      }
+    })
+
+  .state('site.sections.one', {
+      url: '/one',
+      views: {
+        'sectionsTablet': {
+          templateUrl: 'tpl/site-section.html',
+          controller: 'mmSiteSections'
+        }
+      }
+    })
+
+  .state('site.sections.all', {
+      url: '/all',
+      views: {
+        'sectionsTablet': {
+          templateUrl: 'tpl/site-section-all.html',
+          controller: 'mmSiteSections'
         }
       }
     })
@@ -117,7 +149,18 @@ angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files', 'mm.preferences
       url: '/forum',
       views: {
         'site': {
-          templateUrl: 'tpl/site-forum.html'
+          templateUrl: 'tpl/site-forum.html',
+          controller: 'mmDiscussions'
+        }
+      }
+    })
+
+    .state('site.forum.discussion', {
+      url: '/discussion',
+      views: {
+        'forumdiscussion': {
+          templateUrl: 'tpl/site-discussion.html',
+          controller: 'mmDiscussionPosts'
         }
       }
     })
@@ -126,7 +169,8 @@ angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files', 'mm.preferences
       url: '/discussion',
       views: {
         'site': {
-          templateUrl: 'tpl/site-discussion.html'
+          templateUrl: 'tpl/site-discussion.html',
+          controller: 'mmDiscussionPosts'
         }
       }
     })
@@ -163,19 +207,48 @@ angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files', 'mm.preferences
       url: '/messages',
       views: {
         'site': {
-          templateUrl: 'tpl/site-messages.html'
+          controller: 'mmDiscussionsCtrl',
+          templateUrl: 'tpl/site-messages.html',
+          resolve: {
+            discussions: function(mmMessages) {
+              return mmMessages.getDiscussions();
+            }
+          }
         }
       }
     })
 
-    .state('site.message', {
-      url: '/message',
+    .state('site.messages.discussion', {
+      url: '/discussion/:index',
       views: {
-        'site': {
-          templateUrl: 'tpl/site-message.html'
+        'mmMessagesDiscussion': {
+          controller: 'mmDiscussionCtrl',
+          templateUrl: 'tpl/site-messages-discussion.html',
+          resolve: {
+            discussion: function($stateParams, mmMessages) {
+              return mmMessages.getDiscussion($stateParams.index);
+            }
+          }
         }
       }
     })
+
+    // Non-nested state for messages. For tablet we need nested ones.
+    .state('site.messages-discussion', {
+      url: '/messages-discussion/:index',
+      views: {
+        'site': {
+          controller: 'mmDiscussionCtrl',
+          templateUrl: 'tpl/site-messages-discussion.html',
+          resolve: {
+            discussion: function($stateParams, mmMessages) {
+              return mmMessages.getDiscussion($stateParams.index);
+            }
+          }
+        }
+      }
+    })
+
 
     .state('site.events', {
       url: '/events',
@@ -300,7 +373,7 @@ angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files', 'mm.preferences
   $urlRouterProvider.otherwise(function($injector, $location) {
     var $state = $injector.get('$state');
     $state.go('login.index');
-  }); 
+  });
 
   // Set lang files location and load current language
   $translateProvider.useStaticFilesLoader({
@@ -309,7 +382,7 @@ angular.module('mm', ['ionic', 'mm.auth', 'mm.site', 'mm.files', 'mm.preferences
   });
   $translateProvider.preferredLanguage(window.sessionStorage.lang || 'en');
   // If a key is not found for the current language, search in the English file.
-  $translateProvider.fallbackLanguage('en'); 
+  $translateProvider.fallbackLanguage('en');
 
 })
 
