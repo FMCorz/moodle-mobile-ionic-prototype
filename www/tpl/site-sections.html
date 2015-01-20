@@ -1,7 +1,7 @@
 <ion-view view-title="Moodle in English">
     <ion-content scroll="false" padding="false">
-        <div class="row" style="height: 100%; padding: 0">
-            <div class="col" style="height: 100%; padding: 0;">
+        <div class="mm-split-pane">
+            <div class="mm-split-pane-menu">
                 <ion-scroll style="height: 100%;">
                     <ion-list>
                         <a class="item" href="{{getURL('all')}}">
@@ -19,7 +19,7 @@
                     </ion-list>
                 </ion-scroll>
             </div>
-            <div ui-view="sectionsTablet" class="col" style="height: 100%; padding: 0; " ng-class="(isTablet) ? '' : 'hide-view'">
+            <div ui-view="sectionsTablet" class="mm-split-pane-content">
             </div>
         </div>
     </ion-pane>
