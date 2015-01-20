@@ -1,7 +1,7 @@
 <ion-view view-title="Messages">
     <ion-content scroll="false" padding="false">
         <div class="mm-split-pane">
-            <div ui-view="mmMessagesDiscussions" class="mm-split-pane-menu">
+            <div class="mm-split-pane-menu">
                 <ion-scroll style="height: 100%;">
                     <ion-list>
                         <a href="{{getURL($index)}}" class="item item-avatar" ng-repeat="disc in discussions track by $index" ng-class="{active: currentIndex && currentIndex == $index}">
@@ -12,7 +12,7 @@
                     </ion-list>
                 </ion-scroll>
             </div>
-            <div ui-view="mmMessagesDiscussion" class="mm-split-pane-content">
+            <div ui-view="tablet" class="mm-split-pane-content">
             </div>
         </div>
     </ion-pane>

@@ -241,7 +241,7 @@ angular.module('mm.messages', [])
             // Load the first discussion.
             // This does not allways works, seems to be cached states.
             console.log("state go...");
-            $state.go("site.messages.discussion", {index: 0});
+            $state.go('site.messages.tablet', {index: 0});
         }
 
     });
@@ -249,9 +249,9 @@ angular.module('mm.messages', [])
     // Function for returning the correct URL for the state.
     $scope.getURL = function(index) {
         if ($scope.isTablet) {
-            return "#/site/messages/discussion/" + index;
+            return $state.href('site.messages.tablet', {index: index})
         } else {
-            return "#/site/messages-discussion/" + index;
+            return $state.href('site.messages-discussion', {index: index})
         }
     };
 })

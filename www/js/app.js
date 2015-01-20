@@ -48,11 +48,67 @@ angular.module('mm', [
 
 .config(function($stateProvider, $urlRouterProvider, $translateProvider) {
 
+  // Ugly hack to "decorate" the $stateProvider.state() method.
+  // This allows us to automagically define 'tablet' states which use split views.
+  // We can probably do this better, or define our own $stateProvider to clean this up.
+  var $mmStateProvider = {
+    state: function(name, stateConfig) {
+      function setupTablet(state) {
+        if (!state.tablet) {
+          return;
+        }
+
+        // Support shorthand tablet definition.
+        if (angular.isString(state.tablet)) {
+          state.tablet = {
+            parent: state.tablet
+          }
+        }
+
+        var params = state.tablet,
+            parent = params.parent,
+            config = {};
+
+        // Remove any trace from the state object.
+        delete state['tablet'];
+
+        // Prepare the default parameters for the tablet.
+        delete params['parent'];
+        angular.copy(state, config);
+        angular.extend(config, params);
+
+        // We can only support 1 view at the moment.
+        if (config.views.length > 1) {
+          console.log('Cannot guess the view data to use for tablet state of ' + name);
+          return;
+        }
+
+        // Find view name.
+        var viewName, viewData;
+        angular.forEach(config.views, function(v, k) {
+          viewName = k;
+          viewData = v;
+        }, this);
+
+        // Delete the original view and replace with the new one.
+        delete config.views[viewName];
+        config.views['tablet'] = viewData;
+
+        // Define the new tablet state.
+        $stateProvider.state.apply($stateProvider, [parent + '.tablet', config]);
+      }
+
+      setupTablet.apply(this, [stateConfig]);
+      $stateProvider.state.apply($stateProvider, [name, stateConfig]);
+      return this;
+    }
+  }
+
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
-  $stateProvider
+  $mmStateProvider
 
     .state('site', {
       url: '/site',
@@ -224,24 +280,8 @@ angular.module('mm', [
       }
     })
 
-    // tablet
-    .state('site.messages.discussion', {
-      url: '/discussion/:index',
-      views: {
-        'mmMessagesDiscussion': {
-          controller: 'mmDiscussionCtrl',
-          templateUrl: 'tpl/site-messages-discussion.html',
-          resolve: {
-            discussion: function($stateParams, mmMessages) {
-              return mmMessages.getDiscussion($stateParams.index);
-            }
-          }
-        }
-      }
-    })
-
-    // Non-nested state for messages. For tablet we need nested ones.
     .state('site.messages-discussion', {
+      tablet: 'site.messages',
       url: '/messages-discussion/:index',
       views: {
         'site': {
