@@ -67,12 +67,14 @@ angular.module('mm', [
 
         var params = state.tablet,
             parent = params.parent,
+            node = params.node || 'tablet',
             config = {};
 
         // Remove any trace from the state object.
         delete state['tablet'];
 
         // Prepare the default parameters for the tablet.
+        delete params['node'];
         delete params['parent'];
         angular.copy(state, config);
         angular.extend(config, params);
@@ -95,7 +97,7 @@ angular.module('mm', [
         config.views['tablet'] = viewData;
 
         // Define the new tablet state.
-        $stateProvider.state.apply($stateProvider, [parent + '.tablet', config]);
+        $stateProvider.state.apply($stateProvider, [parent + '.' + node, config]);
       }
 
       setupTablet.apply(this, [stateConfig]);
@@ -150,6 +152,10 @@ angular.module('mm', [
     })
 
     .state('site.section-all', {
+      tablet: {
+        parent: 'site.sections',
+        node: 'all'
+      },
       url: '/section-all',
       views: {
         'site': {
@@ -160,6 +166,10 @@ angular.module('mm', [
     })
 
     .state('site.section-one', {
+      tablet: {
+        parent: 'site.sections',
+        node: 'one'
+      },
       url: '/section-one',
       views: {
         'site': {
@@ -169,25 +179,25 @@ angular.module('mm', [
       }
     })
 
-  .state('site.sections.one', {
-      url: '/one',
-      views: {
-        'sectionsTablet': {
-          templateUrl: 'tpl/site-section.html',
-          controller: 'mmSiteSections'
-        }
-      }
-    })
+  // .state('site.sections.one', {
+  //     url: '/one',
+  //     views: {
+  //       'sectionsTablet': {
+  //         templateUrl: 'tpl/site-section.html',
+  //         controller: 'mmSiteSections'
+  //       }
+  //     }
+  //   })
 
-  .state('site.sections.all', {
-      url: '/all',
-      views: {
-        'sectionsTablet': {
-          templateUrl: 'tpl/site-section-all.html',
-          controller: 'mmSiteSections'
-        }
-      }
-    })
+  // .state('site.sections.all', {
+  //     url: '/all',
+  //     views: {
+  //       'sectionsTablet': {
+  //         templateUrl: 'tpl/site-section-all.html',
+  //         controller: 'mmSiteSections'
+  //       }
+  //     }
+    // })
 
     .state('site.label', {
       url: '/label',
@@ -217,17 +227,18 @@ angular.module('mm', [
       }
     })
 
-    .state('site.forum.discussion', {
-      url: '/discussion',
-      views: {
-        'forumdiscussion': {
-          templateUrl: 'tpl/site-discussion.html',
-          controller: 'mmDiscussionPosts'
-        }
-      }
-    })
+    // .state('site.forum.discussion', {
+    //   url: '/discussion',
+    //   views: {
+    //     'tablet': {
+    //       templateUrl: 'tpl/site-discussion.html',
+    //       controller: 'mmDiscussionPosts'
+    //     }
+    //   }
+    // })
 
     .state('site.discussion', {
+      tablet: 'site.forum',
       url: '/discussion',
       views: {
         'site': {

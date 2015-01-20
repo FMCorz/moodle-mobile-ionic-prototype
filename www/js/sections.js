@@ -4,9 +4,9 @@ angular.module('mm.sections', [])
     $scope.isTablet = document.body.clientWidth > 600;
     $scope.getURL = function(type) {
         if ($scope.isTablet) {
-            return "#/site/sections/" + type;
+            return $state.href('site.sections.' + type);
         } else {
-            return "#/site/section-" + type;
+            return $state.href('site.section-' + type);
         }
     };
 

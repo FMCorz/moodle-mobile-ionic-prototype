@@ -4,9 +4,9 @@ angular.module('mm.forums', [])
     $scope.isTablet = document.body.clientWidth > 600;
     $scope.getURL = function() {
         if ($scope.isTablet) {
-            return "#/site/forum/discussion" ;
+            return $state.href('site.forum.tablet');
         } else {
-            return "#/site/discussion";
+            return $state.href('site.discussion');
         }
     };
 
@@ -17,7 +17,7 @@ angular.module('mm.forums', [])
             // Load the first discussion.
             // This does not allways works, seems to be cached states.
             console.log("state go...");
-            $state.go("site.forum.discussion");
+            $state.go("site.forum.tablet");
         }
 
     });
