@@ -9,7 +9,7 @@ angular.module('mm', [
   'mm.forums',
   'pascalprecht.translate'])
 
-.run(function($ionicPlatform, $rootScope, $state, mmAuth) {
+.run(function($ionicPlatform, $rootScope, $state, mmAuth, $ionicBody, $window) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -19,6 +19,12 @@ angular.module('mm', [
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+
+    var checkTablet = function() {
+      $ionicBody.enableClass($window.matchMedia('(min-width:600px)').matches, 'tablet');
+    };
+    ionic.on('resize', checkTablet, $window);
+    checkTablet();
   });
 
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
@@ -218,6 +224,7 @@ angular.module('mm', [
       }
     })
 
+    // tablet
     .state('site.messages.discussion', {
       url: '/discussion/:index',
       views: {
@@ -248,7 +255,6 @@ angular.module('mm', [
         }
       }
     })
-
 
     .state('site.events', {
       url: '/events',
