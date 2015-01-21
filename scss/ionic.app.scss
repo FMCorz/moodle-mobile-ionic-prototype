@@ -56,3 +56,32 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     display: block;
   }
 }
+
+/**
+ * Messages
+ * --------------------------------------------------
+ */
+
+.messages {
+  .item {
+    clear: both;
+    max-width: 80%;
+    border-radius: 12px;
+    border-width: 0; 
+    padding: 4px 10px;
+    margin: 4px 0;
+  }
+  .message {
+    background-color: $stable;
+    float: left;
+  }
+  .message-mine {
+    background-color: rgba(17, 193, 243, .2);
+    float: right;
+  }
+  .item-note {
+    font-size: $font-size-small;
+    color: #999;
+    margin-left: 10px;
+  }
+}

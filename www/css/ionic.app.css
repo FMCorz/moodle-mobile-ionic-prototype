@@ -8096,4 +8096,24 @@ a.button {
 .tablet .mm-split-pane-content {
   display: block; }
 
-/*# sourceMappingURL=ionic.app.css.map */
+/**
+ * Messages
+ * --------------------------------------------------
+ */
+.messages .item {
+  clear: both;
+  max-width: 80%;
+  border-radius: 12px;
+  border-width: 0;
+  padding: 4px 10px;
+  margin: 4px 0; }
+.messages .message {
+  background-color: #f8f8f8;
+  float: left; }
+.messages .message-mine {
+  background-color: rgba(17, 193, 243, 0.2);
+  float: right; }
+.messages .item-note {
+  font-size: 11px;
+  color: #999;
+  margin-left: 10px; }
