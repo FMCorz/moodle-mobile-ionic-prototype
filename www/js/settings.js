@@ -46,11 +46,9 @@ angular.module('mm.appsettings', [])
 
 })
 
-.controller('mmAppSettingsCtrl', function($scope, mmAppSettings, mmAuth, $ionicSideMenuDelegate) {
+.controller('mmAppSettingsCtrl', function($ionicSideMenuDelegate) {
     console.log('Ctrler');
     $ionicSideMenuDelegate.canDragContent(false);
-    $scope.showBackButton = !mmAuth.isLoggedIn();
-    console.log($scope.showBackButton);
 })
 
 .controller('mmAppGeneralSettingsCtrl', function($scope, mmAppSettings) {

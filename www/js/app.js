@@ -44,6 +44,10 @@ angular.module('mm', [
 
   });
 
+  $rootScope.$on('$ionicView.beforeEnter', function () {
+      $rootScope.$root.hideMenuIcon = !mmAuth.isLoggedIn();
+  });
+
 })
 
 .config(function($stateProvider, $urlRouterProvider, $translateProvider) {
@@ -371,9 +375,6 @@ angular.module('mm', [
           controller: 'mmAppSettingsCtrl',
           templateUrl: 'tpl/site-settings.html'
         }
-      },
-      onEnter: function($rootScope, mmAuth) {
-          $rootScope.$root.showMenuIcon = mmAuth.isLoggedIn();
       }
     })
 
