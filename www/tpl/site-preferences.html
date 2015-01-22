@@ -1,14 +1,6 @@
 <ion-view view-title="Preferences">
     <ion-content>
         <ul class="list">
-            <li class="item item-input item-select">
-                <div class="input-label">
-                    {{ "language" | translate }}
-                </div>
-                <!-- lang as lang.name for lang in langs" -->
-                <select ng-model="selectedLanguage" ng-options="code as name for (code, name) in langs" ng-change="languageChanged(selectedLanguage)">
-                </select>
-            </li>
             <li class="item item-toggle">
                 {{ 'enablesyncwifi' | translate }}
                 <label class="toggle">
