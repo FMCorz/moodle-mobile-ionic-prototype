@@ -5,6 +5,7 @@ angular.module('mm', [
   'mm.files',
   'mm.messages',
   'mm.preferences',
+  'mm.appsettings',
   'mm.sections',
   'mm.forums',
   'pascalprecht.translate'])
@@ -29,7 +30,7 @@ angular.module('mm', [
 
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
-    if (toState.name.substr(0, 5) !== 'login' && !mmAuth.isLoggedIn()) {
+    if (toState.name.substr(0, 5) !== 'login' && toState.name !== 'site.settings' && !mmAuth.isLoggedIn()) {
       // We are not logged in.
       event.preventDefault();
       console.log('Redirect to login page, request was: ' + toState.name);
@@ -42,7 +43,6 @@ angular.module('mm', [
     }
 
   });
-
 
 })
 
@@ -368,7 +368,41 @@ angular.module('mm', [
       url: '/settings',
       views: {
         'site': {
+          controller: 'mmAppSettingsCtrl',
           templateUrl: 'tpl/site-settings.html'
+        }
+      },
+      onEnter: function($rootScope, mmAuth) {
+          $rootScope.$root.showMenuIcon = mmAuth.isLoggedIn();
+      }
+    })
+
+    .state('site.settings-general', {
+      url: '/general',
+      views: {
+        'site': {
+          controller: 'mmAppGeneralSettingsCtrl',
+          templateUrl: 'tpl/site-settings-general.html'
+        }
+      }
+    })
+
+    .state('site.settings-space-usage', {
+      url: '/spaceusage',
+      views: {
+        'site': {
+          controller: 'mmAppSpaceUsageSettingsCtrl',
+          templateUrl: 'tpl/site-settings-space-usage.html'
+        }
+      }
+    })
+
+    .state('site.settings-development', {
+      url: '/development',
+      views: {
+        'site': {
+          controller: 'mmAppDevelopmentSettingsCtrl',
+          templateUrl: 'tpl/site-settings-development.html'
         }
       }
     })
@@ -424,7 +458,9 @@ angular.module('mm', [
           $state.go('login.index');
         }
       }
-    });
+    })
+
+    ;
 
   // Default redirect to the login page.
   $urlRouterProvider.otherwise(function($injector, $location) {
