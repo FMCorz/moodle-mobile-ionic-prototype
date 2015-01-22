@@ -46,8 +46,7 @@ angular.module('mm.appsettings', [])
 
 })
 
-.controller('mmAppSettingsCtrl', function($ionicSideMenuDelegate) {
-    console.log('Ctrler');
+.controller('mmAppSettingsCtrl', function($scope, $ionicSideMenuDelegate) {
     $ionicSideMenuDelegate.canDragContent(false);
 })
 
@@ -63,7 +62,6 @@ angular.module('mm.appsettings', [])
     $scope.freespace = '2 GB';
 })
 
-.controller('mmAppDevelopmentSettingsCtrl', function($scope, mmAppSettings) {
+.controller('mmAppDevelopmentSettingsCtrl', function($scope) {
     $scope.cacheExpTime = 300000;
-    console.log( $scope.cacheExpTime);
 });

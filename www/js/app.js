@@ -30,7 +30,7 @@ angular.module('mm', [
 
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
-    if (toState.name.substr(0, 5) !== 'login' && toState.name !== 'site.settings' && !mmAuth.isLoggedIn()) {
+    if (toState.name.substr(0, 5) !== 'login' && toState.name.substr(0, 13) !== 'site.settings' && !mmAuth.isLoggedIn()) {
       // We are not logged in.
       event.preventDefault();
       console.log('Redirect to login page, request was: ' + toState.name);
@@ -404,6 +404,24 @@ angular.module('mm', [
         'site': {
           controller: 'mmAppDevelopmentSettingsCtrl',
           templateUrl: 'tpl/site-settings-development.html'
+        }
+      }
+    })
+
+    .state('site.settings-report', {
+      url: '/report',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-settings-report.html'
+        }
+      }
+    })
+
+    .state('site.settings-about', {
+      url: '/about',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-settings-about.html'
         }
       }
     })
