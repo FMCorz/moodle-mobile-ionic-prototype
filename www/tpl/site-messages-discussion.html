@@ -1,11 +1,11 @@
 <ion-view view-title="{{discussion.from.name}}">
-    <ion-content delegate-handle="messagesScroll">
-        <div class="messages padding">
-            <div class='item item-text-wrap' ng-repeat="message in discussion.messages | orderBy:'time' track by $index" ng-class='{"message-mine": message.mine, "message": !message.mine}'>
-                {{message.message}}
-                <p class="item-note">{{message.time | date:"EEE d, h:mma"}}</p>
-            </div>
-        </div>
+    <ion-content class="padding" delegate-handle="messagesScroll">
+        <p class="item-date"><span class="badge badge-stable">Jan 21, 2014</span></p>
+        <p class='item item-message item-text-wrap' ng-repeat="message in discussion.messages | orderBy:'time' track by $index" ng-class='{"message-mine": message.mine}'>
+            {{message.message}}
+            <span class="item-note">{{message.time | date:"EEE d, h:mma"}}</span>
+        </p>
+        <div class="clearfix"></div>
     </ion-content>
 </ion-view>
 <ion-footer-bar class="item-input-inset">

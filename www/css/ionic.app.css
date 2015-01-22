@@ -8100,20 +8100,24 @@ a.button {
  * Messages
  * --------------------------------------------------
  */
-.messages .item {
+.item-date {
+  text-align: center;
+  margin-top: 10px; }
+
+.item-message {
   clear: both;
   max-width: 80%;
   border-radius: 12px;
   border-width: 0;
   padding: 4px 10px;
-  margin: 4px 0; }
-.messages .message {
+  margin: 4px 0;
   background-color: #f8f8f8;
   float: left; }
-.messages .message-mine {
-  background-color: rgba(17, 193, 243, 0.2);
+  .item-message .item-note {
+    font-size: 11px;
+    color: #999;
+    margin-left: 10px; }
+
+.message-mine {
+  background-color: rgba(17, 193, 243, 0.1);
   float: right; }
-.messages .item-note {
-  font-size: 11px;
-  color: #999;
-  margin-left: 10px; }
