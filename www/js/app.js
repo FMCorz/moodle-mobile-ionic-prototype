@@ -29,12 +29,13 @@ angular.module('mm', [
 
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
-    if (toState.name.substr(0, 5) !== 'login' && !mmAuth.isLoggedIn()) {
+    var toStateName = toState.name;
+    if (toStateName.indexOf('login') === 0 && toStateName.indexOf('settings') === 0 && !mmAuth.isLoggedIn()) {
       // We are not logged in.
       event.preventDefault();
       console.log('Redirect to login page, request was: ' + toState.name);
       $state.transitionTo('login.index');
-    } else if (toState.name.substr(0, 5) === 'login' && mmAuth.isLoggedIn()) {
+    } else if (toStateName.indexOf('login') === 0 && mmAuth.isLoggedIn()) {
       // We are logged in and requested the login page.
       event.preventDefault();
       console.log('Redirect to course page, request was: ' + toState.name);
@@ -364,22 +365,34 @@ angular.module('mm', [
       }
     })
 
-    .state('site.settings', {
+    /*.state('site.settings', {
       url: '/settings',
       views: {
         'site': {
           templateUrl: 'tpl/site-settings.html'
         }
       }
+    })*/
+
+    .state('settings', {
+      url: '/settings',
+      templateUrl: 'tpl/settings.html',
+      abstract: true,
+      onEnter: function($ionicHistory) {
+        // Ensure that there is no history stack when getting here.
+        $ionicHistory.clearHistory();
+      }
     })
 
-    .state('site.synchronization', {
+    .state('settings.index', {
+      url: '/index',
+      templateUrl: 'tpl/settings-index.html'
+    })
+
+
+    .state('settings.synchronization', {
       url: '/synchronization',
-      views: {
-        'site': {
-          templateUrl: 'tpl/site-synchronization.html'
-        }
-      }
+      templateUrl: 'tpl/settings-synchronization.html'
     })
 
     .state('login', {
