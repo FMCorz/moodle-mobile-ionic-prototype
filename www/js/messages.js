@@ -214,15 +214,20 @@ angular.module('mm.messages', [])
         return discussions;
     }
 
+    function getUserThumbnail(index) {
+        return discussions[index].from.thumb;
+    }
+
     return {
         addMessage: addMessage,
         getDiscussion: getDiscussion,
-        getDiscussions: getDiscussions
+        getDiscussions: getDiscussions,
+        getUserThumbnail: getUserThumbnail
     }
 
 })
 
-.controller('mmDiscussionsCtrl', function($scope, discussions, $stateParams, $state) {
+.controller('mmDiscussionsCtrl', function($scope, discussions, $stateParams, $state, mmMessages) {
 
     // We can create a service for return device information.
     $scope.isTablet = document.body.clientWidth > 600;
@@ -232,6 +237,7 @@ angular.module('mm.messages', [])
 
     $scope.$on('mmMessagesDiscussionSelected', function(e, index) {
         $scope.currentIndex = index;
+        $scope.userThumbnail = mmMessages.getUserThumbnail(index);
     });
 
     $scope.$on('$ionicView.enter', function() {

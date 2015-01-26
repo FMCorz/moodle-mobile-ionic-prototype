@@ -1,4 +1,9 @@
 <ion-view view-title="Messages">
+    <ion-nav-buttons side="secondary">
+        <a ui-sref="site.userprofile" ng-show="isTablet">
+            <img style="width: 30px; height: 30px; border-radius: 50%" ng-src="{{userThumbnail}}" alt="">
+        </a>
+    </ion-nav-buttons>
     <ion-content scroll="false" padding="false">
         <div class="mm-split-pane">
             <div class="mm-split-pane-menu">
