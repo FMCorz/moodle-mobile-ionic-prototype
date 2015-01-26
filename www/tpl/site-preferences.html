@@ -1,8 +1,45 @@
 <ion-view view-title="Preferences">
     <ion-content>
         <ul class="list">
+            <li class="item item-divider">
+                General
+            </li>
             <li class="item item-toggle">
-                {{ 'enablesyncwifi' | translate }}
+                Enable events notifications
+                <label class="toggle">
+                    <input type="checkbox" checked="">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </li>
+            <li class="item item-divider">
+                Space usage
+            </li>
+            <li class="item">
+                My Awesome Moodle (John Smith)
+                <div style="float:right;" >
+                    <span style="margin-right: 5px;">30 MB</span>
+                    <i class="ion-close-round"></i>
+                </div>
+            </li>
+            <li class="item">
+                Total
+                <div style="float:right;" >
+                    <span style="margin-right: 5px;">540 MB</span>
+                </div>
+            </li>
+            <li class="item">
+                Free space
+                <div style="float:right;" >
+                    <span style="margin-right: 5px;">2.1 GB</span>
+                </div>
+            </li>
+            <li class="item item-divider">
+                Synchronization
+            </li>
+            <li class="item item-toggle">
+                Synchronization of operations and data
                 <label class="toggle">
                     <input type="checkbox" checked="">
                     <div class="track">
@@ -11,13 +48,31 @@
                 </label>
             </li>
             <li class="item item-toggle">
-                {{ 'enableeventnotifications' | translate }}
+                Synchronization of language files
                 <label class="toggle">
                     <input type="checkbox" checked="">
                     <div class="track">
                         <div class="handle"></div>
                     </div>
                 </label>
+            </li>
+            <li class="item item-toggle">
+                Allow sync only when on Wi-Fi
+                <label class="toggle">
+                    <input type="checkbox">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </li>
+            <li class="item item-divider">
+                Task queue
+            </li>
+            <li class="item">
+                No tasks to be synchronized
+            </li>
+            <li class="item">
+                <button class="button icon-left ion-refresh" style="margin:0 auto;display: block">Force CSS sync now</button>
             </li>
         </ul>
     </ion-content>

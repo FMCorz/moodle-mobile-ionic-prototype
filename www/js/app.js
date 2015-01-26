@@ -4,7 +4,6 @@ angular.module('mm', [
   'mm.site',
   'mm.files',
   'mm.messages',
-  'mm.preferences',
   'mm.appsettings',
   'mm.sections',
   'mm.forums',
@@ -362,7 +361,6 @@ angular.module('mm', [
       url: '/preferences',
       views: {
         'site': {
-          controller: 'mmPreferencesCtrl',
           templateUrl: 'tpl/site-preferences.html'
         }
       }
