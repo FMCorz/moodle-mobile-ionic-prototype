@@ -35,6 +35,10 @@
             <a menu-close class="item item-icon-left"><i class="icon ion-help-buoy"></i>Help</a>
         </div>
 
+        <ion-refresher pulling-text="Pull to invalidate caches" 
+            on-refresh="invalidateCaches()" 
+            refreshing-icon="ion-loading-c">
+
     </ion-content>
 
     <div class="tabs tabs-icon-top tabs-light">
