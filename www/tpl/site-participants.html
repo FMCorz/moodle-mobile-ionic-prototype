@@ -6,7 +6,7 @@
         </ion-refresher>
         <div class="list">
             <div ng-repeat="participant in participants track by $index">
-                <a ui-sref="site.participant" class="item item-avatar" >
+                <a ui-sref="site.userprofile" class="item item-avatar" >
                     <img ng-src="{{participant.avatar}}" alt="">
                     {{participant.name}} {{participant.surname}}
                 </a>

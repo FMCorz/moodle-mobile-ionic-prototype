@@ -261,11 +261,11 @@ angular.module('mm', [
       }
     })
 
-    .state('site.participant', {
-          url: '/participant',
+    .state('site.userprofile', {
+          url: '/userprofile',
           views: {
             'site': {
-              templateUrl: 'tpl/site-participant.html'
+              templateUrl: 'tpl/site-userprofile.html'
             }
           }
         })
