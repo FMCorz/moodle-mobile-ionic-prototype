@@ -10,9 +10,11 @@
         </div>
     </ion-content>
 </ion-view>
-<ion-footer-bar class="item-input-inset">
+<ion-footer-bar style="padding: 0">
+    <form ng-submit="addMessage(newMessage); newMessage = '';" class="item-input-inset" style="width: 100%">
     <label class="item-input-wrapper">
         <input type="search" placeholder="New message..." ng-model="newMessage">
     </label>
-    <button class="button button-clear button-positive" ng-click="addMessage(newMessage); newMessage = '';">Send</button>
+    <button type="submit" class="button button-clear button-positive">Send</button>
+    </form>
 </ion-footer-bar>
