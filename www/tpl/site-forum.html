@@ -15,7 +15,7 @@
                             <h2>{{discussion.subject}}</h2>
                             <p>{{discussion.author}}</p>
                         </div>
-                        <a class="item item-body" href="{{getURL($index)}}">
+                        <a class="item item-body" ng-href="{{getURL($index)}}">
                             <span ng-bind-html="discussion.intro"></span>
                             <p><span class="item-note">{{discussion.replies}} replies</span></p>
                         </a>
