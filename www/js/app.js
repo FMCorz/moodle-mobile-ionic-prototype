@@ -21,7 +21,7 @@ angular.module('mm', [
     }
 
     var checkTablet = function() {
-      $ionicBody.enableClass($window.matchMedia('(min-width:600px)').matches, 'tablet');
+      $ionicBody.enableClass($ionicPlatform.isTablet(), 'tablet');
     };
     ionic.on('resize', checkTablet, $window);
     checkTablet();
@@ -46,7 +46,16 @@ angular.module('mm', [
 
 })
 
-.config(function($stateProvider, $urlRouterProvider, $translateProvider) {
+.config(function($stateProvider, $urlRouterProvider, $translateProvider, $provide) {
+
+  // Decorate $ionicPlatform.
+  $provide.decorator('$ionicPlatform', ['$delegate', '$window', function($delegate, $window) {
+      $delegate.isTablet = function() {
+        return $window.matchMedia('(min-width:600px)').matches;
+      };
+      return $delegate;
+  }]);
+
 
   // Ugly hack to "decorate" the $stateProvider.state() method.
   // This allows us to automagically define 'tablet' states which use split views.
@@ -179,26 +188,6 @@ angular.module('mm', [
       }
     })
 
-  // .state('site.sections.one', {
-  //     url: '/one',
-  //     views: {
-  //       'sectionsTablet': {
-  //         templateUrl: 'tpl/site-section.html',
-  //         controller: 'mmSiteSections'
-  //       }
-  //     }
-  //   })
-
-  // .state('site.sections.all', {
-  //     url: '/all',
-  //     views: {
-  //       'sectionsTablet': {
-  //         templateUrl: 'tpl/site-section-all.html',
-  //         controller: 'mmSiteSections'
-  //       }
-  //     }
-    // })
-
     .state('site.label', {
       url: '/label',
       views: {
@@ -227,16 +216,6 @@ angular.module('mm', [
       }
     })
 
-    // .state('site.forum.discussion', {
-    //   url: '/discussion',
-    //   views: {
-    //     'tablet': {
-    //       templateUrl: 'tpl/site-discussion.html',
-    //       controller: 'mmDiscussionPosts'
-    //     }
-    //   }
-    // })
-
     .state('site.discussion', {
       tablet: 'site.forum',
       url: '/discussion',
@@ -249,7 +228,7 @@ angular.module('mm', [
     })
 
     .state('site.participants', {
-      url: '/participants?courseid',
+      url: '/participants/:courseid',
       views: {
         'site': {
           controller: 'mmCourseParticipants',
@@ -259,13 +238,22 @@ angular.module('mm', [
     })
 
     .state('site.participant', {
-          url: '/participant',
-          views: {
-            'site': {
-              templateUrl: 'tpl/site-participant.html'
+        tablet: {
+          parent: 'site.participants'
+        },
+        url: '/participant/:userid?courseid',
+        views: {
+          'site': {
+            controller: 'mmCourseParticipant',
+            templateUrl: 'tpl/site-participant.html',
+            resolve: {
+              'participant': function($stateParams, mmCourseParticipants) {
+                return mmCourseParticipants.getParticipant($stateParams.courseid, $stateParams.userid);
+              }
             }
           }
-        })
+        }
+      })
 
     .state('site.grades', {
           url: '/grades',

@@ -37,6 +37,22 @@ angular.module('mm.site', [])
    var store = {},
         self = {};
 
+    var lastnames = [
+        'Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Miller', 'Davis', 'García', 'Rodríguez', 'Wilson',
+        'Müller', 'Schmidt', 'Schneider', 'Fischer', 'Meyer', 'Weber', 'Schulz', 'Wagner', 'Becker', 'Hoffmann',
+        'Novák', 'Svoboda', 'Novotný', 'Dvořák', 'Černý', 'Procházková', 'Kučerová', 'Veselá', 'Horáková', 'Němcová',
+        'Смирнов', 'Иванов', 'Кузнецов', 'Соколов', 'Попов', 'Лебедева', 'Козлова', 'Новикова', 'Морозова', 'Петрова',
+        '佐藤', '鈴木', '高橋', '田中', '渡辺', '伊藤', '山本', '中村', '小林', '斎藤'
+    ];
+
+    var firstnames = [
+        'Jacob', 'Ethan', 'Michael', 'Jayden', 'William', 'Isabella', 'Sophia', 'Emma', 'Olivia', 'Ava',
+        'Lukas', 'Leon', 'Luca', 'Timm', 'Paul', 'Leonie', 'Leah', 'Lena', 'Hanna', 'Laura',
+        'Jakub', 'Jan', 'Tomáš', 'Lukáš', 'Matěj', 'Tereza', 'Eliška', 'Anna', 'Adéla', 'Karolína',
+        'Даниил', 'Максим', 'Артем', 'Иван', 'Александр', 'София', 'Анастасия', 'Дарья', 'Мария', 'Полина',
+        '翔', '大翔', '拓海', '翔太', '颯太', '陽菜', 'さくら', '美咲', '葵', '美羽'
+    ];
+
     var validChars = "abcdefghijklmnopqrstuvwxyz";
 
     function getRandomString(length) {
@@ -57,8 +73,10 @@ angular.module('mm.site', [])
 
         return {
             id: id,
-            name: getRandomString( Math.floor(Math.random() * 8) + 3 ),
-            surname: getRandomString( Math.floor(Math.random() * 8) + 3 ),
+            // name: getRandomString( Math.floor(Math.random() * 8) + 3 ),
+            // surname: getRandomString( Math.floor(Math.random() * 8) + 3 ),
+            name: firstnames[Math.floor(Math.random() * firstnames.length)],
+            surname: lastnames[Math.floor(Math.random() * lastnames.length)],
             avatar: avatar
         };
     }
@@ -80,7 +98,11 @@ angular.module('mm.site', [])
         }
 
         return store.participants[courseid];
-    }
+    };
+
+    self.getParticipant = function(courseid, userid) {
+        return self.getParticipants(courseid)[userid] || undefined;
+    };
 
     self.loadMoreParticipants = function(courseid) {
         return $timeout( function(){
@@ -107,10 +129,18 @@ angular.module('mm.site', [])
     $scope.filterText = '';
 })
 
-.controller('mmCourseParticipants', function($scope, $stateParams, mmCourseParticipants) {
+.controller('mmCourseParticipants', function($scope, $stateParams, mmCourseParticipants, $ionicPlatform, $state) {
     var courseid = $stateParams.courseid;
     $scope.participants = mmCourseParticipants.getParticipants(courseid);
     $scope.noMoreItemsAvailable = $scope.participants.length >= 119;
+
+    $scope.getURL = function(index) {
+        if ($ionicPlatform.isTablet()) {
+            return $state.href('site.participants.tablet', {userid: index});
+        } else {
+            return $state.href('site.participant', {courseid: courseid, userid: index});
+        }
+    };
 
     $scope.loadMoreParticipants = function(){
         mmCourseParticipants.loadMoreParticipants(courseid).then(function(participants){
@@ -126,4 +156,8 @@ angular.module('mm.site', [])
             $scope.$broadcast('scroll.refreshComplete');
         });
     };
+})
+
+.controller('mmCourseParticipant', function($scope, participant) {
+    $scope.participant = participant;
 });
