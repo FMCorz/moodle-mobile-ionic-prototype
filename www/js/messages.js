@@ -162,7 +162,8 @@ angular.module('mm.messages', [])
     function generateDiscussions() {
         var index = 0,
             count = 0,
-            msgidx = 0;
+            msgidx = 0,
+            startDate = new Date();
 
         if (discussions[19]) {
             // A few discussions have already been generated.
@@ -184,7 +185,7 @@ angular.module('mm.messages', [])
                     discussions[index].messages.push({
                         message: messageBank[msgidx],
                         mine: Math.round(Math.random()) > 0 ? true: false,
-                        time: Math.round(1420937978 + Math.random() * 200000) * 1000
+                        time: Math.round(startDate.getTime() / 1000 - Math.random() * 500000) * 1000
                     });
                 };
             }
@@ -257,7 +258,8 @@ angular.module('mm.messages', [])
 })
 
 .controller('mmDiscussionCtrl', function($scope, $stateParams, $ionicScrollDelegate, $timeout, mmMessages, discussion) {
-    var sv;
+    var sv,
+        lastDate = null;
 
     // We can create a service for return device information.
     $scope.isTablet = document.body.clientWidth > 600;
@@ -271,6 +273,19 @@ angular.module('mm.messages', [])
     $scope.addMessage = function(message) {
         mmMessages.addMessage($stateParams.index, message);
         sv.scrollBottom();
+    };
+
+    $scope.showDate = function(message) {
+        var d = new Date(message.time);
+        d.setMilliseconds(0);
+        d.setSeconds(0);
+        d.setMinutes(0);
+        d.setHours(1);
+
+        if (!lastDate || d.getTime() != lastDate.getTime()) {
+            lastDate = d;
+            return true;
+        }
     };
 
     $scope.discussion = discussion;
