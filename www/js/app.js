@@ -188,6 +188,15 @@ angular.module('mm', [
       }
     })
 
+    .state('site.choice', {
+      url: '/choice',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-choice.html'
+        }
+      }
+    })
+
     .state('site.label', {
       url: '/label',
       views: {
