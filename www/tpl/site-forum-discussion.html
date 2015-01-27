@@ -1,0 +1,26 @@
+<ion-view view-title="Discussions" class="forum-discussion">
+    <ion-content>
+        <div class="card">
+            <div class="item item-avatar">
+                <img src="{{discussion.thumb}}" alt="">
+                <h2>{{discussion.subject}}</h2>
+                <p>{{discussion.author}}</p>
+            </div>
+            <div class="item item-body">
+                <span ng-bind-html="post(discussion)"></span>
+                <p><span class="item-note">{{discussion.replies}} replies</span></p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="item" style="display: none">Border hack</div>
+            <div ng-repeat="reply in discussion.content track by $index">
+                <div class="item item-avatar">
+                    <img ng-src="{{reply.thumb}}" alt="">
+                    <p>{{reply.author}}</p>
+                    <p>{{reply.subject}}</p>
+                </div>
+                <div class="item item-body" ng-bind-html="post(reply)"></div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

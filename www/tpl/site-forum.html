@@ -1,55 +1,27 @@
 <ion-view view-title="Course announcements">
-    <ion-nav-buttons side="right">
-        <button class="button button-icon ion-more" ng-click="popover.show($event)">
-        </button>
-    </ion-nav-buttons>
     <ion-content scroll="false" padding="false">
         <div class="mm-split-pane">
             <div class="mm-split-pane-menu">
-            <ion-scroll style="height: 100%;">
-                <div class="card">
-                    <div class="item item-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                        <p><span class="item-note">3 discussions</span></p>
+                <ion-scroll style="height: 100%;">
+                    <div class="card">
+                        <div class="item item-body">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                            <p><span class="item-note">{{discussions.length}} discussions</span></p>
+                        </div>
                     </div>
-                </div>
-                <div class="card">
-                    <div class="item item-avatar">
-                        <img src="https://randomuser.me/api/portraits/med/men/1.jpg" alt="">
-                        <h2>Reporting spam and other problem forum posts</h2>
-                        <p>Nathan Wade</p>
+                    <div class="card" ng-repeat="discussion in discussions track by $index">
+                        <div class="item item-avatar">
+                            <img src="{{discussion.thumb}}" alt="">
+                            <h2>{{discussion.subject}}</h2>
+                            <p>{{discussion.author}}</p>
+                        </div>
+                        <a class="item item-body" href="{{getURL($index)}}">
+                            <span ng-bind-html="discussion.intro"></span>
+                            <p><span class="item-note">{{discussion.replies}} replies</span></p>
+                        </a>
                     </div>
-                    <a class="item item-body" href="{{getURL()}}">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p>
-                        <p><span class="item-note">2 replies</span></p>
-                    </a>
+                </ion-scroll>
                 </div>
-
-                <div class="card">
-                    <div class="item item-avatar">
-                        <img src="https://randomuser.me/api/portraits/med/men/56.jpg" alt="">
-                        <h2>Useful forum posts on the moodle.org front page</h2>
-                        <p>Miguel Murphy</p>
-                    </div>
-                    <a class="item item-body" href="{{getURL()}}">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p>
-                        <p><span class="item-note">0 reply</span></p>
-                    </a>
-                </div>
-
-                <div class="card">
-                    <div class="item item-avatar">
-                        <img src="https://randomuser.me/api/portraits/med/men/87.jpg" alt="">
-                        <h2>Useful rating scale now available for every course on moodle.org</h2>
-                        <p>Bobby Alexander</p>
-                    </div>
-                    <a class="item item-body" href="{{getURL()}}">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p>
-                        <p><span class="item-note">1 reply</span></p>
-                    </a>
-                </div>
-            </ion-scroll>
-            </div>
             <div ui-view="tablet" class="mm-split-pane-content">
             </div>
         </div>

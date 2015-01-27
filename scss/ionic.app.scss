@@ -87,3 +87,40 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   background-color: rgba(17, 193, 243, .1);
   float: right;
 }
+
+/**
+ * Forum
+ */
+.forum-discussion .card .item:first-child {
+  border-top-width: $item-border-width;
+  border-top-style: solid;
+  border-top-color: $item-light-border;
+  // Different themes for items
+  &.item-light {
+    border-top-color: $item-light-border;
+  }
+  &.item-stable {
+    border-top-color: $item-stable-border;
+  }
+  &.item-positive {
+    border-top-color: $item-positive-border;
+  }
+  &.item-calm {
+    border-top-color: $item-calm-border;
+  }
+  &.item-assertive {
+    border-top-color: $item-assertive-border;
+  }
+  &.item-balanced {
+    border-top-color: $item-balanced-border;
+  }
+  &.item-energized {
+    border-top-color: $item-energized-border;
+  }
+  &.item-royal {
+    border-top-color: $item-royal-border;
+  }
+  &.item-dark {
+    border-top-color: $item-dark-border;
+  }
+}

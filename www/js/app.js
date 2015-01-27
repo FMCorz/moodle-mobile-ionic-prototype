@@ -211,18 +211,29 @@ angular.module('mm', [
       views: {
         'site': {
           templateUrl: 'tpl/site-forum.html',
-          controller: 'mmDiscussions'
+          controller: 'mmForumDiscussionsCtrl',
+          resolve: {
+            discussions: function(mmForumDiscussions) {
+              return mmForumDiscussions.getDiscussions();
+            }
+          }
         }
       }
     })
 
-    .state('site.discussion', {
+    .state('site.forum-discussion', {
       tablet: 'site.forum',
-      url: '/discussion',
+      url: '/discussion/:id',
       views: {
         'site': {
-          templateUrl: 'tpl/site-discussion.html',
-          controller: 'mmDiscussionPosts'
+          templateUrl: 'tpl/site-forum-discussion.html',
+          controller: 'mmForumDiscussionPostsCtrl',
+          resolve: {
+            discussion: function(mmForumDiscussions, $stateParams) {
+              var d = mmForumDiscussions.getDiscussion($stateParams.id);
+              return d;
+            }
+          }
         }
       }
     })
