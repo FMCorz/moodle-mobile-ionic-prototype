@@ -6,14 +6,14 @@
                     <ion-list>
                         <a href="{{getURL($index)}}" class="item item-avatar" ng-repeat="disc in discussions track by $index" ng-class="{active: currentIndex && currentIndex == $index}">
                             <img ng-src="{{disc.from.thumb}}" alt="">
+                            <span class="item-note">12:00</span>
                             <h2>{{disc.from.name}}</h2>
                             <p>{{disc.messages[0].message}}</p>
                         </a>
                     </ion-list>
                 </ion-scroll>
             </div>
-            <div ui-view="tablet" class="mm-split-pane-content">
-            </div>
+            <div ui-view="tablet" class="mm-split-pane-content"></div>
         </div>
-    </ion-pane>
+    </ion-content>
 </ion-view>
