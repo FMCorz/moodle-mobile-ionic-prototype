@@ -7,7 +7,7 @@
           </label>
         </div>
         <div class="list card" ng-repeat="course in courses | filter:{name: filterText}">
-            <a class="item">
+            <a class="item" ui-sref="site.sections">
                {{course.name}}
             </a>
             <div class="item item-text-wrap">
