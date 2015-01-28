@@ -7,7 +7,7 @@
             </label>
         </div>
         <div class="card">
-            <a class="item item-icon-right" ng-repeat="resource in resources | filter:{name: filterText}" ui-sref="{{resource.state}}" >
+            <a class="item item-icon-right" ng-repeat="resource in resources | filter:{name: filterText}" ng-href="{{resource.page}}" >
                 <img ng-if="resource.img" ng-src="{{resource.img}}" alt="">
                 {{resource.name}}
                 <i ng-if="resource.icon" class="icon {{resource.icon}}" alt=""></i>

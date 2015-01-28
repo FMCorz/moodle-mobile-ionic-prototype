@@ -10,7 +10,7 @@
             <div class="item item-divider">
                 {{section.name}}
             </div>
-            <a class="item item-icon-right" ng-repeat="resource in section.resources | filter:{name: filterText}" ui-sref="{{resource.state}}" >
+            <a class="item item-icon-right" ng-repeat="resource in section.resources | filter:{name: filterText}" ng-href="{{resource.page}}" >
                 <img ng-if="resource.img" ng-src="{{resource.img}}" alt="">
                 {{resource.name}}
                 <i ng-if="resource.icon" class="icon {{resource.icon}}" alt=""></i>

@@ -1,6 +1,6 @@
 angular.module('mm.sections', [])
 
-.factory('mmSiteSections', function() {
+.factory('mmSiteSections', function($state) {
 
     var self = {},
         store = {
@@ -13,13 +13,13 @@ angular.module('mm.sections', [])
                         name: "Course announcements",
                         img: "img/mod/forum.png",
                         icon: "",
-                        state: "site.forum"
+                        page: $state.href("site.forum")
                     }, 
                     {
                         name: "Course outline",
                         img: "img/files/pdf-24.png",
                         icon: "",
-                        state: "site.sections-all"
+                        page: ""
                     }
                 ]
               },
@@ -31,19 +31,19 @@ angular.module('mm.sections', [])
                         name: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...",
                         img: "",
                         icon: "",
-                        state: "site.label"
+                        page: $state.href("site.label")
                     }, 
                     {
                         name: "See the summit of Mont Blanc",
                         img: "img/mod/page.png",
                         icon: "ion-ios7-cloud-download-outline",
-                        state: "site.sections-all"
+                        page: ""
                     }, 
                     {
                         name: "Vote for the climb",
                         img: "img/mod/choice.png",
                         icon: "ion-ios7-browsers-outline",
-                        state: "site.sections-all"
+                        page: ""
                     }
                 ]
               }, 
@@ -55,7 +55,7 @@ angular.module('mm.sections', [])
                         name: "Course resources",
                         img: "img/mod/folder.png",
                         icon: "",
-                        state: "site.folder"
+                        page: $state.href("site.folder")
                     }
                 ]
               }
