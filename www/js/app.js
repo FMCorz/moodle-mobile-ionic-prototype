@@ -163,7 +163,7 @@ angular.module('mm', [
       views: {
         'site': {
           templateUrl: 'tpl/site-section-all.html',
-          controller: 'mmSiteSection'
+          controller: 'mmSiteSectionAll'
         }
       }
     })
@@ -173,11 +173,11 @@ angular.module('mm', [
         parent: 'site.sections',
         node: 'one'
       },
-      url: '/section-one',
+      url: '/section-one?id',
       views: {
         'site': {
           templateUrl: 'tpl/site-section.html',
-          controller: 'mmSiteSection'
+          controller: 'mmSiteSectionOne'
         }
       }
     })
