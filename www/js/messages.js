@@ -157,7 +157,22 @@ angular.module('mm.messages', [])
         'Ut dapibus lorem nec commodo malesuada.',
         'Aenean pulvinar est et molestie rutrum.',
         'Suspendisse eu diam vehicula nibh auctor suscipit',
-    ]
+    ];
+
+    var contacts = [
+        {
+            name: 'Mary Bloody',
+            thumb: 'https://randomuser.me/api/portraits/thumb/women/21.jpg',
+        },
+        {
+            name: 'Bill Smith',
+            thumb: 'https://randomuser.me/api/portraits/thumb/men/2.jpg',
+        },
+        {
+            name: 'William Scott',
+            thumb: 'https://randomuser.me/api/portraits/thumb/men/7.jpg',
+        }
+    ];
 
     function generateDiscussions() {
         var index = 0,
@@ -218,22 +233,28 @@ angular.module('mm.messages', [])
         return discussions[index].from.thumb;
     }
 
+    function getContacts() {
+        return contacts;
+    }
+
     return {
         addMessage: addMessage,
         getDiscussion: getDiscussion,
         getDiscussions: getDiscussions,
-        getUserThumbnail: getUserThumbnail
+        getUserThumbnail: getUserThumbnail,
+        getContacts: getContacts
     }
 
 })
 
-.controller('mmDiscussionsCtrl', function($scope, discussions, $stateParams, $state, mmMessages) {
+.controller('mmDiscussionsCtrl', function($scope, discussions, contacts, $stateParams, $state, mmMessages) {
 
     // We can create a service for return device information.
     $scope.isTablet = document.body.clientWidth > 600;
 
     $scope.currentIndex = null;
     $scope.discussions = discussions;
+    $scope.contacts = contacts;
 
     $scope.$on('mmMessagesDiscussionSelected', function(e, index) {
         $scope.currentIndex = index;

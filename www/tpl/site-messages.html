@@ -4,21 +4,40 @@
             <img style="width: 30px; height: 30px; border-radius: 50%" ng-src="{{userThumbnail}}" alt="">
         </a>
     </ion-nav-buttons>
-    <ion-content scroll="false" padding="false">
-        <div class="mm-split-pane">
-            <div class="mm-split-pane-menu">
-                <ion-scroll style="height: 100%;">
-                    <ion-list>
-                        <a href="{{getURL($index)}}" class="item item-avatar" ng-repeat="disc in discussions track by $index" ng-class="{active: currentIndex && currentIndex == $index}">
-                            <img ng-src="{{disc.from.thumb}}" alt="">
-                            <h2>{{disc.from.name}}</h2>
-                            <p>{{disc.messages[0].message}}</p>
-                        </a>
-                    </ion-list>
-                </ion-scroll>
-            </div>
-            <div ui-view="tablet" class="mm-split-pane-content">
-            </div>
+
+    <div class="mm-split-pane">
+        <div class="mm-split-pane-menu">
+            <ion-tabs class="tabs-icon-top">
+                <ion-tab title="Messages" icon="ion-chatbox" >
+                    <ion-pane>
+                        <ion-content padding="false" has-header="true">
+                            <ion-list>
+                                <a href="{{getURL($index)}}" class="item item-avatar" ng-repeat="disc in discussions track by $index" ng-class="{active: currentIndex && currentIndex == $index}">
+                                    <img ng-src="{{disc.from.thumb}}" alt="">
+                                    <h2>{{disc.from.name}}</h2>
+                                    <p>{{disc.messages[0].message}}</p>
+                                </a>
+                            </ion-list>
+                        </ion-content>
+                    </ion-pane>
+                </ion-tab>
+
+                <ion-tab title="Contacts" icon="ion-person-stalker">
+                    <ion-pane>
+                        <ion-content padding="false" has-header="true">
+                            <ion-list>
+                                <a href="{{getURL($index)}}" class="item item-avatar" ng-repeat="contact in contacts track by $index" ng-class="{active: currentIndex && currentIndex == $index}">
+                                    <img ng-src="{{contact.thumb}}" alt="">
+                                    <h2>{{contact.name}}</h2>
+                                </a>
+                            </ion-list>
+                        </ion-content>
+                    </ion-pane>
+                </ion-tab>
+      
+            </ion-tabs>
         </div>
-    </ion-pane>
+        <div ui-view="tablet" class="mm-split-pane-content">
+        </div>
+    </div>
 </ion-view>

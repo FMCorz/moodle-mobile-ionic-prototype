@@ -288,6 +288,9 @@ angular.module('mm', [
           resolve: {
             discussions: function(mmMessages) {
               return mmMessages.getDiscussions();
+            },
+            contacts: function(mmMessages) {
+              return mmMessages.getContacts();
             }
           }
         }
