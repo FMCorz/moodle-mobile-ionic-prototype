@@ -1,13 +1,18 @@
-<ion-view view-title="Welcome">
+<ion-view view-title="{{name}}">
     <ion-content>
         <div class="card">
-            <a class="item item-media item-text-wrap" ui-sref="site.forum">
-                <img src="img/mod/forum.png" alt="">
-                Course announcements
-            </a>
-            <a class="item item-media item-text-wrap" href="">
-                <img src="img/files/pdf-32.png" alt="">
-                Course outline
+            <label class="item item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="text" placeholder="Filter" ng-model="filterText">
+            </label>
+        </div>
+        <div class="card">
+            <a class="item item-media item-text-wrap item-button-right" ng-repeat="resource in resources | filter:{name: filterText}" ng-href="{{resource.page}}">
+                <img ng-if="resource.img" ng-src="{{resource.img}}" alt="">
+                {{resource.name}}
+                <button ng-if="resource.icon" class="button button-icon">
+                    <i class="icon {{resource.icon}}"></i>
+                </button>
             </a>
         </div>
     </ion-content>

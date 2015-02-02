@@ -1,47 +1,21 @@
 <ion-view view-title="All">
     <ion-content>
         <div class="card">
-            <div class="item item-divider">
-                Welcome
-            </div>
-            <a class="item item-media item-text-wrap" ui-sref="site.forum">
-                <img src="img/mod/forum.png" alt="">
-                Course announcements
-            </a>
-            <a class="item item-media item-text-wrap" href="">
-                <img src="img/files/pdf-32.png" alt="">
-                Course outline
-            </a>
+            <label class="item item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="text" placeholder="Filter" ng-model="filterText">
+            </label>
         </div>
-        <div class="card">
+        <div class="card" ng-repeat="section in sections | filter:filterResources(filterText)">
             <div class="item item-divider">
-                Have your say
+                {{section.name}}
             </div>
-            <a class="item item-text-wrap" ui-sref="site.label">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
-            </a>
-            <a class="item item-media item-text-wrap item-button-right" href="">
-                <img src="img/mod/page.png" alt="">
-                See the summit of Mont Blanc
-                <button class="button button-icon">
-                    <i class="icon ion-ios7-cloud-download-outline"></i>
+            <a class="item item-media item-text-wrap item-button-right" ng-repeat="resource in section.resources | filter:{name: filterText}" ng-href="{{resource.page}}" >
+                <img ng-if="resource.img" ng-src="{{resource.img}}" alt="">
+                {{resource.name}}
+                <button ng-if="resource.icon" class="button button-icon">
+                    <i class="icon {{resource.icon}}"></i>
                 </button>
-            </a>
-            <a class="item item-media item-text-wrap item-button-right" ui-sref="site.choice">
-                <img src="img/mod/choice.png" alt="">
-                Vote for the climb. te quocj baoreah dasodisfj 
-                <button class="button button-icon">
-                    <i class="icon ion-ios7-browsers-outline"></i>
-                </button>
-            </a>
-        </div>
-        <div class="card">
-            <div class="item item-divider">
-                Learning resources
-            </div>
-            <a class="item item-media item-text-wrap" ui-sref="site.folder">
-                <img src="img/mod/folder.png" alt="">
-                Course resources
             </a>
         </div>
     </ion-content>
