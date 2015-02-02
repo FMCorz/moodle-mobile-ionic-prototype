@@ -7,6 +7,7 @@ angular.module('mm', [
   'mm.preferences',
   'mm.sections',
   'mm.forums',
+  'mm.events',
   'pascalprecht.translate'])
 
 .run(function($ionicPlatform, $rootScope, $state, mmAuth, $ionicBody, $window) {
@@ -351,16 +352,29 @@ angular.module('mm', [
       url: '/events',
       views: {
         'site': {
-          templateUrl: 'tpl/site-events.html'
+          controller: 'mmSiteEventsCtrl',
+          templateUrl: 'tpl/site-events.html',
+          resolve: {
+            events: function(mmSiteEvents) {
+              return mmSiteEvents.getAllEvents();
+            }
+          }
         }
       }
     })
 
     .state('site.event', {
-      url: '/event',
+      tablet: 'site.events',
+      url: '/event/:index',
       views: {
         'site': {
-          templateUrl: 'tpl/site-event.html'
+          controller: 'mmSiteEventCtrl',
+          templateUrl: 'tpl/site-event.html',
+          resolve: {
+            'event': function($stateParams, mmSiteEvents) {
+              return mmSiteEvents.getEvent($stateParams.index);
+            }
+          }
         }
       }
     })
