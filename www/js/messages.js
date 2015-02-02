@@ -223,7 +223,7 @@ angular.module('mm.messages', [])
 
 })
 
-.controller('mmDiscussionsCtrl', function($scope, discussions, $stateParams, $state) {
+.controller('mmDiscussionsCtrl', function($scope, discussions, $stateParams, $state, $ionicPlatform) {
 
     // We can create a service for return device information.
     $scope.isTablet = document.body.clientWidth > 600;
@@ -249,7 +249,7 @@ angular.module('mm.messages', [])
 
     // Function for returning the correct URL for the state.
     $scope.getURL = function(index) {
-        if ($scope.isTablet) {
+        if ($ionicPlatform.isTablet()) {
             return $state.href('site.messages.tablet', {index: index})
         } else {
             return $state.href('site.messages-discussion', {index: index})

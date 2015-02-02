@@ -315,6 +315,25 @@ angular.module('mm', [
       }
     })
 
+    .state('site.contacts', {
+      url: '/contacts',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-contacts.html'
+        }
+      }
+    })
+
+    .state('site.contacts-info', {
+      tablet: 'site.contacts',
+      url: '/contacts-info/:index',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-contacts-info.html'
+        }
+      }
+    })
+
     .state('site.events', {
       url: '/events',
       views: {
