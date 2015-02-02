@@ -2,12 +2,12 @@
     <ion-content>
         <div class="list">
             <div ng-repeat="file in files">
-                <a ui-sref="site.files-site({path: $index})" class="item item-icon-left"  ng-if="file.children">
-                    <i class="icon ion-folder"></i>
+                <a ui-sref="site.files-site({path: $index})" class="item item-media" ng-if="file.children">
+                    <img src="img/mod/folder.png" alt="">
                     {{file.name}}
                 </a>
-                <a class="item item-icon-left"  ng-if="!file.children">
-                    <i class="icon ion-document"></i>
+                <a class="item item-media" ng-if="!file.children">
+                    <img src="img/files/document-32.png" alt="">
                     {{file.name}}
                 </a>
             </div>
