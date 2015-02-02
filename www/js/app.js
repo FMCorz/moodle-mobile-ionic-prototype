@@ -490,5 +490,9 @@ angular.module('mm', [
     $state.go('login.index');
   };
 
+  $scope.invalidateCaches = function(){
+      $scope.$broadcast('scroll.refreshComplete');
+  };
+
 });
 
