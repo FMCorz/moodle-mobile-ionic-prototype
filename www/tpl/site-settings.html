@@ -1,24 +1,27 @@
-<ion-view view-title="Settings">
+<ion-view view-title="Settings" >
     <ion-content>
-        <div class="list">
-            <a class="item" ui-sref="site.synchronization">
-                General
-            </a>
-            <a class="item" ui-sref="site.synchronization">
-                Synchronization
-            </a>
-            <a class="item" ui-sref="site.synchronization">
-                Space usage
-            </a>
-            <a class="item" ui-sref="site.synchronization">
-                Development
-            </a>
-            <a class="item" ui-sref="site.synchronization">
-                Report a bug
-            </a>
-            <a class="item" ui-sref="site.synchronization">
-                About
-            </a>
+        <div class="mm-split-pane">
+            <div class="mm-split-pane-menu">
+                <div class="list">
+                    <a class="item" ng-href="{{getURL('general')}}">
+                        General
+                    </a>
+                    <a class="item" ng-href="{{getURL('space-usage')}}">
+                        Space usage
+                    </a>
+                    <a class="item" ng-href="{{getURL('development')}}">
+                        Development
+                    </a>
+                    <a class="item" ng-href="{{getURL('report')}}">
+                        Report a bug
+                    </a>
+                    <a class="item" ng-href="{{getURL('about')}}">
+                        About
+                    </a>
+                </div>
+            </div>
+            <div ui-view="tablet" class="mm-split-pane-content">
+            </div>
         </div>
     </ion-content>
 </ion-view>

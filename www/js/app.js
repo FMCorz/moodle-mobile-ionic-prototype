@@ -4,7 +4,7 @@ angular.module('mm', [
   'mm.site',
   'mm.files',
   'mm.messages',
-  'mm.preferences',
+  'mm.appsettings',
   'mm.sections',
   'mm.forums',
   'pascalprecht.translate'])
@@ -398,7 +398,6 @@ angular.module('mm', [
       url: '/preferences',
       views: {
         'site': {
-          controller: 'mmPreferencesCtrl',
           templateUrl: 'tpl/site-preferences.html'
         }
       }
@@ -408,7 +407,76 @@ angular.module('mm', [
       url: '/settings',
       views: {
         'site': {
+          controller: 'mmAppSettingsCtrl',
           templateUrl: 'tpl/site-settings.html'
+        }
+      }
+    })
+
+    .state('site.settings-general', {
+      tablet: {
+        parent: 'site.settings',
+        node: 'general'
+      },
+      url: '/general',
+      views: {
+        'site': {
+          controller: 'mmAppGeneralSettingsCtrl',
+          templateUrl: 'tpl/site-settings-general.html'
+        }
+      }
+    })
+
+    .state('site.settings-space-usage', {
+      tablet: {
+        parent: 'site.settings',
+        node: 'space-usage'
+      },
+      url: '/spaceusage',
+      views: {
+        'site': {
+          controller: 'mmAppSpaceUsageSettingsCtrl',
+          templateUrl: 'tpl/site-settings-space-usage.html'
+        }
+      }
+    })
+
+    .state('site.settings-development', {
+      tablet: {
+        parent: 'site.settings',
+        node: 'development'
+      },
+      url: '/development',
+      views: {
+        'site': {
+          controller: 'mmAppDevelopmentSettingsCtrl',
+          templateUrl: 'tpl/site-settings-development.html'
+        }
+      }
+    })
+
+    .state('site.settings-report', {
+      tablet: {
+        parent: 'site.settings',
+        node: 'report'
+      },
+      url: '/report',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-settings-report.html'
+        }
+      }
+    })
+
+    .state('site.settings-about', {
+      tablet: {
+        parent: 'site.settings',
+        node: 'about'
+      },
+      url: '/about',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-settings-about.html'
         }
       }
     })

@@ -1,0 +1,14 @@
+<ion-view view-title="General" >
+    <ion-content>
+        <div class="list">
+            <li class="item item-input item-select">
+                <div class="input-label">
+                    {{ "language" | translate }}
+                </div>
+                <!-- lang as lang.name for lang in langs" -->
+                <select ng-model="selectedLanguage" ng-options="code as name for (code, name) in langs" ng-change="languageChanged(selectedLanguage)">
+                </select>
+            </li>
+        </div>
+    </ion-content>
+</ion-view>
