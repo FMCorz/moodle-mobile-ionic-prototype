@@ -284,27 +284,45 @@ angular.module('mm', [
           }
         })
 
-    .state('site.messages-list', {
-      url: '/messages-list',
+    .state('site.messages', {
+      url: '/messages',
       views: {
         'site': {
-          controller: 'mmDiscussionsCtrl',
-          templateUrl: 'tpl/site-messages-list.html',
+          controller: 'mmMessagesCtrl',
+          templateUrl: 'tpl/site-messages.html',
           resolve: {
             discussions: function(mmMessages) {
               return mmMessages.getDiscussions();
+            },
+            contacts: function(mmMessages) {
+              return mmMessages.getContacts();
             }
           }
         }
       }
     })
 
+    // .state('site.messages-list', {
+    //   url: '/messages-list',
+    //   views: {
+    //     'site': {
+    //       controller: 'mmDiscussionsCtrl',
+    //       templateUrl: 'tpl/site-messages-list.html',
+    //       resolve: {
+    //         discussions: function(mmMessages) {
+    //           return mmMessages.getDiscussions();
+    //         }
+    //       }
+    //     }
+    //   }
+    // })
+
     .state('site.messages-discussion', {
-      // tablet: 'site.messages',
+      tablet: 'site.messages',
       url: '/messages-discussion/:index',
       views: {
         'site': {
-          controller: 'mmDiscussionCtrl',
+          controller: 'mmMessageDiscussionCtrl',
           templateUrl: 'tpl/site-messages-discussion.html',
           resolve: {
             discussion: function($stateParams, mmMessages) {
@@ -315,23 +333,26 @@ angular.module('mm', [
       }
     })
 
-    .state('site.messages-contacts', {
-      url: '/messages-contacts',
-      views: {
-        'site': {
-          controller: 'mmMessagesContactsCtrl',
-          templateUrl: 'tpl/site-messages-contacts.html',
-          resolve: {
-            contacts: function(mmMessages) {
-              return mmMessages.getContacts();
-            }
-          }
-        }
-      }
-    })
+    // .state('site.messages-contacts', {
+    //   url: '/messages-contacts',
+    //   views: {
+    //     'site': {
+    //       controller: 'mmMessagesContactsCtrl',
+    //       templateUrl: 'tpl/site-messages-contacts.html',
+    //       resolve: {
+    //         contacts: function(mmMessages) {
+    //           return mmMessages.getContacts();
+    //         }
+    //       }
+    //     }
+    //   }
+    // })
 
     .state('site.messages-contact', {
-      // tablet: 'site.contacts',
+      tablet: {
+        parent: 'site.messages',
+        node: 'contacts-tablet'
+      },
       url: '/messages-contact/:index',
       views: {
         'site': {

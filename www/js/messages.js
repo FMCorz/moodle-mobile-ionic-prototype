@@ -247,61 +247,83 @@ angular.module('mm.messages', [])
 
 })
 
-.controller('mmMessagesTabsCtrl', function($scope, $ionicHistory) {
-    $scope.tab = $scope.$parent.$parent.tab;    // Hack to pass the selected tab.
-    $scope.tabClick = function() {
-        $ionicHistory.nextViewOptions({
-            historyRoot: true,
-            disableAnimate: true,
-            expire: 300
-        });
+.controller('mmMessagesCtrl', function($scope, $state, $ionicPlatform, contacts, discussions) {
+    $scope.contacts = contacts;
+    $scope.discussions = discussions;
+    $scope.isTablet = function() {
+        return $ionicPlatform.isTablet();
+    };
+    $scope.getURL = function(mode, index) {
+        var href;
+        if (mode == 'contact') {
+            if ($ionicPlatform.isTablet()) {
+                href = $state.href('site.messages.contacts-tablet', {index: index});
+            } else {
+                href = $state.href('site.messages-contact', {index: index});
+            }
+        }
+        return href;
     };
 })
 
-.controller('mmMessagesContactsCtrl', function($scope, contacts) {
-    $scope.contacts = contacts;
+.controller('mmMessagesContactsCtrl', function($rootScope, $scope) {
+    $scope.currentIndex = null;
+    $scope.$on('mmMessagesContactSelected', function(e, index) {
+        $scope.currentIndex = index;
+    });
+    $scope.$on('mmMessagesDiscussionSelected', function(e, index) {
+        $scope.currentIndex = null;
+    });
 })
 
-.controller('mmMessagesContactCtrl', function($scope, index, contact) {
+.controller('mmMessagesContactCtrl', function($rootScope, $scope, $state, $ionicPlatform, index, contact) {
     $scope.contact = contact;
     $scope.index = index;
+    $scope.sendMessage = function() {
+        if ($ionicPlatform.isTablet()) {
+            $state.go('site.messages.tablet', {index: index});
+        } else {
+            $state.go('site.messages-discussion', {index: index});
+        }
+    };
+    $rootScope.$broadcast('mmMessagesContactSelected', index);
 })
 
-.controller('mmDiscussionsCtrl', function($scope, discussions, $stateParams, $state, $ionicPlatform) {
+.controller('mmMessagesDiscussionsCtrl', function($rootScope, $scope, $stateParams, $state, $ionicPlatform) {
 
     // We can create a service for return device information.
     $scope.isTablet = document.body.clientWidth > 600;
-
     $scope.currentIndex = null;
-    $scope.discussions = discussions;
 
+    $scope.$on('mmMessagesContactSelected', function(e, index) {
+        $scope.currentIndex = null;
+    });
     $scope.$on('mmMessagesDiscussionSelected', function(e, index) {
         $scope.currentIndex = index;
     });
 
-    $scope.$on('$ionicView.enter', function() {
-        console.log('$ionicView.enter');
+    // $scope.$on('$ionicView.enter', function() {
+    //     console.log('$ionicView.enter');
 
-        if ($scope.isTablet) {
-            // Load the first discussion.
-            // This does not allways works, seems to be cached states.
-            console.log("state go...");
-            $state.go('site.messages.tablet', {index: 0});
-        }
+    //     if ($scope.isTablet) {
+    //         // Load the first discussion.
+    //         // This does not allways works, seems to be cached states.
+    //         console.log("state go...");
+    //         $state.go('site.messages.tablet', {index: 0});
+    //     }
 
-    });
+    // });
 
     // Function for returning the correct URL for the state.
     $scope.getURL = function(index) {
         if ($ionicPlatform.isTablet()) {
-            return $state.href('site.messages.tablet', {index: index})
-        } else {
-            return $state.href('site.messages-discussion', {index: index})
+            return $state.href('site.messages.tablet', {index: index});
         }
+        return $state.href('site.messages-discussion', {index: index});
     };
 })
 
-.controller('mmDiscussionCtrl', function($scope, $stateParams, $ionicScrollDelegate, $timeout, mmMessages, discussion) {
+.controller('mmMessageDiscussionCtrl', function($rootScope, $scope, $stateParams, $ionicScrollDelegate, $timeout, mmMessages, discussion) {
     var sv,
         lastDate = null;
 
@@ -335,5 +357,5 @@ angular.module('mm.messages', [])
     };
 
     $scope.discussion = discussion;
-    $scope.$emit('mmMessagesDiscussionSelected', $stateParams.index);
+    $rootScope.$broadcast('mmMessagesDiscussionSelected', $stateParams.index);
 });

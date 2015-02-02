@@ -1,0 +1,37 @@
+<ion-view view-title="Messages">
+<div class="mm-split-pane">
+    <div class="mm-split-pane-menu">
+        <ion-tabs class="tabs-icon-top">
+            <ion-tab title="Messages" icon="ion-chatbox">
+                <ion-pane ng-controller="mmMessagesDiscussionsCtrl">
+                    <ion-content class="has-tabs"> 
+                        <ion-list>
+                            <ion-item ng-href="{{getURL($index)}}" class="item item-avatar" ng-repeat="disc in discussions track by $index" ng-class="{active: currentIndex && currentIndex == $index}">
+                                <img ng-src="{{disc.from.thumb}}" alt="">
+                                <span class="item-note">{{disc.messages[0].time | date:"EEE, h:mma"}}</span>
+                                <h2>{{disc.from.name}}</h2>
+                                <p>{{disc.messages[0].message}}</p>
+                            </ion-item>
+                        </ion-list>
+                    </ion-content> 
+                </ion-pane>
+            </ion-tab>
+            <ion-tab title="Contacts" icon="ion-person-stalker">
+                <ion-pane ng-controller="mmMessagesContactsCtrl">
+                    <ion-content class="has-tabs">
+                        <ion-list>
+                            <ion-item class="item-avatar" ng-repeat="contact in contacts | orderBy:'name' track by $index" ng-href="{{getURL('contact', contact.index)}}" ng-class="{active: currentIndex && currentIndex == contact.index}">
+                                <img ng-src="{{contact.thumb}}" alt="">
+                                <h2>{{contact.name}}</h2>
+                            </ion-item>
+                        </ion-list>
+                    </ion-content>
+                </ion-pane>
+            </ion-tab>
+        </ion-tabs>
+    </div>
+    <div ui-view="tablet" class="mm-split-pane-content">
+    </div>
+</div>
+
+</ion-view>
