@@ -284,19 +284,19 @@ angular.module('mm', [
           }
         })
 
-    .state('site.messages', {
-      url: '/messages',
-      views: {
-        'site': {
-          templateUrl: 'tpl/site-messages.html',
-        }
-      }
-    })
+    // .state('site.messages', {
+    //   url: '/messages',
+    //   views: {
+    //     'site': {
+    //       templateUrl: 'tpl/site-messages.html',
+    //     }
+    //   }
+    // })
 
-    .state('site.messages.list', {
+    .state('site.messages-list', {
       url: '/list',
       views: {
-        'messages-tab': {
+        'site': {
           controller: 'mmDiscussionsCtrl',
           templateUrl: 'tpl/site-messages-list.html',
           resolve: {
@@ -308,10 +308,10 @@ angular.module('mm', [
       }
     })
 
-    .state('site.messages.contacts', {
+    .state('site.messages-contacts', {
       url: '/contacts',
       views: {
-        'messages-tab': {
+        'site': {
           templateUrl: 'tpl/site-messages-contacts.html'
         }
       }

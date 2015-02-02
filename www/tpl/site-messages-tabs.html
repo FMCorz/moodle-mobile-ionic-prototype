@@ -1,0 +1,10 @@
+<div class="tabs tabs-icon-top" ng-controller="mmMessagesTabsCtrl">
+    <a class="tab-item" ui-sref="site.messages-list" ng-click="tabClick('messages')" ng-class="{active: tab == 'messages'}">
+        <i class="icon ion-chatbox"></i>
+        Messages
+    </a>
+    <a class="tab-item" ui-sref="site.messages-contacts" ng-click="tabClick('contacts')" ng-class="{active: tab == 'contacts'}">
+        <i class="icon ion-person-stalker"></i>
+        Contacts
+    </a>
+</div>

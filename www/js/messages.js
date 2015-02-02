@@ -219,8 +219,19 @@ angular.module('mm.messages', [])
         addMessage: addMessage,
         getDiscussion: getDiscussion,
         getDiscussions: getDiscussions
-    }
+    };
 
+})
+
+.controller('mmMessagesTabsCtrl', function($scope, $ionicHistory) {
+    $scope.tab = $scope.$parent.$parent.tab;    // Hack to pass the selected tab.
+    $scope.tabClick = function() {
+        $ionicHistory.nextViewOptions({
+            historyRoot: true,
+            disableAnimate: true,
+            expire: 300
+        });
+    };
 })
 
 .controller('mmDiscussionsCtrl', function($scope, discussions, $stateParams, $state, $ionicPlatform) {
