@@ -2,6 +2,7 @@ angular.module('mm.messages', [])
 
 .factory('mmMessages', function() {
 
+    var contacts = [];
     var discussions = [
         {
             messages: [],
@@ -205,6 +206,27 @@ angular.module('mm.messages', [])
         });
     }
 
+    function getContact(index) {
+        generateDiscussions();
+        return discussions[index].from;
+    }
+
+    function getContacts(index) {
+        var tmp = {};
+        if (contacts.length < 1) {
+            generateDiscussions();
+            angular.forEach(discussions, function(v, k) {
+                if (tmp[v.from.name]) {
+                    return;
+                }
+                tmp[v.from.name] = true;
+                contacts[k] = v.from;
+                contacts[k]['index'] = k;
+            });
+        }
+        return contacts;
+    }
+
     function getDiscussion(index) {
         generateDiscussions();
         return discussions[index];
@@ -217,6 +239,8 @@ angular.module('mm.messages', [])
 
     return {
         addMessage: addMessage,
+        getContact: getContact,
+        getContacts: getContacts,
         getDiscussion: getDiscussion,
         getDiscussions: getDiscussions
     };
@@ -232,6 +256,15 @@ angular.module('mm.messages', [])
             expire: 300
         });
     };
+})
+
+.controller('mmMessagesContactsCtrl', function($scope, contacts) {
+    $scope.contacts = contacts;
+})
+
+.controller('mmMessagesContactCtrl', function($scope, index, contact) {
+    $scope.contact = contact;
+    $scope.index = index;
 })
 
 .controller('mmDiscussionsCtrl', function($scope, discussions, $stateParams, $state, $ionicPlatform) {
@@ -271,6 +304,8 @@ angular.module('mm.messages', [])
 .controller('mmDiscussionCtrl', function($scope, $stateParams, $ionicScrollDelegate, $timeout, mmMessages, discussion) {
     var sv,
         lastDate = null;
+
+    $scope.index = $stateParams.index;
 
     // We can create a service for return device information.
     $scope.isTablet = document.body.clientWidth > 600;

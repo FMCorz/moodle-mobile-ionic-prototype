@@ -1,4 +1,8 @@
 <ion-view view-title="{{discussion.from.name}}">
+    <ion-nav-buttons side="secondary">
+        <button class="button button-icon icon ion-person" ui-sref="site.messages-contact({index: index})"></button>
+        <!-- TODO Use the person's avatar: <img ng-src="{{discussion.from.thumb}}"> -->
+    </ion-nav-buttons>
     <ion-content class="padding" delegate-handle="messagesScroll">
         <div ng-repeat="message in discussion.messages | orderBy:'time' track by $index">
             <p ng-if="showDate(message)" class="item-date"><span class="badge badge-stable">{{message.time | date:"EEE, d MMM"}}</span></p>

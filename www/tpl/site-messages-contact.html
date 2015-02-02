@@ -1,14 +1,14 @@
-<ion-view view-title="Nathan Wade">
+<ion-view view-title="Contact details">
     <ion-content padding="true">
         <ul class="list">
             <li class="item item-avatar">
-                <img src="https://randomuser.me/api/portraits/med/men/1.jpg" alt="">
-                <h2>Nathan Wade</h2>
+                <img ng-src="{{contact.thumb}}" alt="">
+                <h2>{{contact.name}}</h2>
             </li>
             <li class="item">Email: mymailbox@email.com</li>
             <li class="item">Mobile: 0400 111 222</li>
         </ul>
-        <button class="button button-block button-stable" ui-sref="site.messages-discussion({index: 0})">Send a message</button>
+        <button class="button button-block button-stable" ui-sref="site.messages-discussion({index: index})">Send a message</button>
         <button class="button button-block button-stable">Remove from contacts</button>
         <button class="button button-block button-stable">Block</button>
     </ion-content>

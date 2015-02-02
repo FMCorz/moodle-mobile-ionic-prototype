@@ -1,18 +1,10 @@
 <ion-view view-title="Contacts">
     <ion-content class="has-tabs">
         <ion-list>
-            <a ui-sref="site.messages-contact({index:0})" class="item item-avatar">
-                <img src="https://randomuser.me/api/portraits/med/men/1.jpg" alt="">
-                <h2>Nathan Wade</h2>
-            </a>
-            <a ui-sref="site.messages-contact({index:0})" class="item item-avatar">
-                <img src="https://randomuser.me/api/portraits/med/men/56.jpg" alt="">
-                <h2>Miguel Murphy</h2>
-            </a>
-            <a ui-sref="site.messages-contact({index:0})" class="item item-avatar">
-                <img src="https://randomuser.me/api/portraits/med/men/87.jpg" alt="">
-                <h2>Bobby Alexander</h2>
-            </a>
+            <ion-item class="item-avatar" ng-repeat="contact in contacts | orderBy:'name' track by $index" ui-sref="site.messages-contact({index: contact.index})">
+                <img ng-src="{{contact.thumb}}" alt="">
+                <h2>{{contact.name}}</h2>
+            </ion-item>
         </ion-list>
     </ion-content>
     <ng-include src="'tpl/site-messages-tabs.html'" ng-init="tab='contacts'"></ng-include>
