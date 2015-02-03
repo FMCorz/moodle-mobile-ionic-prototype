@@ -8192,3 +8192,7 @@ a.button {
 .whitespacenormal div{
 	white-space: normal;
 }
+
+.list-left-editing .balance-delete {
+    right: 80px;
+}
