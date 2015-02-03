@@ -1,0 +1,30 @@
+<ion-view view-title="Development" >
+    <ion-content>
+        <div class="list">
+            <li class="item item-toggle">
+                Enable debugging
+                <label class="toggle">
+                    <input type="checkbox" >
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </li>
+            <li class="item item-toggle">
+                Force offline mode
+                <label class="toggle">
+                    <input type="checkbox" >
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </li>
+            <li class="item item-input ">
+                <div class="input-label">
+                    Cache expiration time
+                </div>
+                <input type="number" placeholder="Default: 300000" value="{{cacheExpTime}}">
+            </li>
+        </div>
+    </ion-content>
+</ion-view>
