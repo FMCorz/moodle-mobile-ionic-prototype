@@ -1,25 +1,22 @@
 <ion-view view-title="Space Usage" >
     <ion-content>
-        <div class="list">
-        	<li class="item" ng-repeat="site in sites">
-                {{site.name}} ({{site.username}})
-                <div style="float:right;" >
-                	<span style="margin-right: 5px;">{{site.spaceusage}}</span>
-                	<i class="ion-close-round" ng-show="site.showDelete"></i>
-                </div>
-            </li>
-            <li class="item item-divider">
-                Total
-                <div style="float:right;" >
-                	<span style="margin-right: 5px;">{{totalusage}}</span>
-                </div>
-            </li>
-            <li class="item item-divider">
-                Free space
-                <div style="float:right;" >
-                	<span style="margin-right: 5px;">{{freespace}}</span>
-                </div>
-            </li>
-        </div>
+        <ion-list ng-repeat="site in sites" show-delete='site.showDelete'>
+            <ion-item>
+                <ion-delete-button class="ion-minus-circled" ng-click='onItemDelete($event, $index)'></ion-delete-button>
+                <h2>{{site.name}}</h2>
+                <p>{{site.username}}</p>
+                <span class="badge balance-delete">{{site.spaceusage}}</span>
+            </ion-item>
+        </ion-list>
+        <ion-list>
+            <ion-item class="item-divider">
+                <p>Total</p>
+                <span class="badge">{{totalusage}}</span>
+            </ion-item>
+            <ion-item class="item-divider">
+                <p>Free space</p>
+                <span class="badge">{{freespace}}</span>
+            </ion-item>
+        </ion-list>
     </ion-content>
 </ion-view>

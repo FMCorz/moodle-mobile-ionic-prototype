@@ -10,7 +10,7 @@ angular.module('mm.appsettings', [])
 
     var sites = [
         {
-            name: 'Mount Orange School',
+            name: 'Mount Orange School Long Name For The Moodle',
             username: 'Barbara Gardner',
             showDelete: true,
             spaceusage: '20 MB'
@@ -25,7 +25,7 @@ angular.module('mm.appsettings', [])
 
     var store = window.sessionStorage;
 
-    self.getLanguages = function(){
+    self.getLanguages = function() {
         return langs;
     }
 
@@ -38,8 +38,13 @@ angular.module('mm.appsettings', [])
         $translate.use(selectedLanguage);
     }
 
-    self.getSites = function(){
+    self.getSites = function() {
         return sites;
+    }
+
+    self.deleteFiles = function(index) {
+        sites[index].showDelete = false;
+        sites[index].spaceusage = 'n/a';
     }
 
     return self;
@@ -81,6 +86,10 @@ angular.module('mm.appsettings', [])
     $scope.sites = mmAppSettings.getSites();
     $scope.totalusage = '20 MB';
     $scope.freespace = '2 GB';
+
+    $scope.onItemDelete = function(e, index) {
+        mmAppSettings.deleteFiles(index);
+    }
 })
 
 .controller('mmAppDevelopmentSettingsCtrl', function($scope) {
