@@ -273,6 +273,28 @@ angular.module('mm', [
             resolve: {
               'participant': function($stateParams, mmCourseParticipants) {
                 return mmCourseParticipants.getParticipant($stateParams.courseid, $stateParams.userid);
+              },
+              'courseid': function($stateParams) {
+                return $stateParams.courseid;
+              }
+            }
+          }
+        }
+      })
+
+    .state('site.participant-grades', {
+        tablet: {
+          parent: 'site.participants',
+          node: 'grades-tablet'
+        },
+        url: '/participant-grades/:userid?courseid',
+        views: {
+          'site': {
+            controller: 'mmCourseParticipantGrades',
+            templateUrl: 'tpl/site-participant-grades.html',
+            resolve: {
+              'participant': function($stateParams, mmCourseParticipants) {
+                return mmCourseParticipants.getParticipant($stateParams.courseid, $stateParams.userid);
               }
             }
           }

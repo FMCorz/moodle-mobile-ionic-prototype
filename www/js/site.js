@@ -158,6 +158,16 @@ angular.module('mm.site', [])
     };
 })
 
-.controller('mmCourseParticipant', function($scope, participant) {
+.controller('mmCourseParticipant', function($scope, $state, participant, courseid, $ionicPlatform) {
+    $scope.participant = participant;
+    $scope.getGradeUrl = function() {
+        if ($ionicPlatform.isTablet()) {
+            return $state.href('site.participants.grades-tablet', {userid: participant.id, courseid: courseid});
+        }
+        return $state.href('site.participant-grades', {userid: participant.id, courseid: courseid});
+    };
+})
+
+.controller('mmCourseParticipantGrades', function($scope, participant) {
     $scope.participant = participant;
 });
