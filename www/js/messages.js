@@ -247,33 +247,80 @@ angular.module('mm.messages', [])
 
 })
 
+.value('mmMessagesMessageTabConst', 0)
+.value('mmMessagesContactTabConst', 1)
+
 .controller('mmMessagesCtrl', function($scope, $state, $ionicPlatform, contacts, discussions) {
+    var personIndex = null;
+
     $scope.contacts = contacts;
     $scope.discussions = discussions;
-    $scope.isTablet = function() {
-        return $ionicPlatform.isTablet();
+
+    $scope.showDiscussionLink = false;
+    $scope.showInfoLink = false;
+
+    $scope.goDiscussion = function() {
+        $scope.showDiscussionLink = false;
+        $scope.showInfoLink = true;
+        $state.go('site.messages.tablet', {index: personIndex});
     };
-    $scope.getURL = function(mode, index) {
-        var href;
-        if (mode == 'contact') {
-            if ($ionicPlatform.isTablet()) {
-                href = $state.href('site.messages.contacts-tablet', {index: index});
-            } else {
-                href = $state.href('site.messages-contact', {index: index});
-            }
+    $scope.goInfo = function() {
+        $scope.showDiscussionLink = true;
+        $scope.showInfoLink = false;
+        $state.go('site.messages.contacts-tablet', {index: personIndex});
+    };
+
+    // Implemented this way for faster DOM update.
+    $scope.$watch(function() {
+        return $state.is('site.messages.contacts-tablet');
+    }, function(newv, oldv, $scope) {
+        if (newv) {
+            $scope.showDiscussionLink = true;
+            $scope.showInfoLink = false;
         }
-        return href;
-    };
+    });
+
+    $scope.$watch(function() {
+        return $state.is('site.messages.tablet');
+    }, function(newv, oldv, $scope) {
+        if (newv) {
+            $scope.showDiscussionLink = false;
+            $scope.showInfoLink = true;
+        }
+    });
+
+    // $scope.showDiscussionLink = function() {
+    //     return $state.is('site.messages.contacts-tablet');
+    // };
+    // $scope.showInfoLink = function() {
+    //     return $state.is('site.messages.tablet');
+    // };
+
+    $scope.$on('mmMessagesContactSelected', function(e, index) {
+        personIndex = contacts[index].index;
+    });
+    $scope.$on('mmMessagesDiscussionSelected', function(e, index) {
+        personIndex = index;
+    });
 })
 
-.controller('mmMessagesContactsCtrl', function($rootScope, $scope) {
+.controller('mmMessagesContactsCtrl', function($rootScope, $state, $scope, $ionicTabsDelegate, $ionicPlatform, mmMessagesContactTabConst) {
     $scope.currentIndex = null;
     $scope.$on('mmMessagesContactSelected', function(e, index) {
         $scope.currentIndex = index;
     });
     $scope.$on('mmMessagesDiscussionSelected', function(e, index) {
-        $scope.currentIndex = null;
+        if (mmMessagesContactTabConst != $ionicTabsDelegate.$getByHandle('messages-tabs').selectedIndex()) {
+            $scope.currentIndex = null;
+        }
     });
+
+    $scope.getURL = function(index) {
+        if ($ionicPlatform.isTablet()) {
+            return $state.href('site.messages.contacts-tablet', {index: index});
+        }
+        return $state.href('site.messages-contact', {index: index});
+    };
 })
 
 .controller('mmMessagesContactCtrl', function($rootScope, $scope, $state, $ionicPlatform, index, contact) {
@@ -289,14 +336,16 @@ angular.module('mm.messages', [])
     $rootScope.$broadcast('mmMessagesContactSelected', index);
 })
 
-.controller('mmMessagesDiscussionsCtrl', function($rootScope, $scope, $stateParams, $state, $ionicPlatform) {
+.controller('mmMessagesDiscussionsCtrl', function($rootScope, $scope, $stateParams, $state, $ionicPlatform, $ionicTabsDelegate, mmMessagesMessageTabConst) {
 
     // We can create a service for return device information.
     $scope.isTablet = document.body.clientWidth > 600;
     $scope.currentIndex = null;
 
     $scope.$on('mmMessagesContactSelected', function(e, index) {
-        $scope.currentIndex = null;
+        if (mmMessagesMessageTabConst != $ionicTabsDelegate.$getByHandle('messages-tabs').selectedIndex()) {
+            $scope.currentIndex = null;
+        }
     });
     $scope.$on('mmMessagesDiscussionSelected', function(e, index) {
         $scope.currentIndex = index;

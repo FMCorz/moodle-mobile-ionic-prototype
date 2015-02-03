@@ -1,7 +1,12 @@
 <ion-view view-title="Messages">
+<ion-nav-buttons side="secondary">
+    <!-- TODO Use the person's avatar: <img ng-src="{{discussion.from.thumb}}"> -->
+    <button class="button button-icon icon ion-person" ng-click="goInfo()" ng-show="showInfoLink"></button>
+    <button class="button button-icon icon ion-chatbox" ng-click="goDiscussion()" ng-show="showDiscussionLink"></button>
+</ion-nav-buttons>
 <div class="mm-split-pane">
     <div class="mm-split-pane-menu">
-        <ion-tabs class="tabs-icon-top">
+        <ion-tabs class="tabs-icon-top" delegate-handle="messages-tabs">
             <ion-tab title="Messages" icon="ion-chatbox">
                 <ion-pane ng-controller="mmMessagesDiscussionsCtrl">
                     <ion-content class="has-tabs"> 
@@ -20,7 +25,7 @@
                 <ion-pane ng-controller="mmMessagesContactsCtrl">
                     <ion-content class="has-tabs">
                         <ion-list>
-                            <ion-item class="item-avatar" ng-repeat="contact in contacts | orderBy:'name' track by $index" ng-href="{{getURL('contact', contact.index)}}" ng-class="{active: currentIndex && currentIndex == contact.index}">
+                            <ion-item class="item-avatar" ng-repeat="contact in contacts | orderBy:'name' track by $index" ng-href="{{getURL(contact.index)}}" ng-class="{active: currentIndex && currentIndex == contact.index}">
                                 <img ng-src="{{contact.thumb}}" alt="">
                                 <h2>{{contact.name}}</h2>
                             </ion-item>
