@@ -47,7 +47,10 @@ angular.module('mm', [
 
 })
 
-.config(function($stateProvider, $urlRouterProvider, $translateProvider, $provide) {
+.config(function($stateProvider, $urlRouterProvider, $translateProvider, $provide, $ionicConfigProvider) {
+
+  // Set tabs to bottom on Android.
+  $ionicConfigProvider.platform.android.tabs.position('bottom');
 
   // Decorate $ionicPlatform.
   $provide.decorator('$ionicPlatform', ['$delegate', '$window', function($delegate, $window) {
