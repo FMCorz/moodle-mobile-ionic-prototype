@@ -21,19 +21,19 @@ angular.module('mm.files', [])
                     {
                         name: 'Course material',
                         children: [
-                            {name: 'Learning English.pdf'},
-                            {name: 'Peer reviewing.pdf'},
-                            {name: 'World map.pdf'},
+                            {name: 'Learning English.pdf', icon: 'pdf-32.png'},
+                            {name: 'Peer reviewing.pdf', icon: 'pdf-32.png'},
+                            {name: 'World map.pdf', icon: 'pdf-32.png'},
                         ]
                     },
                     {
                         name: 'Exams',
                         children: [
-                            {name: 'Math 101 - 2014.doc'},
-                            {name: 'Science 202 - 2013.doc'}
+                            {name: 'Math 101 - 2014.doc', icon: 'document-32.png'},
+                            {name: 'Science 202 - 2013.doc', icon: 'document-32.png'}
                         ]},
-                    {name: 'Beer brewing.pdf'},
-                    {name: 'Work expenses.xls'}
+                    {name: 'Beer brewing.pdf', icon: 'pdf-32.png'},
+                    {name: 'Work expenses.xls', icon: 'spreadsheet-32.png'}
                 ]
             }
         }
@@ -61,24 +61,24 @@ angular.module('mm.files', [])
                     {
                         name: 'Moodle in English',
                         children: [
-                            {name: 'How to use Moodle.pdf'},
-                            {name: 'Top 10 tips about Moodle.pdf'},
-                            {name: 'Veni vedi vici.odt'},
+                            {name: 'How to use Moodle.pdf', icon: 'pdf-32.png'},
+                            {name: 'Top 10 tips about Moodle.pdf', icon: 'pdf-32.png'},
+                            {name: 'Veni vedi vici.odt', icon: 'document-32.png'},
                         ]
                     },
                     {
                         name: 'Moodle Certification',
                         children: [
-                            {name: 'Certificate template.doc'},
-                            {name: 'Terms and conditions.pdf'}
+                            {name: 'Certificate template.doc', icon: 'document-32.png'},
+                            {name: 'Terms and conditions.pdf', icon: 'pdf-32.png'}
                         ]
                     },
                     {
                         name: 'Moodle for Language Teaching',
                         children: [
-                            {name: 'Best practices.pdf'},
-                            {name: 'Everyone.jpg'},
-                            {name: 'Tedx talk.mp4'},
+                            {name: 'Best practices.pdf', icon: 'pdf-32.png'},
+                            {name: 'Everyone.jpg', icon: 'jpeg-32.png'},
+                            {name: 'Tedx talk.mp4', icon: 'mpeg-32.png'},
                         ]
                     },
                 ]
@@ -114,11 +114,12 @@ angular.module('mm.files', [])
             cancelText: 'Cancel',
             buttonClicked: function(index) {
                 var choices = ['album', 'camera', 'audio', 'video'],
+                    icons = ['jpeg', 'jpeg', 'mp3', 'mpeg'],
                     ext = ['.png', '.jpg', '.mp3', '.mp4'],
                     name = choices[index] + Math.round(Math.random() * 99 + 1) + ext[index],
                     files;
                 
-                mmFilesMy.add(path, {name: name});
+                mmFilesMy.add(path, {name: name, icon: icons[index] + '-32.png'});
                 files = mmFilesMy.getFiles(path);
                 $scope.files = files.children;
 
