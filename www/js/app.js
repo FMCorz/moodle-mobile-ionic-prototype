@@ -515,19 +515,6 @@ angular.module('mm', [
       }
     })
 
-    .state('site.settings-report', {
-      tablet: {
-        parent: 'site.settings',
-        node: 'report'
-      },
-      url: '/report',
-      views: {
-        'site': {
-          templateUrl: 'tpl/site-settings-report.html'
-        }
-      }
-    })
-
     .state('site.settings-about', {
       tablet: {
         parent: 'site.settings',
