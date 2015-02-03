@@ -15,6 +15,9 @@ $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
 
+$item-media-width:                32px;
+$item-media-height:               32px;
+
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
@@ -87,6 +90,17 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .message-mine {
   background-color: rgba(17, 193, 243, .1);
   float: right;
+}
+
+.item-media {
+  @extend .item-avatar;
+  padding-left: $item-media-width + ($item-padding * 2);
+  min-height: $item-media-width + ($item-padding * 2);
+  > img:first-child {
+    max-width: $item-media-width;
+    max-height: $item-media-height;
+    border-radius: 0;
+  }
 }
 
 /**
