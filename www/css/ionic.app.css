@@ -8192,3 +8192,7 @@ a.button {
 .whitespacenormal div{
 	white-space: normal;
 }
+
+.justify-text {
+    text-align: justify;
+}
