@@ -8192,3 +8192,7 @@ a.button {
 .list-left-editing .balance-delete {
     right: 80px;
 }
+
+.justify-text {
+    text-align: justify;
+}
