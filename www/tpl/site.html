@@ -31,9 +31,17 @@
             <a menu-close class="item item-icon-left" ui-sref="site.files"><i class="icon ion-folder"></i>My files</a>
             <div class="item item-divider"></div>
             <a menu-close class="item item-icon-left" ui-sref="site.preferences"><i class="icon ion-gear-a"></i>Preferences</a>
-            <a menu-close class="item item-icon-left" href="https://moodle.org"><i class="icon ion-earth"></i>Website</a>
-            <a menu-close class="item item-icon-left"><i class="icon ion-help-buoy"></i>Help</a>
+            <a menu-close class="item item-icon-left" href="https://moodle.org" target="_blank">
+                <i class="icon ion-earth"></i>Website
+            </a>
+            <a menu-close class="item item-icon-left" href="http://docs.moodle.org/27/en/Moodle_Mobile" target="_blank">
+                <i class="icon ion-help-buoy"></i>Help
+            </a>
         </div>
+
+        <ion-refresher pulling-text="Pull to invalidate caches" 
+            on-refresh="invalidateCaches()" 
+            refreshing-icon="ion-loading-c">
 
     </ion-content>
 
