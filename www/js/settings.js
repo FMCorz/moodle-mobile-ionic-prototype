@@ -10,7 +10,7 @@ angular.module('mm.appsettings', [])
 
     var sites = [
         {
-            name: 'Mount Orange School',
+            name: 'Mount Orange School Long Name For The Moodle',
             username: 'Barbara Gardner',
             showDelete: true,
             spaceusage: '20 MB'

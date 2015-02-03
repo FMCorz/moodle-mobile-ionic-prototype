@@ -3,17 +3,18 @@
         <ion-list ng-repeat="site in sites" show-delete='site.showDelete'>
         	<ion-item>
                 <ion-delete-button class="ion-minus-circled" ng-click='onItemDelete($event, $index)'></ion-delete-button>
-                {{site.name}} ({{site.username}})
+                <h2>{{site.name}}</h2>
+                <p>{{site.username}}</p>
                 <span class="badge balance-delete">{{site.spaceusage}}</span>
             </ion-item>
         </ion-list>
         <ion-list>
             <ion-item class="item-divider">
-                Total
+                <p>Total</p>
                 <span class="badge">{{totalusage}}</span>
             </ion-item>
             <ion-item class="item-divider">
-                Free space
+                <p>Free space</p>
                 <span class="badge">{{freespace}}</span>
             </ion-item>
         </ion-list>
