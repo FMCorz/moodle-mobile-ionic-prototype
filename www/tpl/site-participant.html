@@ -1,20 +1,20 @@
 <ion-view view-title="{{participant.name}} {{participant.surname}}">
     <ion-content padding="true">
-        <ul class="list">
-            <li class="item item-avatar">
+        <div class="list">
+            <div class="item item-avatar">
                 <img ng-src="{{participant.avatar}}">
                 <h2>{{participant.name}} {{participant.surname}}</h2>
-            </li>
-            <li class="item item-divider">Contacts</li>
-            <li class="item">Email: mymailbox@email.com</li>
-            <li class="item">City: Barcelona</li>
-            <li class="item">Country: Spain</li>
-            <li class="item item-divider">Description</li>
-            <li class="item item-text-wrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>
+            </div>
+            <div class="item item-divider">Contacts</div>
+            <div class="item">Email: mymailbox@email.com</div>
+            <div class="item">City: Barcelona</div>
+            <div class="item">Country: Spain</div>
+            <div class="item item-divider">Description</div>
+            <div class="item item-text-wrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            <button class="button button-block">Add as contact</button>
+            <button class="button button-block">Add a note</button>
+            <button class="button button-block" ui-sref="site.messages-discussion({index: 0})">Send a message</button>
+            <a class="button button-block" ng-href="{{getGradeUrl()}}">Grades</a>
         </ul>
-        <button class="button button-block button-stable">Add as contact</button>
-        <button class="button button-block button-stable">Add a note</button>
-        <button class="button button-block button-stable" ui-sref="site.messages-discussion({index: 0})">Send a message</button>
-        <a class="button button-block button-stable" ng-href="{{getGradeUrl()}}">Grades</a>
     </ion-content>
 </ion-view>
