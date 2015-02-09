@@ -8189,6 +8189,5 @@ a.button {
   .forum-discussion .card .item:first-child.item-dark {
     border-top-color: #111111; }
 
-.whitespacenormal div{
-	white-space: normal;
-}
+.list-left-editing .balance-delete {
+    right: 80px; }
