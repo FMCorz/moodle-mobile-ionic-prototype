@@ -192,6 +192,15 @@ angular.module('mm', [
       }
     })
 
+    .state('site.page', {
+      url: '/page',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-page.html'
+        }
+      }
+    })
+
     .state('site.choice', {
       url: '/choice',
       views: {
