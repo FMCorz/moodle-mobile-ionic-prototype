@@ -194,3 +194,19 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     border-top-color: $item-dark-border;
   }
 }
+
+/**
+ * Basic responsive design.
+ */
+.phone-only {
+  display: block;
+}
+.tablet .phone-only {
+  display: none;
+}
+.tablet-only {
+  display: none;
+}
+.tablet .tablet-only {
+  display: block;
+}

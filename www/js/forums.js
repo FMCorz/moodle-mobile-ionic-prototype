@@ -206,17 +206,6 @@ angular.module('mm.forums', [])
         }
     };
 
-    $scope.$on('$ionicView.enter', function() {
-        console.log('$ionicView.enter');
-
-        if ($scope.isTablet) {
-            // Load the first discussion.
-            // This does not allways works, seems to be cached states.
-            console.log("state go...");
-            $state.go("site.forum.tablet", {id: 0});
-        }
-
-    });
     $scope.post = function(t, crop) {
         return t;
     };

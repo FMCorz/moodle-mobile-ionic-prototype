@@ -8240,3 +8240,18 @@ a.button {
     border-top-color: #6b46e5; }
   .forum-discussion .card .item:first-child.item-dark {
     border-top-color: #111111; }
+
+/**
+ * Responsive design...
+ */
+.phone-only {
+  display: block; }
+
+.tablet .phone-only {
+  display: none; }
+
+.tablet-only {
+  display: none; }
+
+.tablet .tablet-only {
+  display: block; }
