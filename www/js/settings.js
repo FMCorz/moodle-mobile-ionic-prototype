@@ -80,14 +80,10 @@ angular.module('mm.appsettings', [])
 })
 
 .controller('mmAppSpaceUsageSettingsCtrl', function($scope, mmAppSettings) {
-    $scope.showDelete = false;
     $scope.sites = mmAppSettings.getSites();
     $scope.totalusage = '20 MB';
     $scope.freespace = '2 GB';
 
-    $scope.toggleDelete = function() {
-        $scope.showDelete = !$scope.showDelete;
-    }
     $scope.onItemDelete = function(e, index) {
         mmAppSettings.deleteFiles(index);
         $scope.showDelete = false;

@@ -1,6 +1,6 @@
 <ion-view view-title="Preferences">
     <ion-content>
-        <ion-list class="item-text-wrap" show-delete='true'>
+        <ion-list class="item-text-wrap">
             <ion-item class="item-divider">
                 General
             </ion-item>
@@ -16,25 +16,25 @@
             <ion-item class="item-divider">
                 Space usage
             </ion-item>
-            <ion-item>
-                <ion-delete-button class="ion-minus-circled"></ion-delete-button>
+            <ion-item class="item-button-right">
+                <span class="item-note">30 MB</span>
                 <h2>My Awesome Moodle</h2>
                 <p>John Smith</p>
-                <span class="badge balance-delete">30 MB</span>
+                <button class="button button-icon"><i class="icon ion-trash-a positive"></i></button>
             </ion-item>
             <ion-item>
                 Total
-                <span class="badge">540 MB</span>
+                <span class="item-note">30 MB</span>
             </ion-item>
             <ion-item>
                 Free space
-                <span class="badge">2.1 GB</span>
+                <span class="item-note">2.1 GB</span>
             </ion-item>
             <ion-item class="item-divider">
                 Synchronization
             </ion-item>
             <ion-item class="item-toggle">
-                Synchronization of operations and data
+                Operations and data
                 <label class="toggle">
                     <input type="checkbox" checked="">
                     <div class="track">
@@ -43,7 +43,7 @@
                 </label>
             </ion-item>
             <ion-item class="item-toggle">
-                Synchronization of language files
+                Language files
                 <label class="toggle">
                     <input type="checkbox" checked="">
                     <div class="track">
@@ -52,13 +52,19 @@
                 </label>
             </ion-item>
             <ion-item class="item-toggle">
-                Allow sync only when on Wi-Fi
+                Only synchronize when on Wi-Fi
                 <label class="toggle">
                     <input type="checkbox">
                     <div class="track">
                         <div class="handle"></div>
                     </div>
                 </label>
+            </ion-item>
+            <ion-item class="item-button-right">
+                Sync CSS now
+                <button class="button button-icon">
+                    <i class="icon ion-refresh positive"></i>
+                </button>
             </ion-item>
             <ion-item class="item-divider">
                 Task queue
@@ -67,11 +73,5 @@
                 No tasks to be synchronized
             </ion-item>
         </ion-list>
-        <div class="padding">
-            <button class="button button-block">
-                <i class="icon ion-refresh"></i>
-                Force CSS sync now
-            </button>
-        </div>
     </ion-content>
 </ion-view>
