@@ -1,21 +1,22 @@
-<ion-view view-title="Space Usage" >
+<ion-view view-title="Space Usage">
+    <ion-nav-buttons side="secondary">
+        <button class="button button-icon ion-edit" ng-click='toggleDelete()'></button>
+    </ion-nav-buttons>
     <ion-content>
-        <ion-list ng-repeat="site in sites" show-delete='site.showDelete'>
-            <ion-item>
+        <ion-list show-delete='showDelete'>
+            <ion-item ng-repeat="site in sites">
                 <ion-delete-button class="ion-minus-circled" ng-click='onItemDelete($event, $index)'></ion-delete-button>
+                <span class="item-note">{{site.spaceusage}}</span>
                 <h2>{{site.name}}</h2>
                 <p>{{site.username}}</p>
-                <span class="badge balance-delete">{{site.spaceusage}}</span>
             </ion-item>
-        </ion-list>
-        <ion-list>
             <ion-item class="item-divider">
+                <span class="item-note">{{totalusage}}</span>
                 <p>Total</p>
-                <span class="badge">{{totalusage}}</span>
             </ion-item>
             <ion-item class="item-divider">
+                <span class="item-note">{{freespace}}</span>
                 <p>Free space</p>
-                <span class="badge">{{freespace}}</span>
             </ion-item>
         </ion-list>
     </ion-content>

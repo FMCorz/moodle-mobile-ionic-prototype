@@ -12,14 +12,12 @@ angular.module('mm.appsettings', [])
         {
             name: 'Mount Orange School Long Name For The Moodle',
             username: 'Barbara Gardner',
-            showDelete: true,
             spaceusage: '20 MB'
         },
         {
             name: 'My Awesome Moodle',
             username: 'John Smith',
-            showDelete: false,
-            spaceusage: 'n/a'
+            spaceusage: '0'
         }
     ];
 
@@ -43,8 +41,7 @@ angular.module('mm.appsettings', [])
     }
 
     self.deleteFiles = function(index) {
-        sites[index].showDelete = false;
-        sites[index].spaceusage = 'n/a';
+        sites[index].spaceusage = '0';
     }
 
     return self;
@@ -83,12 +80,17 @@ angular.module('mm.appsettings', [])
 })
 
 .controller('mmAppSpaceUsageSettingsCtrl', function($scope, mmAppSettings) {
+    $scope.showDelete = false;
     $scope.sites = mmAppSettings.getSites();
     $scope.totalusage = '20 MB';
     $scope.freespace = '2 GB';
 
+    $scope.toggleDelete = function() {
+        $scope.showDelete = !$scope.showDelete;
+    }
     $scope.onItemDelete = function(e, index) {
         mmAppSettings.deleteFiles(index);
+        $scope.showDelete = false;
     }
 })
 
