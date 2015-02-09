@@ -19,6 +19,6 @@
     <label class="item-input-wrapper">
         <input type="search" placeholder="New message..." ng-model="newMessage">
     </label>
-    <button type="submit" class="button button-clear">Send</button>
+    <button type="submit" class="button button-clear" ng-disabled="!newMessage">Send</button>
     </form>
 </ion-footer-bar>

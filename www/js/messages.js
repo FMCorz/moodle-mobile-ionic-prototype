@@ -388,6 +388,9 @@ angular.module('mm.messages', [])
     });
 
     $scope.addMessage = function(message) {
+        if (!message) {
+            return;
+        }
         mmMessages.addMessage($stateParams.index, message);
         sv.scrollBottom();
     };
