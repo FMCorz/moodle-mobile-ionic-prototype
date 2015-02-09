@@ -73,5 +73,11 @@ angular.module('mm.sections', [])
         e.preventDefault();
         e.stopPropagation();
     };
+
+    $scope.goToFile = function(e) {
+        window.open('files/lorem.pdf', '_blank');
+        e.preventDefault();
+        e.stopPropagation();
+    }
 })
 ;

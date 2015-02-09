@@ -219,6 +219,15 @@ angular.module('mm', [
       }
     })
 
+    .state('site.file', {
+      url: '/file',
+      views: {
+        'site': {
+          templateUrl: 'tpl/site-file.html'
+        }
+      }
+    })
+
     .state('site.folder', {
       url: '/folder',
       views: {

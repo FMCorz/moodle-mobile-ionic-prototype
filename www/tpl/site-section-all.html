@@ -8,9 +8,12 @@
                 <img src="img/mod/forum.png" alt="">
                 Course announcements
             </a>
-            <a class="item item-media item-text-wrap" href="files/lorem.pdf">
+            <a class="item item-media item-text-wrap item-button-right" ui-sref="site.file">
                 <img src="img/files/pdf-32.png" alt="">
                 Course outline
+                <button class="button button-icon" ng-click="goToFile($event)">
+                    <i class="icon ion-paperclip positive"></i>
+                </button>
             </a>
         </div>
         <div class="card">
