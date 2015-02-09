@@ -3,7 +3,7 @@
         <div class="mm-split-pane">
             <div class="mm-split-pane-menu">
                 <div class="list">
-                    <a ng-repeat="event in events track by $index" class="item item-icon-left" ng-href="{{getURL($index)}}">
+                    <a ng-repeat="event in events track by $index" class="item item-icon-left item-text-wrap" ng-href="{{getURL($index)}}">
                         <i class="icon {{event.icon}}"></i>
                         <h2>{{event.name}}</h2>
                         <p>{{event.start}}</p>
