@@ -64,6 +64,10 @@ angular.module('mm.sections', [])
         e.stopPropagation();
     };
 
-
+    $scope.go = function(e) {
+        window.open('https://moodle.org', '_blank');
+        e.preventDefault();
+        e.stopPropagation();
+    };
 })
 ;
