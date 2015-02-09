@@ -631,5 +631,106 @@ angular.module('mm', [
       $scope.$broadcast('scroll.refreshComplete');
   };
 
+})
+
+.filter('dateDayAndTime', function($filter) {
+  return function(d) {
+    // TODO optmise this, we can surely cache most of this.
+    var todayStarts = new Date();
+    var todayEnds = new Date();
+    var sixDayStarts = new Date();
+    var yearStarts = new Date();
+    var yearEnds = new Date();
+    var monthStarts = new Date();
+    var monthEnds = new Date();
+    var dateStarts = new Date(d);
+    var dateEnds = new Date(d);
+
+    todayStarts.setHours(0, 0, 0, 0);
+    todayEnds.setHours(23, 59, 59, 999);
+    dateStarts.setHours(0, 0, 0, 0);
+    dateEnds.setHours(23, 59, 59, 999);
+    sixDayStarts.setHours(0, 0, 0, 0);
+    sixDayStarts = new Date(sixDayStarts.getTime() - (3600 * 24 * 6 * 1000));
+    monthStarts.setHours(0, 0, 0, 0);
+    monthStarts.setDate(1);
+    monthEnds = new Date(monthEnds.getFullYear(), monthEnds.getMonth() + 1, 0);
+    monthEnds.setHours(23, 59, 59, 999);
+    yearStarts = new Date(yearStarts.getFullYear() - 1, 12, 1);
+    yearStarts.setHours(0, 0, 0, 0);
+    yearEnds = new Date(yearEnds.getFullYear(), 12, 0);
+    yearEnds.setHours(23, 59, 59, 999);
+
+    // TODO use proper localised filter.
+    // TODO add more rules
+    // TODO allow customisation of the date format through the filter
+    //      (i.e. 'short' vs 'long', as in month displayed as Month or as Number)
+    if (d >= todayStarts && d <= todayEnds) {
+      // Today.
+      return $filter('date')(d, 'h:mm a');
+    } else if (d >= sixDayStarts && d < todayStarts) {
+      // In the last 6 days.
+      return $filter('date')(d, 'EEE, h:mm a');
+    } else if (d >= monthStarts && d <= monthEnds) {
+      // In the same month.
+      return $filter('date')(d, 'EEE d, h:mm a');
+    } else if (d >= yearStarts && d <= yearEnds) {
+      // In the same year.
+      return $filter('date')(d, 'MMM d, h:mm a');
+    } else {
+      return $filter('date')(d, 'd/MM/yy h:mm a');
+    }
+  };
+})
+
+.filter('dateDayOrTime', function($filter) {
+  return function(d) {
+    // TODO optmise this, we can surely cache most of this.
+    var todayStarts = new Date();
+    var todayEnds = new Date();
+    var sixDayStarts = new Date();
+    var yearStarts = new Date();
+    var yearEnds = new Date();
+    var monthStarts = new Date();
+    var monthEnds = new Date();
+    var dateStarts = new Date(d);
+    var dateEnds = new Date(d);
+
+    todayStarts.setHours(0, 0, 0, 0);
+    todayEnds.setHours(23, 59, 59, 999);
+    dateStarts.setHours(0, 0, 0, 0);
+    dateEnds.setHours(23, 59, 59, 999);
+    sixDayStarts.setHours(0, 0, 0, 0);
+    sixDayStarts = new Date(sixDayStarts.getTime() - (3600 * 24 * 6 * 1000));
+    monthStarts.setHours(0, 0, 0, 0);
+    monthStarts.setDate(1);
+    monthEnds = new Date(monthEnds.getFullYear(), monthEnds.getMonth() + 1, 0);
+    monthEnds.setHours(23, 59, 59, 999);
+    yearStarts = new Date(yearStarts.getFullYear() - 1, 12, 1);
+    yearStarts.setHours(0, 0, 0, 0);
+    yearEnds = new Date(yearEnds.getFullYear(), 12, 0);
+    yearEnds.setHours(23, 59, 59, 999);
+
+    // TODO use proper localised filter.
+    // TODO add more rules
+    // TODO allow customisation of the date format through the filter
+    //      (i.e. 'short' vs 'long', as in month displayed as Month or as Number)
+    if (d >= todayStarts && d <= todayEnds) {
+      // Today.
+      return $filter('date')(d, 'h:mm a');
+    } else if (d >= sixDayStarts && d < todayStarts) {
+      // In the last 6 days.
+      return $filter('date')(d, 'EEE');
+    } else if (d >= monthStarts && d <= monthEnds) {
+      // In the same month.
+      return $filter('date')(d, 'EEE, d');
+    } else if (d >= yearStarts && d <= yearEnds) {
+      // In the same year.
+      return $filter('date')(d, 'MMM d');
+    } else {
+      return $filter('date')(d, 'd/MM/yy');
+    }
+  };
 });
+
 
