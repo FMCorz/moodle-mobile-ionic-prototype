@@ -289,13 +289,6 @@ angular.module('mm.messages', [])
         }
     });
 
-    // $scope.showDiscussionLink = function() {
-    //     return $state.is('site.messages.contacts-tablet');
-    // };
-    // $scope.showInfoLink = function() {
-    //     return $state.is('site.messages.tablet');
-    // };
-
     $scope.$on('mmMessagesContactSelected', function(e, index) {
         personIndex = contacts[index].index;
     });
