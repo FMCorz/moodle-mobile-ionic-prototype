@@ -1,15 +1,15 @@
 <ion-view view-title="Contact details">
     <ion-content padding="true">
-        <ul class="list">
-            <li class="item item-avatar">
+        <div class="list">
+            <div class="item item-avatar">
                 <img ng-src="{{contact.thumb}}" alt="">
                 <h2>{{contact.name}}</h2>
-            </li>
-            <li class="item">Email: mymailbox@email.com</li>
-            <li class="item">Mobile: 0400 111 222</li>
-        </ul>
-        <button class="button button-block button-stable" ng-click="sendMessage();">Send a message</button>
-        <button class="button button-block button-stable">Remove from contacts</button>
-        <button class="button button-block button-stable">Block</button>
+            </div>
+            <div class="item">Email: mymailbox@email.com</div>
+            <div class="item">Mobile: 0400 111 222</div>
+            <button class="button button-block" ng-click="sendMessage();">Send a message</button>
+            <button class="button button-block">Remove from contacts</button>
+            <button class="button button-block">Block</button>
+        </div>
     </ion-content>
 </ion-view>
