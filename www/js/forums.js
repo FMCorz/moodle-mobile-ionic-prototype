@@ -150,35 +150,42 @@ angular.module('mm.forums', [])
     }
 
     function generateDiscussion() {
-        var topic = generatePost();
-        topic.content = generatePosts(topic.subject);
+        var time = new Date(new Date().getTime() - (3600 * 24 * 1000 + Math.round(Math.random() * 3600 * 24 * 15 * 1000))),
+            topic = generatePost(null, time);
+        topic.content = generatePosts(topic.subject, time);
         topic.intro = topic.post.substr(0, 100) + '...</p>';
         topic.replies = topic.content.length;
+        topic.lastReplyTime = topic.content[topic.content.length - 1].time;
         return topic;
     }
 
-    function generatePost(subject) {
+    function generatePost(subject, time) {
         return {
             author: generateAuthor(),
             thumb: generateThumb(),
             subject: subject ? 'Re: ' + subject : generateSubject(),
             post: generateContent(),
+            time: time
         };
     }
 
-    function generatePosts(subject) {
+    function generatePosts(subject, fromtime) {
         var para = Math.floor(Math.random() * 25) + 1;
         posts = [];
         for (var i = 0; i < para; i++) {
-            posts.push(generatePost(subject));
+            time = new Date(fromtime.getTime() + Math.random() * 3600 * 12 * 1000);
+            if (time > new Date()) {
+                // Skip posts in the future.
+                break;
+            }
+            posts.push(generatePost(subject, time));
+            fromtime = time;
         }
         return posts;
     }
 
     self.getDiscussions = function(courseid) {
-        // console.log('adasd');
         courseid = 0; // Hardcoded for now...
-        // console.log(store[courseid], 'te');
         if (!store[courseid]) {
             store[courseid] = [];
             var count = Math.random() * 80 + 20;
@@ -198,7 +205,8 @@ angular.module('mm.forums', [])
 
 .controller('mmForumDiscussionsCtrl', function($scope, $state, discussions) {
     $scope.isTablet = document.body.clientWidth > 600;
-    $scope.getURL = function(index) {
+    $scope.getURL = function(discussion) {
+        var index = discussions.indexOf(discussion);
         if ($scope.isTablet) {
             return $state.href('site.forum.tablet', {id: index});
         } else {

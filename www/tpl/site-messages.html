@@ -13,8 +13,8 @@
                         <ion-list>
                             <ion-item ng-href="{{getURL($index)}}" class="item item-avatar" ng-repeat="disc in discussions track by $index" ng-class="{active: currentIndex && currentIndex == $index}">
                                 <img ng-src="{{disc.from.thumb}}" alt="">
-                                <span class="item-note">{{disc.messages[0].time | date:"EEE, h:mma"}}</span>
                                 <h2>{{disc.from.name}}</h2>
+                                <span class="item-note">{{disc.messages[0].time | date:"EEE, h:mma"}}</span>
                                 <p>{{disc.messages[0].message}}</p>
                             </ion-item>
                         </ion-list>

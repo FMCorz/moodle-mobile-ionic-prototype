@@ -9,14 +9,14 @@
                             <p><span class="item-note">{{discussions.length}} discussions</span></p>
                         </div>
                     </div>
-                    <div class="card" ng-repeat="discussion in discussions track by $index">
+                    <div class="card" ng-repeat="discussion in discussions | orderBy:'lastReplyTime':true track by $index">
                         <div class="item item-avatar">
                             <img src="{{discussion.thumb}}" alt="">
                             <h2>{{discussion.subject}}</h2>
-                            <div class="item-note">09/02/2015</div>
+                            <div class="item-note">{{discussion.lastReplyTime | dateDayOrTime}}</div>
                             <p>{{discussion.author}}</p>
                         </div>
-                        <a class="item item-body" ng-href="{{getURL($index)}}">
+                        <a class="item item-body" ng-href="{{getURL(discussion)}}">
                             <span ng-bind-html="discussion.intro"></span>
                             <p><span class="item-note">{{discussion.replies}} replies</span></p>
                         </a>

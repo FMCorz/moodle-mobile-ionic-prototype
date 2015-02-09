@@ -4,7 +4,7 @@
             <div class="item item-avatar">
                 <img src="{{discussion.thumb}}" alt="">
                 <h2>{{discussion.subject}}</h2>
-                <div class="item-note">09/02/2015</div>
+                <div class="item-note">{{discussion.time | dateDayAndTime}}</div>
                 <p>{{discussion.author}}</p>
             </div>
             <div class="item item-body">
@@ -18,7 +18,7 @@
                 <div class="item item-avatar">
                     <img ng-src="{{reply.thumb}}" alt="">
                     <p>{{reply.author}}</p>
-                    <div class="item-note">03:46pm</div>
+                    <div class="item-note">{{reply.time | dateDayAndTime}}</div>
                     <p>{{reply.subject}}</p>
                 </div>
                 <div class="item item-body" ng-bind-html="post(reply)"></div>
