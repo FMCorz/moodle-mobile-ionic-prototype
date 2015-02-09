@@ -20,11 +20,17 @@
             <a class="item item-text-wrap" ui-sref="site.label">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
             </a>
-            <a class="item item-media item-text-wrap item-button-right" href="">
+            <a class="item item-media item-text-wrap item-button-right">
                 <img src="img/mod/page.png" alt="">
                 See the summit of Mont Blanc
-                <button class="button button-icon">
+                <button class="button button-icon" ng-show="downloadicon" ng-click="download($event)">
                     <i class="icon ion-ios7-cloud-download-outline positive"></i>
+                </button>
+                <button class="button button-icon" ng-show="loadingicon" ng-click="cancel($event)">
+                    <i class="icon ion-loading-d positive"></i>
+                </button>
+                <button class="button button-icon" ng-show="refreshicon" ng-click="refresh($event)">
+                    <i class="icon ion-refresh positive"></i>
                 </button>
             </a>
             <a class="item item-media item-text-wrap item-button-right" ui-sref="site.choice">

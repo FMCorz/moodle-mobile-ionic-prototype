@@ -22,7 +22,48 @@ angular.module('mm.sections', [])
 
     });
 })
-.controller('mmSiteSection', function($scope, $state) {
+.controller('mmSiteSection', function($scope, $state, $timeout) {
+    var forget;
     $scope.isTablet = document.body.clientWidth > 600;
+    $scope.downloadicon = true;
+    $scope.loadingicon = false;
+    $scope.refreshicon = false;
+
+    $scope.download = function(e) {
+        $scope.downloadicon = false;
+        $scope.loadingicon = true;
+        $scope.refreshicon = false;
+        e.preventDefault();
+        e.stopPropagation();
+        forget = $timeout(function() {
+            $scope.downloadicon = false;
+            $scope.loadingicon = false;
+            $scope.refreshicon = true;
+        }, 2000);
+    };
+
+    $scope.cancel = function(e) {
+        $scope.downloadicon = true;
+        $scope.loadingicon = false;
+        $scope.refreshicon = false;
+        $timeout.cancel(forget);
+        e.preventDefault();
+        e.stopPropagation();
+    };
+
+    $scope.refresh = function(e) {
+        $scope.downloadicon = false;
+        $scope.loadingicon = true;
+        $scope.refreshicon = false;
+        forget = $timeout(function() {
+            $scope.downloadicon = false;
+            $scope.loadingicon = false;
+            $scope.refreshicon = true;
+        }, 2000);
+        e.preventDefault();
+        e.stopPropagation();
+    };
+
+
 })
 ;
