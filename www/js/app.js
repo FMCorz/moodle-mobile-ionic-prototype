@@ -1,13 +1,7 @@
 angular.module('mm', [
   'ionic',
   'mm.auth',
-  'mm.site',
-  'mm.files',
-  'mm.messages',
-  'mm.appsettings',
-  'mm.sections',
-  'mm.forums',
-  'mm.events',
+  'oc.lazyLoad',
   'pascalprecht.translate'])
 
 .run(function($ionicPlatform, $rootScope, $state, mmAuth, $ionicBody, $window) {
@@ -47,7 +41,7 @@ angular.module('mm', [
 
 })
 
-.config(function($stateProvider, $urlRouterProvider, $translateProvider, $provide, $ionicConfigProvider) {
+.config(function($stateProvider, $urlRouterProvider, $translateProvider, $provide, $ionicConfigProvider, $ocLazyLoadProvider) {
 
   // Set tabs to bottom on Android.
   $ionicConfigProvider.platform.android.tabs.position('bottom');
@@ -59,6 +53,35 @@ angular.module('mm', [
       };
       return $delegate;
   }]);
+
+  // Config ocLazyLoad
+  $ocLazyLoadProvider.config({
+    modules: [{
+        name: 'mm.auth',
+        files: ['js/auth.js']
+    },{
+        name: 'mm.events',
+        files: ['js/events.js']
+    },{
+        name: 'mm.files',
+        files: ['js/files.js']
+    },{
+        name: 'mm.forums',
+        files: ['js/forums.js']
+    },{
+        name: 'mm.messages',
+        files: ['js/messages.js']
+    },{
+        name: 'mm.sections',
+        files: ['js/sections.js']
+    },{
+        name: 'mm.appsettings',
+        files: ['js/settings.js']
+    },{
+        name: 'mm.site',
+        files: ['js/site.js']
+    }]
+  });
 
 
   // Ugly hack to "decorate" the $stateProvider.state() method.
@@ -132,6 +155,20 @@ angular.module('mm', [
       onEnter: function($ionicHistory) {
         // Remove the login page from the history stack.
         $ionicHistory.clearHistory();
+      },
+      resolve: { // Any property in resolve should return a promise and is executed before the view is loaded
+        lazyLoadControllers: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              'mm.auth',
+              'mm.events',
+              'mm.files',
+              'mm.forums',
+              'mm.messages',
+              'mm.sections',
+              'mm.appsettings',
+              'mm.site']
+            );
+        }]
       }
     })
 
