@@ -30,14 +30,20 @@ angular.module('mm.config', [])
         return self.config[name];
     };
 
+    this.getPlugins = function(type) {
+        return self.config.plugins[type];
+    };
+
     this.getPluginsForLazyLoad = function() {
         var formattedPlugins = [];
 
-        for(var pluginName in self.config.plugins) {
-            formattedPlugins.push({
-                name: pluginName,
-                files: self.config.plugins[pluginName]
-            });
+        for(var pluginType in self.config.plugins) {
+            for(var i = 0; i < self.config.plugins[pluginType].length; i++) {
+                formattedPlugins.push({
+                    name: self.config.plugins[pluginType][i].module,
+                    files: self.config.plugins[pluginType][i].files
+                });
+            }
         }
 
         return formattedPlugins;

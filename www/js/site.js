@@ -124,6 +124,26 @@ angular.module('mm.site', [])
 
 })
 
+.controller('mmSideMenu', function($scope, $injector, mmConfig) {
+    var plugins = mmConfig.getPlugins('general');
+    var formattedPlugins = [];
+
+    // This should be handled by a PluginManager service
+    for(var i = 0; i < plugins.length; i++) {
+        var service = $injector.get(plugins[i].service);
+        if(service.isPluginVisible()) {
+            formattedPlugins.push({
+                icon: service.getIcon(),
+                name: service.getPluginName(),
+                number: service.getExtraNumber(),
+                state: service.getMainState()
+            });
+        }
+    }
+
+    $scope.plugins = formattedPlugins;
+})
+
 .controller('mmSiteCourses', function($scope, mmSiteCourses) {
     $scope.courses = mmSiteCourses.all();
     $scope.filterText = '';

@@ -1,5 +1,31 @@
 angular.module('mm.messages', [])
 
+.factory('mmMessagesPlugin', function() {
+    var self = {};
+
+    self.getIcon = function() {
+        return 'ion-chatbox';
+    };
+
+    self.isPluginVisible = function() {
+        return true;
+    };
+
+    self.getPluginName = function() {
+        return 'Messages';
+    };
+
+    self.getExtraNumber = function() {
+        return 6;
+    };
+
+    self.getMainState = function() {
+        return 'site.messages';
+    };
+
+    return self;
+})
+
 .factory('mmMessages', function() {
 
     var contacts = [];

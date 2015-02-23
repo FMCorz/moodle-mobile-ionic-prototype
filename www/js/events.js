@@ -1,5 +1,31 @@
 angular.module('mm.events', [])
 
+.factory('mmEventsPlugin', function() {
+    var self = {};
+
+    self.getIcon = function() {
+        return 'ion-calendar';
+    };
+
+    self.isPluginVisible = function() {
+        return true;
+    };
+
+    self.getPluginName = function() {
+        return 'Calendar events';
+    };
+
+    self.getExtraNumber = function() {
+        return 0;
+    };
+
+    self.getMainState = function() {
+        return 'site.events';
+    };
+
+    return self;
+})
+
 .factory('mmSiteEvents', function() {
 
     var store = {},

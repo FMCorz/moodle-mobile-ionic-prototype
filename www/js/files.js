@@ -1,5 +1,31 @@
 angular.module('mm.files', [])
 
+.factory('mmFilesPlugin', function() {
+    var self = {};
+
+    self.getIcon = function() {
+        return 'ion-folder';
+    };
+
+    self.isPluginVisible = function() {
+        return true;
+    };
+
+    self.getPluginName = function() {
+        return 'My Files';
+    };
+
+    self.getExtraNumber = function() {
+        return 0;
+    };
+
+    self.getMainState = function() {
+        return 'site.files';
+    };
+
+    return self;
+})
+
 .factory('mmFilesMy', function() {
 
     var store = {},
