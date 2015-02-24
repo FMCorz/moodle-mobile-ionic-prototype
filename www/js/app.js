@@ -4,6 +4,7 @@ angular.module('mm', [
   'mm.config',
   'mm.site',
   'mm.appsettings',
+  'mm.pluginmanager',
   'oc.lazyLoad',
   'pascalprecht.translate'])
 
@@ -132,10 +133,14 @@ angular.module('mm', [
         $ionicHistory.clearHistory();
       },
       resolve: {
-        lazyLoadControllers: function(mmConfig, $ocLazyLoad) {
+        lazyLoadControllers: function(mmConfig, mmPluginManager, $ocLazyLoad) {
           return mmConfig.initConfig().then(function(){
             var plugins = mmConfig.getPluginsForLazyLoad();
             return $ocLazyLoad.load(plugins);
+          }).then(function() {
+            return mmPluginManager.downloadPlugins().then(function() {
+              return mmPluginManager.loadPlugins();
+            });
           });
         }
       }

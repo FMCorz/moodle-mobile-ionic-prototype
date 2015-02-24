@@ -124,8 +124,8 @@ angular.module('mm.site', [])
 
 })
 
-.controller('mmSideMenu', function($scope, $injector, mmConfig) {
-    var plugins = mmConfig.getPlugins('general');
+.controller('mmSideMenu', function($scope, $injector, mmConfig, mmPluginManager) {
+    var plugins = mmConfig.getPlugins('general').concat(mmPluginManager.getPlugins());
     var formattedPlugins = [];
 
     // This should be handled by a PluginManager service

@@ -30,13 +30,6 @@
                 ]
             },
             {
-                "module": "mm.events",
-                "service": "mmEventsPlugin",
-                "files": [
-                    "js/events.js"
-                ]
-            },
-            {
                 "module": "mm.files",
                 "service": "mmFilesPlugin",
                 "files": [
