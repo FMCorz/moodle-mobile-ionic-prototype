@@ -1,6 +1,8 @@
 angular.module('mm', [
   'ionic',
   'mm.auth',
+  'mm.util',
+  'mm.config',
   'mm.site',
   'mm.files',
   'mm.messages',
@@ -564,50 +566,6 @@ angular.module('mm', [
       views: {
         'site': {
           templateUrl: 'tpl/site-synchronization.html'
-        }
-      }
-    })
-
-    .state('login', {
-      url: '/login',
-      abstract: true,
-      templateUrl: 'tpl/login.html',
-      cache: false,   // Disable caching to force controller reload.
-      onEnter: function($ionicHistory) {
-        // Ensure that there is no history stack when getting here.
-        $ionicHistory.clearHistory();
-      }
-    })
-
-    .state('login.index', {
-      url: '/index',
-      templateUrl: 'tpl/login-index.html',
-      controller: 'mmAuthLoginCtrl',
-      onEnter: function($state, mmAuth) {
-        // Skip this page if there are no identities yet.
-        if (!mmAuth.hasIdentities()) {
-          $state.go('login.site');
-        }
-      }
-    })
-
-    .state('login.site', {
-      url: '/site',
-      templateUrl: 'tpl/login-site.html',
-      controller: 'mmAuthSiteCtrl',
-    })
-
-    .state('login.credentials', {
-      url: '/cred',
-      templateUrl: 'tpl/login-credentials.html',
-      controller: 'mmAuthCredCtrl',
-      params: {
-        url: ''
-      },
-      onEnter: function($state, $stateParams) {
-        // Do not allow access to this page when the URL was not passed.
-        if (!$stateParams.url) {
-          $state.go('login.index');
         }
       }
     });
