@@ -1,18 +1,22 @@
 angular.module('mm.auth')
 
-.controller('mmAuthSiteCtrl', function($scope, $ionicLoading, $state, $timeout, mmAuth) {
+.controller('mmAuthSiteCtrl', function($scope, $ionicLoading, $state, mmAuth) {
+
+    $scope.logindata = mmAuth.getLoginData();
     $scope.connect = function(url) {
-        if (!url) {
-            return;
-        }
 
         $ionicLoading.show({
             template: '<i class="icon ion-load-c"> Loading...'
         });
-        $timeout(function() {
+
+        mmAuth.checkSite(url).then(function() {
             $ionicLoading.hide();
             $state.go('login.credentials', {url: url});
-        }, 1000);
+        }, function(error) {
+            // TODO: Show error message with ngMessages or popup
+            $ionicLoading.hide();
+            alert(error);
+        });
     }
 
 });

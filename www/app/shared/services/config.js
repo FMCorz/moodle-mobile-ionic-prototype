@@ -1,11 +1,11 @@
 angular.module('mm.config', [])
 
-.service('mmConfig', function($http, $q) {
+.factory('mmConfig', function($http, $q) {
 
-    var self = this;
+    var self = {};
     self.config = {};
 
-    this.initConfig = function() {
+    self.initConfig = function() {
 
         var deferred = $q.defer();
 
@@ -26,8 +26,15 @@ angular.module('mm.config', [])
         return deferred.promise;
     };
 
-    this.get = function(name) {
+    self.get = function(name) {
         return self.config[name];
     };
+
+    self.set = function(name, value) {
+        // TODO: Store it in local DB
+        self.config[name] = value;
+    };
+
+    return self;
 
 });

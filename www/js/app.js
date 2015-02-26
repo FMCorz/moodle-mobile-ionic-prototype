@@ -1,6 +1,7 @@
 angular.module('mm', [
   'ionic',
   'mm.auth',
+  'mm.core',
   'mm.util',
   'mm.config',
   'mm.site',
@@ -10,7 +11,8 @@ angular.module('mm', [
   'mm.sections',
   'mm.forums',
   'mm.events',
-  'pascalprecht.translate'])
+  'pascalprecht.translate',
+  'angular-md5'])
 
 .run(function($ionicPlatform, $rootScope, $state, mmAuth, $ionicBody, $window) {
   $ionicPlatform.ready(function() {
@@ -49,7 +51,8 @@ angular.module('mm', [
 
 })
 
-.config(function($stateProvider, $urlRouterProvider, $translateProvider, $provide, $ionicConfigProvider) {
+.config(function($stateProvider, $urlRouterProvider, $translateProvider, $provide, $ionicConfigProvider, 
+                  $httpProvider, mmUtilProvider) {
 
   // Set tabs to bottom on Android.
   $ionicConfigProvider.platform.android.tabs.position('bottom');
@@ -584,6 +587,13 @@ angular.module('mm', [
   $translateProvider.preferredLanguage(window.sessionStorage.lang || 'en');
   // If a key is not found for the current language, search in the English file.
   $translateProvider.fallbackLanguage('en');
+
+  // This code is to be able to get data sent with $http.post using $_POST variable.
+  // Otherwise all the data ends up in php://input and seems like local/mobile/check.php doesn't like it.
+  $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+  $httpProvider.defaults.transformRequest = [function(data) {
+      return angular.isObject(data) && String(data) !== '[object File]' ? mmUtilProvider.param(data) : data;
+  }];
 
 })
 
