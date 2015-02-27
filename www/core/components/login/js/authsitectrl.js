@@ -6,6 +6,11 @@ angular.module('mm.auth')
 
     $scope.connect = function(url) {
 
+        if (!url) {
+            alert('siteurlrequired');
+            return;
+        }
+
         mmDialogs.showModalLoading('Loading');
 
         if(mmAuth.isDemoSite(url)) {

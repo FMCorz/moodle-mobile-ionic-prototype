@@ -4,15 +4,22 @@ angular.module('mm.auth')
 
     $scope.logindata = mmAuth.getLoginData();
     $scope.login = function() {
-        mmDialogs.showModalLoading('Loading');
 
         var siteurl = $scope.logindata.siteurl,
             username = $scope.logindata.username,
             password = $scope.logindata.password;
 
-        if (!username || !password) {
+        if (!username) {
+            alert('usernamerequired');
             return;
         }
+        if(!password) {
+            alert('passwordrequired');
+            return;
+        }
+
+        mmDialogs.showModalLoading('Loading');
+
         mmAuth.getUserToken(siteurl, username, password).then(function(token) {
             mmAuth.saveToken(siteurl, token).then(function() {
                 mmDialogs.closeModalLoading();
@@ -22,6 +29,7 @@ angular.module('mm.auth')
                 alert(error);
             });
         }, function(error) {
+            mmDialogs.closeModalLoading();
             alert(error);
         });
     };
