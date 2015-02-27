@@ -11,8 +11,55 @@ angular.module('mm.auth', [])
         password: ''
     };
 
+    /**
+     * Get the login's data.
+     * @return {Object} Login data with siteurl, username and password.
+     */
     self.getLoginData = function() {
         return logindata;
+    };
+
+    /**
+     * Get the login's siteurl.
+     * @return {String} Login's siteurl.
+     */
+    self.getLoginURL = function() {
+        return logindata.siteurl;
+    };
+
+    /**
+     * Clear the login data.
+     */
+    self.clearLoginData = function() {
+        logindata.siteurl = '';
+        logindata.username = '';
+        logindata.password = '';
+    };
+
+    /**
+     * Check if the siteurl belongs to a demo site.
+     * @param  {String}  siteurl URL of the site to check.
+     * @return {Boolean}         True if it is a demo site, false otherwise.
+     */
+    self.isDemoSite = function(siteurl) {
+        return typeof(self.getDemoSiteData(siteurl)) != 'undefined';
+    };
+
+    /**
+     * Get the demo data of the siteurl if it is a demo site.
+     * @param  {String} siteurl URL of the site to check.
+     * @return {Object}         Demo data if the site is a demo site, undefined otherwise.
+     */
+    self.getDemoSiteData = function(siteurl) {
+        var demo_sites = mmConfig.get('demo_sites');
+
+        for(var i = 0; i < demo_sites.length; i++) {
+            if(siteurl == demo_sites[i].key) {
+                return demo_sites[i];
+            }
+        }
+
+        return undefined;
     };
 
     /**
@@ -26,11 +73,6 @@ angular.module('mm.auth', [])
     self.checkSite = function(siteurl, protocol) {
 
         var deferred = $q.defer();
-
-        var demodata = self.getDemoSiteData(siteurl);
-        if( typeof(demodata) != 'undefined' ) {
-            // TODO: Treat demo site
-        }
 
         // formatURL adds the protocol if is missing.
         siteurl = mmUtil.formatURL(siteurl);
@@ -73,23 +115,6 @@ angular.module('mm.auth', [])
 
         return deferred.promise;
 
-    };
-
-    /**
-     * Get the demo data of the siteurl if it is a demo site.
-     * @param  {String} siteurl URL of the site to check.
-     * @return {Object}         Demo data if the site is a demo site, undefined otherwise.
-     */
-    self.getDemoSiteData = function(siteurl) {
-        var demo_sites = mmConfig.get('demo_sites');
-
-        for(var i = 0; i < demo_sites.length; i++) {
-            if(siteurl == demo_sites[i].key) {
-                return demo_sites[i];
-            }
-        }
-
-        return undefined;
     };
 
     /**
@@ -187,7 +212,6 @@ angular.module('mm.auth', [])
         };
 
         $http.post(loginurl, data).success(function(response) {
-            console.log(response);
 
             if (typeof(response.token) != 'undefined') {
                 deferred.resolve(response.token);
@@ -232,7 +256,6 @@ angular.module('mm.auth', [])
         siteurl = siteurl.replace("https://", "http://");
         var service = store.getItem('service'+siteurl);
         if (service) {
-            // TODO: MM.currentService = service;
             return service;
         }
 
@@ -240,13 +263,11 @@ angular.module('mm.auth', [])
         siteurl = siteurl.replace("http://", "https://");
         var service = store.getItem('service'+siteurl);
         if (service) {
-            // TODO: MM.currentService = service;
             return service;
         }
 
-        // TODO: MM.currentService = mmConfig.get('wsextservice');
         // Return default service.
-        return mmConfig.get('wsextservice');
+        return mmConfig.get('wsservice');
     };
 
     /**
@@ -259,8 +280,6 @@ angular.module('mm.auth', [])
 
         var deferred = $q.defer();
 
-        mmConfig.set('current_token', token); // TODO: It can be done later if we don't need it in moodleWSCall
-
         var preSets = {
             wstoken: token,
             siteurl: siteurl,
@@ -271,7 +290,14 @@ angular.module('mm.auth', [])
 
         function siteDataRetrieved(site) {
             if(self.isValidMoodleVersion(site.functions)) {
-                self.saveSite(site, token);
+
+                mmConfig.set('current_token', token);
+
+                site.id = md5.createHash(site.siteurl + site.username);
+                site.token = token;
+
+                self.addSite(site);
+                self.login(site);
                 deferred.resolve();
             } else {
                 deferred.reject('invalidmoodleversion'+'2.4');
@@ -306,50 +332,68 @@ angular.module('mm.auth', [])
     /**
      * Saves the site in local DB.
      * @param  {Object} site  Moodle site data returned from the server.
-     * @param  {String} token User's token.
      */
-    self.saveSite = function(site, token) {
-        site.id = md5.createHash(site.siteurl + site.username);
-        site.token = token;
+    self.addSite = function(site) {
+        var sites = self.getSites();
+        sites.push(site);
+        store.sites = JSON.stringify(sites);
+    };
+
+    /**
+     * Login a user to a certain site.
+     * @param  {Object} site  Moodle site data returned from the server.
+     */
+    self.login = function(site) {
         mmConfig.set('current_site', site);
     };
 
+    /**
+     * Login a user to a site from the list of sites.
+     * @param  {Number} index  Position of the site in the list of stored sites.
+     */
+    self.loginInSite = function(index) {
+        mmConfig.set('current_site', self.geSite(index) );
+    };
 
+    /**
+     * Check if a user is logged in.
+     * @return {Boolean} True if a user is logged in, false otherwise.
+     */
     self.isLoggedIn = function() {
-        return store.isLoggedIn && parseInt(store.isLoggedIn, 10) === 1;
+        var current_site = mmConfig.get('current_site');
+        return typeof(current_site) != 'undefined' && current_site && current_site.id;
     };
 
-    self.login = function() {
-        store.isLoggedIn = '1';
-    };
-
+    /**
+     * Logout a user.
+     */
     self.logout = function() {
-        store.isLoggedIn = '0';
+        // store.isLoggedIn = '0';
+        mmConfig.set('current_site', null);
     };
 
-    self.addIdentity = function(data) {
-        var identities = self.getIdentities();
-        identities.push(data);
-        store.identities = JSON.stringify(identities);
+    self.deleteSite = function(index) {
+        var sites = self.getSites();
+        sites.splice(index, 1);
+        store.sites = JSON.stringify(sites);
     };
 
-    self.deleteIdentity = function(index) {
-        var identities = self.getIdentities();
-        identities.splice(index, 1);
-        store.identities = JSON.stringify(identities);
+    self.hasSites = function() {
+        var sites = self.getSites();
+        return sites.length > 0;
     };
 
-    self.hasIdentities = function() {
-        var identities = self.getIdentities();
-        return identities.length > 0;
-    };
-
-    self.getIdentities = function() {
-        var identities = store.identities;
-        if (!identities) {
+    self.getSites = function() {
+        var sites = store.sites;
+        if (!sites) {
             return [];
         }
-        return JSON.parse(identities);
+        return JSON.parse(sites);
+    };
+
+    self.getSite = function(index) {
+        var sites = self.getSites();
+        return sites[index];
     };
 
     return self;
@@ -381,8 +425,8 @@ angular.module('mm.auth', [])
         templateUrl: 'core/components/login/tpl/login-index.html',
         controller: 'mmAuthLoginCtrl',
         onEnter: function($state, mmAuth) {
-            // Skip this page if there are no identities yet.
-            if (!mmAuth.hasIdentities()) {
+            // Skip this page if there are no sites yet.
+            if (!mmAuth.hasSites()) {
                 $state.go('login.site');
             }
         }
@@ -392,18 +436,20 @@ angular.module('mm.auth', [])
         url: '/site',
         templateUrl: 'core/components/login/tpl/login-site.html',
         controller: 'mmAuthSiteCtrl',
+        onEnter: function($ionicNavBarDelegate, mmAuth) {
+            if (!mmAuth.hasSites()) {
+                $ionicNavBarDelegate.showBackButton(false);
+            }
+        }
     })
 
     .state('login.credentials', {
         url: '/cred',
         templateUrl: 'core/components/login/tpl/login-credentials.html',
         controller: 'mmAuthCredCtrl',
-        params: {
-            url: ''
-        },
-        onEnter: function($state, $stateParams) {
+        onEnter: function($state, mmAuth) {
             // Do not allow access to this page when the URL was not passed.
-            if (!$stateParams.url) {
+            if (mmAuth.getLoginURL() == '') {
                 $state.go('login.index');
             }
         }

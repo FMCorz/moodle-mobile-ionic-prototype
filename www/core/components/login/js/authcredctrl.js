@@ -1,46 +1,29 @@
 angular.module('mm.auth')
 
-.controller('mmAuthCredCtrl', function($scope, $state, $ionicLoading, $stateParams, $timeout, mmAuth) {
+.controller('mmAuthCredCtrl', function($scope, $state, $stateParams, $timeout, mmAuth, mmDialogs) {
 
     $scope.logindata = mmAuth.getLoginData();
     $scope.login = function() {
-        $ionicLoading.show({
-            template: '<i class="icon ion-load-c"> Loading...'
-        });
-        $timeout(function() {
-            $ionicLoading.hide();
-            var siteurl = $scope.logindata.siteurl,
-                username = $scope.logindata.username,
-                password = $scope.logindata.password;
+        mmDialogs.showModalLoading('Loading');
 
-            if (!username || !password) {
-                return;
-            }
-            mmAuth.getUserToken(siteurl, username, password).then(function(token) {
-                console.log(token);
-                mmAuth.saveToken(siteurl, token).then(function() {
+        var siteurl = $scope.logindata.siteurl,
+            username = $scope.logindata.username,
+            password = $scope.logindata.password;
 
-                    mmAuth.addIdentity({
-                        thumb: 'http://api.randomuser.me/portraits/thumb/women/' + Math.round((Math.random() * 99) + 1) + '.jpg',
-                        name: $scope.logindata.username,
-                        desc: $scope.url
-                    })
-                    mmAuth.login();
-                    $state.go('site.index');
-                }, function(error) {
-                    alert(error);
-                });
+        if (!username || !password) {
+            return;
+        }
+        mmAuth.getUserToken(siteurl, username, password).then(function(token) {
+            mmAuth.saveToken(siteurl, token).then(function() {
+                mmDialogs.closeModalLoading();
+                mmAuth.clearLoginData();
+                $state.go('site.index');
             }, function(error) {
                 alert(error);
             });
-            // mmAuth.addIdentity({
-            //     thumb: 'http://api.randomuser.me/portraits/thumb/women/' + Math.round((Math.random() * 99) + 1) + '.jpg',
-            //     name: $scope.logindata.username,
-            //     desc: $scope.url
-            // })
-            // mmAuth.login();
-            // $state.go('site.index');
-        }, 1000);
-    }
+        }, function(error) {
+            alert(error);
+        });
+    };
 
 });

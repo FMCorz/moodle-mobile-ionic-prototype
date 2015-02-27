@@ -4,6 +4,7 @@ angular.module('mm', [
   'mm.core',
   'mm.util',
   'mm.config',
+  'mm.dialogs',
   'mm.site',
   'mm.files',
   'mm.messages',

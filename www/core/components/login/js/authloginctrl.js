@@ -1,10 +1,10 @@
 angular.module('mm.auth')
 
-.controller('mmAuthLoginCtrl', function($scope, $state, $timeout, mmAuth) {
+.controller('mmAuthLoginCtrl', function($scope, $state, $ionicHistory, mmAuth, mmDialogs) {
 
-    $scope.identities = mmAuth.getIdentities();
+    $scope.sites = mmAuth.getSites();
     $scope.data = {
-        hasIdentities: mmAuth.hasIdentities(),
+        hasSites: mmAuth.hasSites(),
         showDetele: false
     }
 
@@ -13,22 +13,28 @@ angular.module('mm.auth')
     };
 
     $scope.onItemDelete = function(e, index) {
-        mmAuth.deleteIdentity(index);
-        $scope.identities.splice(index, 1);
-        console.log($scope.identities);
-
-        $scope.data.hasIdentities = mmAuth.hasIdentities();
-        if (!$scope.data.hasIdentities) {
-            $scope.data.showDelete = false;
-        }
-
         // Prevent login() from being triggered. No idea why I cannot replicate this
         // problem on http://codepen.io/ionic/pen/JsHjf.
         e.stopPropagation();
+
+        var site = mmAuth.getSite(index);
+        mmDialogs.popConfirm(undefined, 'Are you sure you want to delete the site "'+site.sitename+'"?')
+            .then(function(confirmed) {
+                if(confirmed) {
+                    mmAuth.deleteSite(index);
+                    $scope.sites.splice(index, 1);
+
+                    if(!mmAuth.hasSites()) {
+                        $state.go('login.site');
+                    }
+                }
+            });
+
     }
 
-    $scope.login = function() {
-        mmAuth.login();
+    $scope.login = function(index) {
+        console.log(index);
+        mmAuth.loginInSite(index);
         $state.go('site.index');
     }
 

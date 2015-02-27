@@ -1,15 +1,16 @@
 <ion-view view-title="Login">
   <ion-nav-buttons side="secondary">
-      <button class="button button-icon ion-edit" ng-click="toggleDelete()" ng-show='data.hasIdentities'></button>
+      <button class="button button-icon ion-edit" ng-click="toggleDelete()" ng-show='data.hasSites'></button>
       <button class="button button-icon ion-plus" ng-click="add()"></button>
   </ion-nav-buttons>
   <ion-content>
-      <ion-list ng-repeat="identity in identities" show-delete='data.showDelete'>
-        <ion-item class="item item-thumbnail-left item-remove-animate" ng-click="login()">
+      <ion-list ng-repeat="site in sites track by $index" show-delete='data.showDelete'>
+        <ion-item class="item item-thumbnail-left item-remove-animate" ng-click="login($index)">
           <ion-delete-button class="ion-minus-circled" ng-click='onItemDelete($event, $index)'></ion-delete-button>
-          <img ng-src="{{identity.thumb}}">
-          <h2>{{identity.name}}</h2>
-          <p>{{identity.desc}}</p>
+          <img ng-src="{{site.userpictureurl}}">
+          <h2>{{site.fullname}}</h2> <!-- TODO: MM.util.formatText. Filter? -->
+          <p>{{site.sitename}}</p>
+          <p>{{site.siteurl}}</p>
         </a>
       </ion-item>
     </ion-list>

@@ -1,22 +1,40 @@
 angular.module('mm.auth')
 
-.controller('mmAuthSiteCtrl', function($scope, $ionicLoading, $state, mmAuth) {
+.controller('mmAuthSiteCtrl', function($scope, $state, mmAuth, mmDialogs) {
 
     $scope.logindata = mmAuth.getLoginData();
+
     $scope.connect = function(url) {
 
-        $ionicLoading.show({
-            template: '<i class="icon ion-load-c"> Loading...'
-        });
+        mmDialogs.showModalLoading('Loading');
 
-        mmAuth.checkSite(url).then(function() {
-            $ionicLoading.hide();
-            $state.go('login.credentials', {url: url});
-        }, function(error) {
-            // TODO: Show error message with ngMessages or popup
-            $ionicLoading.hide();
-            alert(error);
-        });
+        if(mmAuth.isDemoSite(url)) {
+
+            var sitedata = mmAuth.getDemoSiteData(url);
+
+             mmAuth.getUserToken(sitedata.url, sitedata.username, sitedata.password).then(function(token) {
+                mmAuth.saveToken(sitedata.url, token).then(function() {
+                    mmDialogs.closeModalLoading();
+                    mmAuth.clearLoginData();
+                    $state.go('site.index');
+                }, function(error) {
+                    alert(error);
+                });
+            }, function(error) {
+                alert(error);
+            });
+        }
+        else {
+            mmAuth.checkSite(url).then(function(code) {
+                mmDialogs.closeModalLoading();
+                $state.go('login.credentials');
+            }, function(error) {
+                // TODO: Show error message with ngMessages or popup
+                mmDialogs.closeModalLoading();
+                alert(error);
+            });
+
+        }
     }
 
 });
