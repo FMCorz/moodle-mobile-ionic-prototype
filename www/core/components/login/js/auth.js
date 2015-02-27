@@ -363,7 +363,7 @@ angular.module('mm.auth', [])
     .state('login', {
         url: '/login',
         abstract: true,
-        templateUrl: 'app/components/core/login/tpl/login.html',
+        templateUrl: 'core/components/login/tpl/login.html',
         cache: false,   // Disable caching to force controller reload.
         onEnter: function($ionicHistory) {
             // Ensure that there is no history stack when getting here.
@@ -378,7 +378,7 @@ angular.module('mm.auth', [])
 
     .state('login.index', {
         url: '/index',
-        templateUrl: 'app/components/core/login/tpl/login-index.html',
+        templateUrl: 'core/components/login/tpl/login-index.html',
         controller: 'mmAuthLoginCtrl',
         onEnter: function($state, mmAuth) {
             // Skip this page if there are no identities yet.
@@ -390,13 +390,13 @@ angular.module('mm.auth', [])
 
     .state('login.site', {
         url: '/site',
-        templateUrl: 'app/components/core/login/tpl/login-site.html',
+        templateUrl: 'core/components/login/tpl/login-site.html',
         controller: 'mmAuthSiteCtrl',
     })
 
     .state('login.credentials', {
         url: '/cred',
-        templateUrl: 'app/components/core/login/tpl/login-credentials.html',
+        templateUrl: 'core/components/login/tpl/login-credentials.html',
         controller: 'mmAuthCredCtrl',
         params: {
             url: ''
