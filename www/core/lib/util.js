@@ -110,6 +110,78 @@ angular.module('mm.util', [])
             }
             return false;
         };
+
+        /**
+         * This function downloads a file from Moodle if the file is already downloaded the function replaces the www reference with
+         * the internal file system reference
+         *
+         * @param  {string} file The file path (usually a url)
+         * @return {string}      A local or URL path
+         */
+        this.getMoodleFilePath = function (fileurl, courseId, siteId, token) {
+
+            return fileurl;
+
+            // This function is used in regexp callbacks, better not to risk!!
+            // if (!fileurl) {
+            //     return '';
+            // }
+
+            // if (!courseId) {
+            //     courseId = 1;
+            // }
+
+            // if (!siteId) {
+            //     siteId = MM.config.current_site.id;
+            // }
+
+            // if (!token) {
+            //     var site = MM.db.get('sites', siteId);
+            //     token = site.get('token');
+            // }
+
+            // var downloadURL = MM.fixPluginfile(fileurl, token);
+            // var extension = "." + fileurl.split('.').pop();
+            // if (extension.indexOf(".php") === 0) {
+            //     extension = "";
+            // }
+
+            // var filename = hex_md5(fileurl) + extension;
+
+            // var path = {
+            //     directory: siteId + "/" + courseId,
+            //     file:      siteId + "/" + courseId + "/" + filename
+            // };
+
+            // // We download the file asynchronously because this function must to be sync.
+            // MM.fs.init(function() {
+            //     MM.fs.fileExists(path.file,
+            //     function(path) {
+            //         MM.util.replaceFile(downloadURL, path);
+            //     },
+            //     function() {});
+
+            //     if (MM.deviceConnected()) {
+            //         MM.log("Starting download of Moodle file: " + downloadURL);
+            //         // All the functions are asynchronous, like createDir.
+            //         MM.fs.createDir(path.directory, function() {
+            //             MM.log("Downloading Moodle file to " + path.file + " from URL: " + downloadURL);
+
+            //             MM.moodleDownloadFile(downloadURL, path.file,
+            //                 function(fullpath) {
+            //                     MM.util.replaceFile(downloadURL, fullpath);
+            //                     MM.log("Download of content finished " + fullpath + " URL: " + downloadURL);
+            //                 },
+            //                 function(fullpath) {
+            //                    MM.log("Error downloading " + fullpath + " URL: " + downloadURL);
+            //                 }
+            //             );
+            //         });
+            //     }
+            // });
+
+            // return downloadURL;
+        };
     }
 
     this.$get = function(mmConfig) {

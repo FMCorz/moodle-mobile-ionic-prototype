@@ -8,8 +8,8 @@
         <ion-item class="item item-thumbnail-left item-remove-animate" ng-click="login($index)">
           <ion-delete-button class="ion-minus-circled" ng-click='onItemDelete($event, $index)'></ion-delete-button>
           <img ng-src="{{site.userpictureurl}}">
-          <h2>{{site.fullname}}</h2> <!-- TODO: MM.util.formatText. Filter? -->
-          <p>{{site.sitename}}</p>
+          <h2>{{site.fullname | formatText}}</h2>
+          <p>{{site.sitename | formatText}}</p>
           <p>{{site.siteurl}}</p>
         </a>
       </ion-item>
