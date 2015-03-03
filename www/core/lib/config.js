@@ -2,6 +2,7 @@ angular.module('mm.config', [])
 
 .factory('mmConfig', function($http, $q) {
 
+    var store = window.sessionStorage;
     var self = {};
     self.config = {};
 
@@ -27,12 +28,20 @@ angular.module('mm.config', [])
     };
 
     self.get = function(name) {
-        return self.config[name];
+        var value = self.config[name];
+        if(typeof(value) == 'undefined' ){
+            value = store[name];
+            if(typeof(value) == 'undefined' || value == null) {
+                return undefined;
+            }
+            return JSON.parse( value );
+        }
+        return value;
     };
 
     self.set = function(name, value) {
-        // TODO: Store it in local DB
         self.config[name] = value;
+        store[name] = JSON.stringify(value);
     };
 
     return self;
