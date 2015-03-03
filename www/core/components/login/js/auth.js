@@ -352,7 +352,7 @@ angular.module('mm.auth', [])
      * @param  {Number} index  Position of the site in the list of stored sites.
      */
     self.loginInSite = function(index) {
-        mmConfig.set('current_site', self.geSite(index) );
+        mmConfig.set('current_site', self.getSite(index) );
     };
 
     /**

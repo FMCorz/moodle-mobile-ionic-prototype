@@ -33,7 +33,6 @@ angular.module('mm.auth')
     }
 
     $scope.login = function(index) {
-        console.log(index);
         mmAuth.loginInSite(index);
         $state.go('site.index');
     }
