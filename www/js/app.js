@@ -7,7 +7,7 @@ angular.module('mm', [
   'oc.lazyLoad',
   'pascalprecht.translate'])
 
-.run(function($ionicPlatform, $rootScope, $state, mmAuth, $ionicBody, $window) {
+.run(function($ionicPlatform, $rootScope, $state, mmAuth, $ionicBody, $window, $translatePartialLoader, $translate) {
 
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -42,6 +42,8 @@ angular.module('mm', [
 
   });
 
+  $translatePartialLoader.addPart('lang');
+  $translate.refresh();
 
 })
 
@@ -630,9 +632,12 @@ angular.module('mm', [
   });
 
   // Set lang files location and load current language
-  $translateProvider.useStaticFilesLoader({
-    prefix: 'lang/',
-    suffix: '.json'
+  // $translateProvider.useStaticFilesLoader({
+  //   prefix: 'lang/',
+  //   suffix: '.json'
+  // });
+  $translateProvider.useLoader('$translatePartialLoader', {  
+    urlTemplate: '{part}/{lang}.json'
   });
   $translateProvider.preferredLanguage(window.sessionStorage.lang || 'en');
   // If a key is not found for the current language, search in the English file.

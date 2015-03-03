@@ -92,4 +92,12 @@ angular.module('mm.appsettings', [])
 
 .controller('mmAppDevelopmentSettingsCtrl', function($scope) {
     $scope.cacheExpTime = 300000;
-});
+})
+
+.run(function($translatePartialLoader, $translate) {
+
+  $translatePartialLoader.addPart('plugins/lang');
+  $translate.refresh();
+
+})
+;
