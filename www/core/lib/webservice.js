@@ -1,6 +1,6 @@
-angular.module('mm.core', [])
+angular.module('mm.webservice', [])
 
-.factory('mmCore', function($http, $q, mmConfig, mmUtil) {
+.factory('mmWebService', function($http, $q, mmConfig, mmUtil) {
 
     var deprecatedFunctions = {
         "moodle_webservice_get_siteinfo": "core_webservice_get_site_info",

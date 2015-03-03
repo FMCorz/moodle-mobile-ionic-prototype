@@ -1,7 +1,7 @@
 angular.module('mm', [
   'ionic',
   'mm.auth',
-  'mm.core',
+  'mm.webservice',
   'mm.util',
   'mm.config',
   'mm.dialogs',

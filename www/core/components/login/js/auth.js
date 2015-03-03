@@ -1,6 +1,6 @@
 angular.module('mm.auth', [])
 
-.factory('mmAuth', function($http, $q, md5, mmCore, mmConfig, mmUtil) {
+.factory('mmAuth', function($http, $q, md5, mmWebService, mmConfig, mmUtil) {
 
     var self = {};
     var store = window.sessionStorage;
@@ -305,8 +305,8 @@ angular.module('mm.auth', [])
         }
 
         // We have a valid token, try to get the site info.
-        mmCore.moodleWSCall('moodle_webservice_get_siteinfo', {}, preSets).then(siteDataRetrieved, function(error) {
-            mmCore.moodleWSCall('core_webservice_get_site_info', {}, preSets).then(siteDataRetrieved, function(error) {
+        mmWebService.moodleWSCall('moodle_webservice_get_siteinfo', {}, preSets).then(siteDataRetrieved, function(error) {
+            mmWebService.moodleWSCall('core_webservice_get_site_info', {}, preSets).then(siteDataRetrieved, function(error) {
                 deferred.reject(error);
             });
         });
