@@ -64,6 +64,37 @@ angular.module('mm.db', [])
         self = {};
 
     /**
+     * Call a DB simple function.
+     * @param  {Boolean} useSite True if it should use the current site DB, false if it should use the app DB.
+     * @param  {String}  func    Name of the function to call.
+     * @return {Promise}         Promise to be resolved when the operation finishes.
+     */
+    function callDBFunction(useSite, func) {
+        var deferred = $q.defer();
+
+        var db = self.getDB(useSite);
+        try{
+            if(typeof(db) != 'undefined') {
+                db[func].apply(db, Array.prototype.slice.call(arguments, 2)).then(function(result) {
+                    if(typeof(result) == 'undefined') {
+                        deferred.reject();
+                    } else {
+                        deferred.resolve(result);
+                    }
+                });
+            } else {
+                deferred.reject();
+            }
+        } catch(ex) {
+            console.log('Error executing function '+func+' to DB '+db.getName());
+            console.log(ex.name+': '+ex.message);
+            deferred.reject();
+        }
+
+        return deferred.promise;
+    }
+
+    /**
      * Get the database object to use.
      * @param  {Boolean} useSite True if siteDB should be used, false otherwise.
      * @return {Object}          DB.
@@ -135,27 +166,7 @@ angular.module('mm.db', [])
      * @return {Promise}         Promise to be resolved when the value is retrieved.
      */
     self.get = function(table, id, useSite) {
-        var deferred = $q.defer();
-
-        var db = getDB(useSite);
-        try{
-            if(typeof(db) != 'undefined') {
-                db.get(table, id).then(function(entry) {
-                    if(typeof(entry) == 'undefined') {
-                        deferred.reject();
-                    } else {
-                        deferred.resolve(entry);
-                    }
-                });
-            } else {
-                deferred.reject();
-            }
-        } catch(ex) {
-            console.log('Error getting value from db. '+ex.name+': '+ex.message);
-            deferred.reject();
-        }
-
-        return deferred.promise;
+        return callDBFunction(useSite, 'get', table, id);
     };
 
     /**
@@ -165,27 +176,7 @@ angular.module('mm.db', [])
      * @return {Promise}         Promise to be resolved when the value is retrieved.
      */
     self.getAll = function(table, useSite) {
-        var deferred = $q.defer();
-
-        var db = getDB(useSite);
-        try{
-            if(typeof(db) != 'undefined') {
-                db.values(table, undefined, 99999999).then(function(entries) {
-                    if(typeof(entries) == 'undefined') {
-                        deferred.reject();
-                    } else {
-                        deferred.resolve(entries);
-                    }
-                });
-            } else {
-                deferred.reject();
-            }
-        } catch(ex) {
-            console.log('Error getting value from db. '+ex.name+': '+ex.message);
-            deferred.reject();
-        }
-
-        return deferred.promise;
+        return callDBFunction(useSite, 'values', table, undefined, 99999999);
     };
 
     /**
@@ -195,25 +186,7 @@ angular.module('mm.db', [])
      * @return {Promise}         Promise to be resolved when the count is retrieved.
      */
     self.count = function(table, useSite) {
-        var deferred = $q.defer();
-
-        var db = getDB(useSite);
-        try{
-            if(typeof(db) != 'undefined') {
-                db.count(table).then(function(count) {
-                    deferred.resolve(count);
-                }, function() {
-                    deferred.reject();
-                });
-            } else {
-                deferred.reject();
-            }
-        } catch(ex) {
-            console.log('Error counting from db. '+ex.name+': '+ex.message);
-            deferred.reject();
-        }
-
-        return deferred.promise;
+        return callDBFunction(useSite, 'count', table);
     };
 
     /**
@@ -224,25 +197,18 @@ angular.module('mm.db', [])
      * @return {Promise}         Promise to be resolved when the entry is stored.
      */
     self.insert = function(table, value, useSite) {
-        var deferred = $q.defer();
+        return callDBFunction(useSite, 'put', table, value);
+    };
 
-        var db = getDB(useSite);
-        try{
-            if(typeof(db) != 'undefined') {
-                db.put(table, value).then(function(key) {
-                    deferred.resolve(key);
-                }, function() {
-                    deferred.reject();
-                });
-            } else {
-                deferred.reject();
-            }
-        } catch(ex) {
-            console.log('Error inserting to db '+JSON.stringify(value)+'. '+ex.name+': '+ex.message);
-            deferred.reject();
-        }
-
-        return deferred.promise;
+    /**
+     * Remove an entry from the local DB.
+     * @param  {String}  table   Name of the table to remove the entry from.
+     * @param  {String}  id      ID of the value to remove.
+     * @param  {Boolean} useSite True if it should use the current site DB, false if it should use the app DB.
+     * @return {Promise}         Promise to be resolved when the value is deleted.
+     */
+    self.remove = function(table, id, useSite) {
+        return callDBFunction(useSite, 'remove', table, id);
     };
 
     /**
@@ -259,7 +225,7 @@ angular.module('mm.db', [])
     self.where = function(table, useSite, field_name, op, value, op2, value2) {
         var deferred = $q.defer();
 
-        var db = getDB(useSite);
+        var db = self.getDB(useSite);
         try{
             if(typeof(db) != 'undefined') {
                 db.from(table).where(field_name, op, value, op2, value2).list().then(function(list) {
@@ -271,7 +237,7 @@ angular.module('mm.db', [])
                 deferred.reject();
             }
         } catch(ex) {
-            console.log('Error inserting to db '+JSON.stringify(value)+'. '+ex.name+': '+ex.message);
+            console.log('Error querying db '+db.getName()+'. '+ex.name+': '+ex.message);
             deferred.reject();
         }
 
@@ -280,6 +246,7 @@ angular.module('mm.db', [])
 
     /**
      * Retrieve the list of entries where a certain field is equal to a certain value.
+     * Important: the field must be an index.
      * @param  {String}  table      Name of the table to get the entries from.
      * @param  {Boolean} useSite    True if it should use the current site DB, false if it should use the app DB.
      * @param  {String}  field_name Name of the field to check.
@@ -289,7 +256,7 @@ angular.module('mm.db', [])
     self.getWhereEqual = function(table, useSite, field_name, value) {
         var deferred = $q.defer();
 
-        var db = getDB(useSite);
+        var db = self.getDB(useSite);
         try{
             if(typeof(db) != 'undefined') {
                 db.from(table).where(field_name, '=', value).list().then(function(list) {
@@ -301,7 +268,7 @@ angular.module('mm.db', [])
                 deferred.reject();
             }
         } catch(ex) {
-            console.log('Error inserting to db '+JSON.stringify(value)+'. '+ex.name+': '+ex.message);
+            console.log('Error getting where equal from db '+db.getName()+'. '+ex.name+': '+ex.message);
             deferred.reject();
         }
 
@@ -326,35 +293,6 @@ angular.module('mm.db', [])
         }, function() {
             deferred.reject();
         });
-
-        return deferred.promise;
-    };
-
-    /**
-     * Remove an entry from the local DB.
-     * @param  {String}  table   Name of the table to remove the entry from.
-     * @param  {String}  id      ID of the value to remove.
-     * @param  {Boolean} useSite True if it should use the current site DB, false if it should use the app DB.
-     * @return {Promise}         Promise to be resolved when the value is deleted.
-     */
-    self.remove = function(table, id, useSite) {
-        var deferred = $q.defer();
-
-        var db = getDB(useSite);
-        try{
-            if(typeof(db) != 'undefined') {
-                db.remove(table, id).then(function(number) {
-                    deferred.resolve(number);
-                }, function() {
-                    deferred.reject();
-                });
-            } else {
-                deferred.reject();
-            }
-        } catch(ex) {
-            console.log('Error removing from db. '+ex.name+': '+ex.message);
-            deferred.reject();
-        }
 
         return deferred.promise;
     };
