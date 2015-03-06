@@ -12,7 +12,6 @@ angular.module('mm', [
   'pascalprecht.translate'])
 
 .run(function($ionicPlatform, $rootScope, $state, mmAuth, $ionicBody, $window, mmDB) {
-  setTimeout(mmDB.testSwitchAndDelete, 5000);
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
