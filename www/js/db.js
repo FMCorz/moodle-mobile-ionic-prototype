@@ -16,7 +16,12 @@ angular.module('mm.db', [])
             },
             {
                 name: 'cache',
-                keyPath: 'id'
+                keyPath: 'id',
+                indexes: [
+                    {
+                        name: 'type'
+                    }
+                ]
             },
             {
                 name: 'services',
@@ -46,7 +51,12 @@ angular.module('mm.db', [])
             },
             {
                 name: 'usergroups',
-                keyPath: 'id'
+                keyPath: 'id',
+                indexes: [
+                    {
+                        name: 'userid'
+                    }
+                ]
             },
             {
                 name: 'cache',
