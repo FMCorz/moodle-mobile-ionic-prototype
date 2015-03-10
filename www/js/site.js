@@ -1,5 +1,98 @@
 angular.module('mm.site', [])
 
+.factory('mmSite', function(mmDB) {
+    /** Define the site storage schema. */
+    var site_schema = {
+        autoSchema: true,
+        stores: [
+            {
+                name: 'preferences',
+                keyPath: 'id'
+            },
+            {
+                name: 'courses',
+                keyPath: 'id'
+            },
+            {
+                name: 'groups',
+                keyPath: 'id'
+            },
+            {
+                name: 'users',
+                keyPath: 'id'
+            },
+            {
+                name: 'usergroups',
+                keyPath: 'id',
+                indexes: [
+                    {
+                        name: 'userid'
+                    }
+                ]
+            },
+            {
+                name: 'cache',
+                keyPath: 'id'
+            },
+            {
+                name: 'sync',
+                keyPath: 'id'
+            }
+        ]
+    };
+
+    var self = {},
+        db;
+
+    /**
+     * Get the name of a site DB.
+     * @param  {String} siteid ID of the site.
+     * @return {String}        DB name.
+     */
+    self.getDBName = function(siteid) {
+        return 'Site-'+siteid;
+    };
+
+    /**
+     * Change the current site DB to use the one specified by parameter.
+     * @param  {String} siteid ID of the site.
+     * @return {Promise}       Promise to be resolved when the site DB is ready.
+     */
+    self.useSite = function(siteid) {
+        if(typeof(db) != 'undefined') {
+            db.close();
+        }
+
+        db = mmDB.getDB(self.getDBName(siteid), site_schema);
+    };
+
+    /**
+     * Close the current site DB.
+     */
+    self.closeSite = function() {
+        if(typeof(db) != 'undefined') {
+            db.close();
+            db = undefined;
+        }
+    };
+
+    /**
+     * Delete a site DB.
+     * @param  {String} siteid ID of the site.
+     * @return {Promise}       Promise to be resolved when the site DB is deleted.
+     */
+    self.deleteSite = function(siteid) {
+        var databaseName = self.getDBName(siteid);
+        if(typeof(db) != 'undefined' && db.getName() == databaseName) {
+            db.close();
+        }
+        return ydn.db.deleteDatabase(databaseName);
+    };
+
+    return self;
+
+})
+
 .factory('mmSiteCourses', function() {
 
     var store = {},

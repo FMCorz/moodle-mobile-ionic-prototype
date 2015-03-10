@@ -11,7 +11,7 @@ angular.module('mm', [
   'mm.events',
   'pascalprecht.translate'])
 
-.run(function($ionicPlatform, $rootScope, $state, mmAuth, $ionicBody, $window, mmDB) {
+.run(function($ionicPlatform, $rootScope, $state, mmAuth, $ionicBody, $window) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -741,6 +741,40 @@ angular.module('mm', [
       return $filter('date')(d, 'd/MM/yy');
     }
   };
+})
+
+.factory('mmApp', function(mmDB) {
+    /** Define the app storage schema. */
+    var app_schema = {
+        autoSchema: true,
+        stores: [
+            {
+                name: 'settings',
+                keyPath: 'id'
+            },
+            {
+                name: 'sites',
+                keyPath: 'id'
+            },
+            {
+                name: 'cache',
+                keyPath: 'id',
+                indexes: [
+                    {
+                        name: 'type'
+                    }
+                ]
+            },
+            {
+                name: 'services',
+                keyPath: 'id'
+            }
+        ]
+    };
+
+    var db = mmDB.getDB('MoodleMobile', app_schema);
+
+    return {};
 });
 
 
