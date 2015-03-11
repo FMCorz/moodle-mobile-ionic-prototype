@@ -128,6 +128,7 @@ angular.module('mm', [
     .state('site', {
       url: '/site',
       templateUrl: 'tpl/site.html',
+      controller: 'mmSideMenu',
       abstract: true,
       onEnter: function($ionicHistory) {
         // Remove the login page from the history stack.

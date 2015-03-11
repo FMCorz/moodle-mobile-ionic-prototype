@@ -1,4 +1,38 @@
-angular.module('mm.messages', [])
+angular.module('mm.messages', ['mm.site'])
+
+.run(function($mmSideMenuDelegate, mmMessages) {
+    console.log('Run messages');
+    $mmSideMenuDelegate.registerPlugin('mm.messages', function() {
+        return {
+            icon: 'ion-chatbox',
+            state: 'site.messages',
+            name: 'Messages',
+            badge: mmMessages.getNewMessagesNumber()
+        };
+    });
+
+    function receiveNewMessage() {
+        mmMessages.setNewMessagesNumber(mmMessages.getNewMessagesNumber() + 1);
+        $mmSideMenuDelegate.updatePluginData('mm.messages');
+        setTimeout(receiveNewMessage, 2000);
+    }
+
+    setTimeout(receiveNewMessage, 2000);
+
+    // var i = 0;
+    // setTimeout(function() {
+    //     i++;
+    //     $mmSideMenuDelegate.registerPlugin('mm.messages'+i, function() {
+    //         return {
+    //             icon: 'ion-chatbox',
+    //             state: 'site.messages',
+    //             name: 'Messages '+i,
+    //             badge: mmMessages.getNewMessagesNumber()
+    //         };
+    //     });
+    //     $mmSideMenuDelegate.updatePluginData('mm.messages'+i);
+    // }, 1000);
+})
 
 .factory('mmMessages', function() {
 
@@ -237,12 +271,20 @@ angular.module('mm.messages', [])
         return discussions;
     }
 
+    var number = 8;
+
     return {
         addMessage: addMessage,
         getContact: getContact,
         getContacts: getContacts,
         getDiscussion: getDiscussion,
-        getDiscussions: getDiscussions
+        getDiscussions: getDiscussions,
+        getNewMessagesNumber: function() {
+            return number;
+        },
+        setNewMessagesNumber: function(newnumber) {
+            number = newnumber;
+        }
     };
 
 })

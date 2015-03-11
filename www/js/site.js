@@ -1,5 +1,46 @@
 angular.module('mm.site', [])
 
+.factory('$mmSideMenuDelegate', function() {
+
+    var plugins = {},
+        self = {},
+        data,
+        controllers = [];
+
+    self.registerPlugin = function(name, callback) {
+        plugins[name] = callback;
+    }
+
+    self.updatePluginData = function(name) {
+        data[name] = plugins[name]();
+        console.log('Update plugin data: '+name+' '+data[name]['badge'] );
+        self.notifyControllers();
+    }
+
+    self.getData = function() {
+        if (typeof(data) == 'undefined') {
+            data = {};
+            angular.forEach(plugins, function(callback, plugin) {
+                self.updatePluginData(plugin);
+            });
+        }
+        return data;
+    }
+
+    self.on = function(callback) {
+        controllers.push(callback);
+    }
+
+    self.notifyControllers = function() {
+        angular.forEach(controllers, function(callback) {
+            callback();
+        });
+
+    }
+
+    return self;
+})
+
 .factory('mmSiteCourses', function() {
 
     var store = {},
@@ -170,4 +211,15 @@ angular.module('mm.site', [])
 
 .controller('mmCourseParticipantGrades', function($scope, participant) {
     $scope.participant = participant;
-});
+})
+
+.controller('mmSideMenu', function($scope, $injector, $mmSideMenuDelegate) {
+    $scope.plugins = $mmSideMenuDelegate.getData();
+
+    // $scope.$watchCollection($mmSideMenuDelegate.getData, function(newValue) {
+    //     console.log(new Date().getTime()+' Watch ' );
+    //     $scope.plugins = newValue;
+    // });
+})
+
+;
